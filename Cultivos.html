@@ -3,11 +3,17 @@
         <title></title>
         <meta charset="UTF-8">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="estilos/pantallas.css">
+        <link rel="stylesheet" href="estilos/pantallasCultivos.css">
     </head>
     <body>
         <h1>Cultivos</h1>
         <h2>Registro y seguimiento de las cañas</h2>
+        <div class="bot">
+            <button>
+                <img src="iconos/anadir.png" alt="anadir" width="14" height="14">
+                Agregar Cultivo
+            </button>
+        </div>
         <div class="seleccion">
             <button class="activo">
                 <img src="iconos/planta-negro.png" alt="Icono Cultivos Registrados" width="14" height="14">  
@@ -29,10 +35,7 @@
                 <input type="date" id="fecha" name="fecha">
                 <label>Fecha Estimada:</label>
                 <input type="date" id="fecha" name="fecha">
-                <button>
-                    <img src="iconos/anadir.png" alt="anadir" width="14" height="14">
-                    Agregar Cultivo
-                </button>
+                <button class="filtrar"><img src="iconos/filtrar.png" alt="filtrar"  width="14" height="14">Filtrar</button>
                 </div>
                 <table class="tabla-cultivos">
                     <tr>
