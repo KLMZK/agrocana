@@ -44,6 +44,11 @@ h2{
     cursor: pointer;
     border-radius: 20px;
 }
+.seleccion button:hover{
+    background-color: #ffffff; 
+    height: 30px;
+    width: 180px; 
+}
 
 .seleccion button.activo {
    background-color: #ffffff; 
@@ -146,21 +151,21 @@ h2{
     border-collapse: separate;
     border-spacing: 0 12px;
     font-family: "Inter", sans-serif;
-    font-size: 16px;
-    margin-top: -320px; 
+    font-size: 16px; 
     table-layout: auto;
 }
 
 .contenido th, .contenido td {
+    align-content: flex-start;
+    justify-content: flex-start;
     padding: 10px 12px;
     text-align: left;
     border-bottom: 1px solid #D9D9D9;
 }
-.contenido .icono{
-    border: 0;
-}
 .acciones {
-    margin-top: 24px;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: 0px;
     display: flex;
     gap: 8px;
 }
@@ -168,15 +173,15 @@ h2{
 .Boton-icono {
     border: none;
     background-color: transparent;
-    padding: 6px;
+    padding: 4px 6px 6px 6px;
     cursor: pointer;
     border-radius: 6px;
+    margin-bottom: 30px;
 }
 
 .Boton-icono:hover {
     background-color: #E6E6E6;
 }
-
 .Boton-icono img {
     width: 18px;
     height: 18px;
