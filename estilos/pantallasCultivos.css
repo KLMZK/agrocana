@@ -156,6 +156,7 @@ h2{
     display: flex;
     justify-content: right;
     align-items: right;
+    margin-right: 100px;
 }
 .bot button{
     display: flex;
