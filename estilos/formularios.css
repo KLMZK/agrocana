@@ -3,6 +3,9 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
 }
 form{
     padding: 20px;
@@ -35,18 +38,12 @@ h2{
     font-size: 18px;
     font-weight: normal;
     margin-bottom: 30px;
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
 }
 label{
     display: block;
     margin-bottom: -15px;
     margin-left: 13px;
     text-align: justify;
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
     font-weight:550;
 }
 input[type=text], input[type=password], input[type=email]{
@@ -59,9 +56,6 @@ input[type=text], input[type=password], input[type=email]{
     box-sizing: border-box;
     border-radius: 13px;
     background-color: #E2DFDF;
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-style: normal;
     font-weight: 300;
 }
 input[type=submit]{
@@ -74,9 +68,6 @@ input[type=submit]{
     width: 90%;
     border-radius: 10px;
     font-size: 17px;
-    font-family: "Inter", sans-serif;
-    font-optical-sizing: auto;
-    font-style:normal;
     font-weight:540;
 }
 body::before {
