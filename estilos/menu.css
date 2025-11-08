@@ -119,4 +119,5 @@ h2 {
 }
 iframe {
     zoom: 0.89;
+    border: none;
 }
