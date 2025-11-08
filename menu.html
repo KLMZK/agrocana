@@ -1,0 +1,170 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                font-family: "Inter", sans-serif;
+                font-optical-sizing: auto;
+                font-style: normal;
+            }
+            h1 {
+                font-size: 14.5px;
+                margin: 5px;
+                font-weight: bold;
+                margin-bottom: 0px;
+            }
+            h2 {
+                font-size: 13px;
+                margin: 2px;
+                font-weight: 500;
+            }
+            #menu {
+                text-align: center;
+                background-color: #F6F6F6;
+                border-right: 2px solid #D9D9D9;
+                width: 15%;
+            }
+            #empresa {
+                border-bottom: 2px solid #D9D9D9;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 8%;
+            }
+            #navegacion {
+                border-bottom: 2px solid #D9D9D9;
+                height: 81%;
+                text-align: left;
+                padding-top: 20px;
+            }
+            #navegacion h2 {
+                margin-left: 20px;
+                color: #4A4545;
+                font-size: 13.5px;
+                font-weight: 100;
+            }
+            #navegacion button {
+                background: none;
+                border: none;
+                text-align: left;
+                padding: 8px 16px;
+                width: 100%;
+                font-size: 13.5px;
+                cursor: pointer;
+                border-radius: 8px;
+                height: 33px;
+                display: flex;
+                align-items: center;
+            }
+            #navegacion button p{
+                display: inline;
+                margin-left: 8px;
+            }
+            #navegacion button:hover {
+                background-color: #EAEAEA;
+            }
+            #navegacion ul {
+                list-style-type: none;
+                padding: 0;
+                padding-inline: 7px;
+                margin-top: -8px;
+                padding-block: 10px;
+            }
+            #navegacion li {
+                margin-bottom: 12px;
+            }
+            #pagina {
+                width: 84.7%;
+            }
+            #titulo {
+                border-bottom: 2px solid #D9D9D9;
+                height: 8%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-right: 50px;
+                padding-left: 20px;
+            }
+            #titulo p {
+                font-size: 18px;
+                margin-left: 10px;
+            }
+            #usuario2 {
+                display: flex;
+                align-items: center;
+            }
+            #usuario1 {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 8%;
+            }
+            #usuario1 h1, #usuario2 h1 {
+                font-size: 15px;
+                font-weight: bold;
+            }
+            #fondo-usuario {
+                margin-right: 8px;
+                border-radius: 50%;
+                background-color: #D9D9D9;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 32px;
+                width: 32px;
+            }
+            #fondo-usuario img {
+                border-radius: 100%;
+                object-fit: cover;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="menu">
+            <div id="empresa">
+                <img src="iconos/logo.png" alt="Logo AgroCaña" width="65" height="65" />
+                <div style="display: block; margin-left:-5px;">
+                    <h1>AgroCaña Lara</h1>
+                    <h2 name="titulo" style="color: #8B8383;">Cultivos de caña</h2>
+                </div>
+            </div>
+            <div id="navegacion">
+                <h2>Navegación</h2><br>
+                <ul>
+                    <li><button onclick="" style="background-color: #EAEAEA;"><img src="iconos/casa.png" width="15" height="15"/><p>Panel Principal</p></button><li>
+                    <li><button onclick=""><img src="iconos/planta-negro.png" width="15" height="15"/><p>Cultivos</p></button><li>
+                    <li><button onclick=""><img src="iconos/grafico-circular.png" width="15" height="15"/><p>Finanzas y Recursos</p></button><li>
+                    <li><button onclick=""><img src="iconos/usuarios.png" width="15" height="15"/><p>Personal y Proveedores</p></button><li>
+                    <li><button onclick=""><img src="iconos/cliente.png" width="15" height="15"/><p>Clientes y Pedidos</p></button><li>
+                    <li><button onclick=""><img src="iconos/envio.png" width="15" height="15"/><p>Envíos y Logistica</p></button><li>
+                    <li><button onclick=""><img src="iconos/archivo.png" width="15" height="15"/><p>Reportes</p></button><li>
+                </ul>
+            </div>
+            <div id="usuario1">
+                <div id="fondo-usuario">
+                    <img src="iconos/usuario.png" width="25" height="25"/>
+                </div>
+                <h1>Usuario</h1>
+            </div>
+        </div>
+        <div id="pagina">
+            <div id="titulo">
+                <div style="display: flex; align-items: center;"><img src="iconos/tabla.png" width="auto" height="36"/> <p>Panel Principal</p></div>
+                <div align="right" id="usuario2">
+                    <div id="fondo-usuario">
+                        <img src="iconos/usuario.png" width="25" height="25"/>
+                    </div>
+                    <h1>Usuario</h1>
+                </div>
+            </div>
+            <div id="frame">
+                <iframe src="principal.html" width="100%" height="91.5%"></iframe>
+            </div>
+        </div>
+    </body>
+</html>
