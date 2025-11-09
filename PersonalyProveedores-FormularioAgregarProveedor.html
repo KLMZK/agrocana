@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap" rel="stylesheet">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <link rel="stylesheet" href="estilos/formulariosedit.css">
+    </head>
+    <body>
+        <form action="proveedor.php" method="post">
+            <p></p>
+            <h1 class="inder-regular">Nuevo Proveedor</h1><br>
+            <h2 >Registra o edita un nuevo proveedor</h2><br>
+            <div align="center">
+            <label for="nombre">Nombre de la Empresa/Persona</label><br>
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre del proveedor" required><br><br>
+            <label for="insumo">Tipo de insumo que provee</label><br>
+            <input type="text" id="insumo" name="insumo" placeholder="Tipos de insumos" required><br><br>
+            <label for="telefono">Teléfono</label><br>
+            <input type="text" id="telefono" name="telefono" placeholder="000-0000" required><br><br>
+            <label for="correo">Coreo electrónico</label><br>
+            <input type="email" id="correo" name="correo" placeholder="correo@ejemplo.com" required><br><br>
+            <label for="notas">Notas</label><br>
+            <input type="text" id="notas" name="notas" placeholder="Notas Adicionales" required><br><br>
+            <input type="submit" value="Guardar Proveedor">
+            </div>   
+        </form>
+    </body>         
+</html

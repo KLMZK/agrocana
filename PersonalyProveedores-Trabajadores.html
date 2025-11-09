@@ -1,0 +1,154 @@
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="estilos/pantallasCultivos.css">
+        <style>
+            .seleccion button{
+                width: 130px;
+            }
+            .seleccion button:hover{
+                width: 130px;
+            }
+            .seleccion button.activo{
+                width: 130px;
+            }
+            .seleccion{
+                width: 270px;
+                height:3px;
+            }
+            .categoria,.valor{
+                font-family: "Inter", sans-serif;
+                font-size: 16px; 
+            }
+            .info{
+                border: 1px solid #D9D9D9;
+                background-color: transparent;
+                border-radius: 10px;
+                padding: 20px;
+                font-family: "Inter", sans-serif;
+                font-size: 16px; 
+                width: 50%;
+                height: 600px;
+            }
+            .titulo{
+                margin-top: 0px;
+                margin-bottom: 40px;
+                font-family: "Inter", sans-serif;
+                font-size: 16px; 
+            }
+            .gastos{
+                margin-bottom: 30px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Personal y Proveedores</h1>
+        <h2>Control de trabajadores y comunicación</h2>
+
+
+        <div class="seleccion" style="gap:10px;">
+            <form action="PersonalyProveedores-Trabajadores.html" style="margin-top: 17px;">
+            <button class="activo">
+                 <img src="iconos/usuario.png" alt="Icono trabajadores" width="14" height="14">  
+                Trabajadores</button>
+            </form>
+            <form action="PersonalyProveedores-Proveedores.html" style="margin-top: 17px;">
+                <button>
+                    <img src="iconos/proveedor.png" alt="Icono proveedor" width="14" height="14">  
+                    Proveedores</button>
+            </form>
+        </div>
+
+
+
+
+            <div class="contenido" style="height: 500px; gap: 5px;">
+                <div class="arriba" style="justify-content: space-between; padding-bottom: 5px; margin-bottom:0 ;">
+                <text>Registro de Trabajadores</text>
+                <div class="bot">
+                    <form action="PersonalyProveedores-FormularioAgregarTrabajadores.html">
+                    <button style=" margin-top:-10px; margin-right: -150px"><img src="iconos/anadir.png" alt="anadir"  width="14" height="14">Agregar Trabajador</button>
+                    </form>
+                </div>
+                </div>
+                <table class="tabla-trabajadores" style="margin-top: 10px;">
+                    <tr>
+                        <th style="font-size: 14px;">Nombre</th>
+                        <th style="font-size: 14px;">Tipo</th>
+                        <th style="font-size: 14px;">Rol</th>
+                        <th style="font-size: 14px;">Contacto</th>
+                        <th style="font-size: 14px;">Estado</th>
+                        <th style="font-size: 14px;">Acciones</th>
+                    </tr>
+                    <tr>
+                        <td>Nombre</td>
+                        <td>Recurrente</td>
+                        <td>Rol</td>
+                        <td><img src="iconos/telefono.png" alt="telefono"  width="14" height="14">000-0000</td>
+                        <td>Activo</td>
+                        <td class="acciones">
+                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
+                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nombre</td>
+                        <td>Temporal</td>
+                        <td>Rol</td>
+                        <td><img src="iconos/telefono.png" alt="telefono"  width="14" height="14">000-0000</td>
+                        <td>Activo</td>
+                        <td class="acciones">
+                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
+                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nombre</td>
+                        <td>Recurrente</td>
+                        <td>Rol</td>
+                        <td><img src="iconos/telefono.png" alt="telefono"  width="14" height="14">000-0000</td>
+                        <td>Activo</td>
+                        <td class="acciones">
+                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
+                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nombre</td>
+                        <td>Temporal</td>
+                        <td>Rol</td>
+                        <td><img src="iconos/telefono.png" alt="telefono"  width="14" height="14">000-0000</td>
+                        <td>No Activo</td>
+                        <td class="acciones">
+                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
+                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
+                        </td>
+                    </tr>
+                </table><br>
+                <br><div class="info">
+                    <p class="titulo">Resumen del Personal</p>
+                    <div class="gastos">
+                        <text class="categoria">Total de trabajadores</text>
+                        <text class="valor">0<br></text>
+                    </div>
+                    <div class="gastos">
+                        <text class="categoria">Recurrentes</text>
+                        <text class="valor">0<br></text>
+                    </div>
+                    <div class="gastos">
+                        <text class="categoria">Temporales</text>
+                        <text class="valor">0<br></text>
+                    </div>
+                    <div class="gastos" style="border-top: 1px solid #D9D9D9; padding-top: 20px;">
+                        <text class="categoria">Activos hoy</text>
+                        <text class="valor">0<br></text>
+                    </div>
+                </div>
+            </div>
+    </body>
+</html>
