@@ -1,0 +1,269 @@
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="estilos/pantallasCultivos.css">
+        <style>
+            .edit-icon {
+                position: absolute; 
+                top: 10px; 
+                right: 10px;
+                margin-bottom: 0;
+            }
+            .item-cliente, .item-pedido {
+                border: 1px solid #D9D9D9;
+                padding: 15px;
+                padding-right: 50px; 
+                border-radius: 10px;
+                margin-bottom: 15px;
+                font-family: "Inter", sans-serif;
+                position: relative; 
+            }
+            .cliente-nombre, .pedido-nombre {
+                font-size: 18px;
+                font-weight: 600;
+                margin: 0 0 5px 0;
+            }
+            .cliente-info, .pedido-datos {
+                font-size: 14px;
+                color: #8B8383;
+                display: flex;
+                align-items: center;
+                margin-bottom: 10px;
+            }
+            .icon-info {
+                font-size: 16px;
+                margin-right: 3px;
+            }
+            .cliente-datos {
+                display: flex;
+                justify-content: space-between;
+                font-size: 14px;
+            }
+            .total-compra {
+                font-weight: 200;
+                color: #4C4C4C; 
+            }
+            .item-pedido .pedido-producto {
+                font-size: 14px;
+                color: #4C4C4C;
+                margin: 0 0 8px 0;
+            }
+            .item-pedido .pedido-datos {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 3px;
+                margin-bottom: 0;
+            }
+            .item-pedido .pedido-total {
+                position: absolute;
+                top: 50px;
+                right: 170px;
+                font-weight: 400;
+                font-size: 16px;
+            }
+            .estado {
+                position: absolute;
+                top: 50px;
+                right: 50px;
+                padding: 3px 10px;
+                border-radius: 5px;
+                font-weight: bold;
+                font-size: 12px;
+            }
+            .entregado {
+                background-color: #e0f2e0;
+                color: #346E19; 
+            }
+            .no-entregado {
+                background-color: #fcebeb;
+                color: #d32f2f;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Gestión de Clientes</h1>
+        <h2>Seguimiento de clientes, pedidos y ventas</h2>
+        <div class="contenedor">
+            <div class="cuadros">
+                <p style="font-weight: bold;">Total Ingresos</p>
+                <text style="color:#316C1B; font-size: 25px; margin-top: 30px;">$40,000</text><br>
+                <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Mes actual</text>
+            </div>
+            <div class="cuadros">
+                <p style="font-weight: bold;">Total Gastos</p>
+                <text style="color:#C51B1B; font-size: 25px; margin-top: 30px;">$10,000</text><br>
+                <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Mes actual</text>
+            </div>
+            <div class="cuadros">
+                <p style="font-weight: bold;">Balance</p>
+                <text style="color:#316C1B; font-size: 25px; margin-top: 30px;">$40,000</text><br>
+                <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Resultado Neto</text>
+            </div>
+        </div>
+        <div style="display: flex; gap: 40px; margin-left: 20px; margin-top: 30px; width: 95%;">
+            <div style="flex: 1;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="font-family: 'Inter', sans-serif; font-size: 18px; display: flex; align-items: center; gap: 5px; font-weight: 600;"><span class="material-icons" style="font-size: 20px;"><img src="iconos/revisar.png" alt="clientes" style="width: 14px; height: 14;"></span> Lista de Clientes</h3>
+                    <button onclick="window.location.href = 'ClientesyPedidos-FormularioClientes.html'" style="background-color: #346E19; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px;"><span class="material-icons" style="font-size: 18px;"><img src="iconos/anadir.png" alt="clientes" style="width: 14px; height: 14;"></span> Agregar</button>
+                </div>
+                
+                <div class="item-cliente">
+                    <p class="cliente-nombre">Nombre</p>
+                    <div class="cliente-info">
+                        <span class="material-icons icon-info"><img src="iconos/telefono.png" alt="clientes" style="width: 14px; height: 14;"></span> 000-0000 
+                        <span class="material-icons icon-info" style="margin-left: 10px;"><img src="iconos/sobre.png" alt="clientes" style="width: 14px; height: 14;"></span> correo@ejemplo.com
+                    </div>
+                    <div class="cliente-datos">
+                        <span>Última compra: dd/mm/aaaa</span> 
+                        <span class="total-compra">Total: $10,000</span>
+                    </div>
+                    <button class="Boton-icono edit-icon">
+                        <img src="iconos/editar.png" alt="clientes" style="width: 14px; height: 14;">
+                    </button>
+                </div>
+
+                <div class="item-cliente">
+                    <p class="cliente-nombre">Nombre</p>
+                    <div class="cliente-info">
+                        <span class="material-icons icon-info"><img src="iconos/telefono.png" alt="clientes" style="width: 14px; height: 14;"></span> 000-0000 
+                        <span class="material-icons icon-info" style="margin-left: 10px;"><img src="iconos/sobre.png" alt="clientes" style="width: 14px; height: 14;"></span> correo@ejemplo.com
+                    </div>
+                    <div class="cliente-datos">
+                        <span>Última compra: dd/mm/aaaa</span> 
+                        <span class="total-compra">Total: $10,000</span>
+                    </div>
+                    <button class="Boton-icono edit-icon">
+                        <img src="iconos/editar.png" alt="clientes" style="width: 14px; height: 14;">
+                    </button>
+                </div>
+
+                <div class="item-cliente">
+                    <p class="cliente-nombre">Nombre</p>
+                    <div class="cliente-info">
+                        <span class="material-icons icon-info"><img src="iconos/telefono.png" alt="clientes" style="width: 14px; height: 14;"></span> 000-0000 
+                        <span class="material-icons icon-info" style="margin-left: 10px;"><img src="iconos/sobre.png" alt="clientes" style="width: 14px; height: 14;"></span> correo@ejemplo.com
+                    </div>
+                    <div class="cliente-datos">
+                        <span>Última compra: dd/mm/aaaa</span> 
+                        <span class="total-compra">Total: $10,000</span>
+                    </div>
+                    <button class="Boton-icono edit-icon">
+                        <img src="iconos/editar.png" alt="clientes" style="width: 14px; height: 14;">
+                    </button>
+                </div>
+            </div>
+            
+            <div style="flex: 1;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h3 style="font-family: 'Inter', sans-serif; font-size: 18px; display: flex; align-items: center; gap: 5px; font-weight: 600;"><span class="material-icons" style="font-size: 20px;"><img src="iconos/envio.png" alt="clientes" style="width: 14px; height: 14;"></span> Pedidos</h3>
+                    <button onclick="window.location.href = 'ClientesyPedidos-FormularioPedido.html'" style="background-color: #346E19; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px;"><span class="material-icons" style="font-size: 18px;"><img src="iconos/anadir.png" alt="clientes" style="width: 14px; height: 14;"></span> Nuevo Pedido</button>
+                </div>
+
+                <div class="item-pedido">
+                    <p class="pedido-nombre">Nombre</p>
+                    <p class="pedido-producto">Caña de Azúcar 00 Kilos</p>
+                    <div class="pedido-datos">
+                        <span>Pedido: dd/mm/aaaa</span> 
+                        <span>Entrega: dd/mm/aaaa</span>
+                    </div>
+                    <span class="estado entregado">Entregado</span>
+                    <span class="pedido-total">Total: $00,000</span>
+                    <button class="Boton-icono edit-icon">
+                        <img src="iconos/editar.png" alt="clientes" style="width: 14px; height: 14;">
+                    </button>
+                </div>
+
+                <div class="item-pedido">
+                    <p class="pedido-nombre">Nombre</p>
+                    <p class="pedido-producto">Caña de Azúcar 00 Kilos</p>
+                    <div class="pedido-datos">
+                        <span>Pedido: dd/mm/aaaa</span> 
+                        <span>Entrega: dd/mm/aaaa</span>
+                    </div>
+                    <span class="estado no-entregado">No entregado</span>
+                    <span class="pedido-total">Total: $00,000</span>
+                    <button class="Boton-icono edit-icon">
+                        <img src="iconos/editar.png" alt="clientes" style="width: 14px; height: 14;">
+                    </button>
+                </div>
+
+                <div class="item-pedido">
+                    <p class="pedido-nombre">Nombre</p>
+                    <p class="pedido-producto">Caña de Azúcar 00 Kilos</p>
+                    <div class="pedido-datos">
+                        <span>Pedido: dd/mm/aaaa</span> 
+                        <span>Entrega: dd/mm/aaaa</span>
+                    </div>
+                    <span class="estado entregado">Entregado</span>
+                    <span class="pedido-total">Total: $00,000</span>
+                    <button class="Boton-icono edit-icon">
+                        <img src="iconos/editar.png" alt="clientes" style="width: 14px; height: 14;">
+                    </button>
+                </div>
+            </div>
+    </div>
+
+    <div class="contenido">
+        <h3 style="font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 600; margin-left: 10px;">Historial de Ventas</h3>
+        
+        <div class="arriba" style="display: none;">
+            <text>Filtros:</text>
+            <select>
+                <option>Cliente</option>
+            </select>
+            <select>
+                <option>Producto</option>
+            </select>
+            <input type="date" value="dd/mm/aaaa">
+            <button class="filtrar">Filtrar</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Fecha Pedido</th>
+                    <th>Fecha Entrega</th>
+                    <th>Estado</th>
+                    <th>Monto</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Nombre</td>
+                    <td>Producto</td>
+                    <td>00 kg</td>
+                    <td>dd/mm/aaaa</td>
+                    <td>dd/mm/aaaa</td>
+                    <td>Entregado</td>
+                    <td>$00,000</td>
+                </tr>
+                <tr>
+                    <td>Nombre</td>
+                    <td>Producto</td>
+                    <td>00 t</td>
+                    <td>dd/mm/aaaa</td>
+                    <td>dd/mm/aaaa</td>
+                    <td>Entregado</td>
+                    <td>$00,000</td>
+                </tr>
+                <tr>
+                    <td>Nombre</td>
+                    <td>Producto</td>
+                    <td>00 kg</td>
+                    <td>dd/mm/aaaa</td>
+                    <td>dd/mm/aaaa</td>
+                    <td>Pendiente</td>
+                    <td>$00,000</td>
+                </tr>
+            </tbody>
+        </table>
+
+        </div>
+    </body>
+</html>

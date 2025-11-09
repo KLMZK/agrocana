@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap" rel="stylesheet">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <link rel="stylesheet" href="estilos/formulariosedit.css">
+    </head>
+    <body>
+        <form action="agregarcliente.php" method="post">
+            <p></p>
+            <h1 class="inder-regular">Nuevo Cliente</h1><br>
+            <h2>Registra o edita un nuevo cliente</h2>
+            <div align="center">
+
+                    <label for="nombre">Nombre/Empresa</label><br>
+                    <input type="text" id="nombre" name="nombre" placeholder="Nombre del cliente" required><br>
+                    <label for="telefono">Teléfono</label><br>
+                    <input type="text" id="telefono" name="telefono" placeholder="000-0000" required><br>
+                    <label for="corre">Correo Elctrónico</label><br>
+                    <input type="email" id="correo" name="correo" placeholder="correo@ejemplo.com" required><br>
+                    <br><input type="submit" value="Guardar Cliente">
+        </form>
+    </body>         
+</html>

@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap" rel="stylesheet">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <link rel="stylesheet" href="estilos/formulariosedit.css">
+        <style>
+            .contenedor{
+                display: flex;
+                gap: 20px;
+                width: 100%;
+            }
+            .form{
+                display: flex;
+                flex-direction: column;
+                flex: 1px;
+            }
+            .contenedor input{
+                flex: 1px;
+                display: flex;
+                flex-direction: column;
+            }
+            .form label{
+                display: block;
+                margin-bottom: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="pedido.php" method="post">
+            <p></p>
+            <h1 class="inder-regular">Nuevo Pedido</h1><br>
+            <h2 >Registra o edita un nuevo pedido</h2><br>
+            <div align="center">
+                    <label for="cliente">Cliente</label><br>
+                    <select id="cliente" name="cliente">
+                        <option value="">Selecciona un cliente</option>
+                        <option value="cliente1">Cliente 1</option>
+                        <option value="cliente2">Cliente 2</option>
+                    </select>
+                    <label for="producto">Producto</label><br>
+                    <select id="producto" name="producto">
+                        <option value="">Selecciona un producto</option>
+                        <option value="producto1">Producto 1</option>
+                        <option value="producto2">Producto 2</option>
+                    </select>
+                    <label for="cantidad">Cantidad</label><br>
+                    <input type="number" id="cantidad" name="cantidad" placeholder="0" required>
+                    <div class="contenedor">
+                        <div class="form">
+                            <label for="pedido">Fecha Pedido</label>
+                            <input type="date" id="pedido" name="pedido" required>
+                        </div>
+                        <div class="form">
+                            <label for="entrega">Fecha entrega</label>
+                            <input type="date" id="entrega" name="entrega"required>
+                        </div>
+                    </div>
+            <br><input type="submit" value="Guardar Pedido">
+            </div>   
+        </form>
+    </body>         
+</html>
