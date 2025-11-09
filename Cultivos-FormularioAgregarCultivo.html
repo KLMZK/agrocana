@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap" rel="stylesheet">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <link rel="stylesheet" href="estilos/formulariosedit.css">
+    </head>
+    <body>
+        <form action="cultivos.php" method="post">
+            <p></p>
+            <h1 class="inder-regular">Nuevo Cultivo</h1><br>
+            <h2 >Registro de nuevo cultivo</h2><br>
+            <div align="center">
+            <label for="tipo/lote">Tipo/Lote</label><br>
+            <input type="text" id="tipo/lote" name="tipo/lote" placeholder="Caña de azúcar A-1" required><br><br>
+            <label for="fecha/siembra">Fecha de siembra</label><br>
+            <input type="date" id="fecha/siembra" name="fecha/siembra" placeholder="dd/mm/aaaa" required><br><br>
+            <label for="hectareas">Héctareas</label><br>
+            <input type="float" id="hectareas" name="hectareas" placeholder="0.0" required><br><br>
+            <label for="observaciones">Observaciones</label><br>
+            <input type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales" required><br><br>
+            <input type="submit" value="Guardar Cultivo">
+            </div>   
+        </form>
+    </body>         
+</html>

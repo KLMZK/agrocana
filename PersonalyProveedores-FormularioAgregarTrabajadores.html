@@ -1,0 +1,107 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap" rel="stylesheet">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <link rel="stylesheet" href="estilos/formulariosedit.css">
+        <style>
+            .contenedor{
+                display: flex;
+                gap: 10px;
+                width: 100%;
+            }
+            .form{
+                display: flex;
+                flex-direction: column;
+                flex: 1px;
+            }
+            .contenedor input{
+                flex: 1px;
+                display: flex;
+                flex-direction: column;
+            }
+            .form label{
+                display: block;
+                margin-bottom: 5px;
+            }
+            .cont-img {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-family: Inter, sans-serif;
+                cursor: pointer;
+            }
+
+            .circulo {
+                width: 90px;
+                height: 90px;
+                background-color: #E5E5E5;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: 0.3s;
+            }
+
+            .circulo:hover {
+                background-color: #dcdcdc;
+            }
+
+            .circulo img {
+                width: 35px;
+            }
+
+            input[type="file"] {
+                display: none;
+            }
+            .subida {
+                margin-top: 8px;
+                font-size: 14px;
+                color: #333;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="trabajador.php" method="post">
+            <p></p>
+            <h1 class="inder-regular">Nuevo Trabajador</h1><br>
+            <h2 >Registro o edita un nuevo trabajador</h2><br>
+            <div align="center">
+                <label class="cont-img">
+                    <div class="circulo">
+                        <img src="iconos/imagen.png" alt="Icono subir foto">
+                    </div>
+                    <text class="subida">Subir foto</text>
+                    <input type="file" accept="imagen/*">
+                </label><br>
+                <input type="file" id="imagen" accept="imagen"required>
+                <label for="nombre">Nombre Completo</label><br>
+                <input type="text" id="nombre" name="nombre" placeholder="Nombre">
+                <label for="tipo">Tipo de Trabajador</label><br>
+                <select id="tipo" name="tipo">
+                    <option value="">Seleccionar Tipo</option>
+                    <option value="tipo1">Recurrente</option>
+                    <option value="tipo2">Temporal</option>
+                </select>
+                <label for="rol">Rol/Tarea Asignada</label><br>
+                <input type="text" id="rol" name="rol" placeholder="Rol">
+                <label for="telefono">Contacto</label><br>
+                <input type="text" id="telefono" name="telefono" placeholder="000-0000" required>
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="usuario">Usuario</label>
+                        <input type="text" id="usuario" name="usuario" placeholder="Usuario para ingresar" required>
+                    </div>
+                    <div class="form" >
+                        <label for="contraseña" >Contraseña</label>
+                        <input type="password" id="contraseña" name="contraseña" placeholder="Contraseña para ingresar" required >
+                    </div>
+            </div><br>
+            <input type="submit" value="Guardar Trabajador">
+            </div>   
+        </form>
+    </body>         
+</html>

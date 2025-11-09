@@ -1,0 +1,94 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+form{
+    padding: 20px;
+    padding-top: 10px;
+    background-color: #f9f9f9;
+    padding-inline: 35px;
+    border-radius: 13px;
+    width: 500px;
+    opacity: 0;
+    animation-name: expandir;
+    animation-duration: 1s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+    padding-bottom: 80px;
+}
+h1{
+    font-family: "Inter", sans-serif;
+    margin-top: -5px;
+    text-align: left;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+h2{
+    margin-top: -39px;
+    color: #8B8383;
+    text-align: left;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: normal;
+}
+label{
+    display: block;
+    margin-bottom: -15px;
+    margin-left: 13px;
+    text-align: justify;
+    font-weight:550;
+}
+input[type=text], input[type=date], input[type=float], select, input[type=number], input[type=password],input[type=email]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 5px 0;
+    font-size: 17px;
+    display: inline-block;
+    border: 0;
+    box-sizing: border-box;
+    border-radius: 13px;
+    background-color: #E2DFDF;
+    font-weight: 300;
+}
+input[type=submit]{
+    background-color: #395018;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 1px;
+    border: none;
+    cursor: pointer;
+    width: 90%;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight:540;
+}
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: -1;
+    animation-name: fondo;
+    animation-duration: 0.7s;
+    animation-fill-mode: forwards;
+}
+@keyframes fondo {
+    from {     background-color: rgba(0, 0, 0, 0); }
+    to {     background-color: rgba(0, 0, 0, 0.8);}
+}
+@keyframes expandir {
+    from {     opacity: 0; }
+    to {     opacity: 1; }
+    50% {     transform: scale(1.05); }
+}

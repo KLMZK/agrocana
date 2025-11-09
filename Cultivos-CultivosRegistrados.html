@@ -6,77 +6,85 @@
         <link rel="stylesheet" href="estilos/pantallasCultivos.css">
     </head>
     <body>
-        <h1>Actividades Agrícolas</h1>
-        <h2>Registro y seguimiento de las actividades</h2>
+        <h1>Cultivos</h1>
+        <h2>Registro y seguimiento de las cañas</h2>
         <div class="bot">
+            <form action="Cultivos-FormularioAgregarCultivo.html" style="margin-top: 17px;">
             <button>
                 <img src="iconos/anadir.png" alt="anadir" width="14" height="14">
-                Agregar Actividad
+                Agregar Cultivo
             </button>
+            </form>
         </div>
         <div class="seleccion">
-            <form action="Cultivos.html"style="margin-top: 17px;">
+                <button class="activo">
+                    <img src="iconos/planta-negro.png" alt="Icono Cultivos Registrados" width="14" height="14">  
+                    Cultivos Registrados</button>
+            <form action="Cultivos-ActividadesAgricolas.html" style="margin-top: 17px;">
             <button>
-                <img src="iconos/planta-negro.png" alt="Icono Cultivos Registrados" width="14" height="14">  
-                Cultivos Registrados</button>
-            </form>
-            <button class="activo">
                  <img src="iconos/calendario.png" alt="Icono Actividades Agrícolas" width="14" height="14">  
                 Actividades Agrícolas</button>
+            </form>
         </div>
         <form>
             <div class="contenido">
                 <div class="arriba">
-                <text>Seguimiento de Actividades</text>
-                <label style="margin-left: 100px;">Tipo de Actividad:</label>
-                <select id="tipo" name="tipo" style="margin-left: 5px;">
-                    <option value="">Tipo</option>
-                    <option value="Riego">Riego</option>
-                    <option value="Fertilizacion">Fertilizacion</option>
-                    <option value="Fumigación">Fumigación</option>
+                <text>Listas de Cultivos</text>
+                <select id="estado" name="estado">
+                    <option value="">Estado</option>
+                    <option value="En crecimiento">En crecimiento</option>
+                    <option value="Listo para cosecha">Listo para cosecha</option>
                 </select>
-                <label>Fecha de la Actividad:</label>
+                <label>Fecha de Siembra:</label>
+                <input type="date" id="fecha" name="fecha">
+                <label>Fecha Estimada:</label>
                 <input type="date" id="fecha" name="fecha">
                 <button class="filtrar"><img src="iconos/filtrar.png" alt="filtrar"  width="14" height="14">Filtrar</button>
                 </div>
                 <table class="tabla-cultivos">
                     <tr>
-                        <th style="font-size: 14px;">Tipo</th>
-                        <th style="font-size: 14px;">Fecha</th>
-                        <th style="font-size: 14px;">Responsable</th>
-                        <th style="font-size: 14px;">Insumos</th>
+                        <th style="font-size: 14px;">Tipo/Lote</th>
+                        <th style="font-size: 14px;">Siembra</th>
+                        <th style="font-size: 14px;">Cosecha Estimada</th>
+                        <th style="font-size: 14px;">Hectáreas</th>
                         <th style="font-size: 14px;">Estado</th>
                         <th style="font-size: 14px;">Acciones</th>
                     </tr>
                     <tr>
-                        <td><p>Riego</p>
+                        <td><p>Caña de azúcar A-1</p>
+                        <p style="color:#8B8383; font-size:14px;">Datos</p></td>
                         <td>dd/mm/aaaa</td>
-                        <td>Nombre</td>
-                        <td>Agua 20L</td>
-                        <td>Completado</td>
+                        <td>dd/mm/aaaa</td>
+                        <td>00 ha</td>
+                        <td>En crecimiento</td>
                         <td class="acciones">
+                            <button class="Boton-icono"><img src="iconos/palomita.png" alt="palomita"></button>
                             <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
                             <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
                         </td>
                     </tr>
                     <tr>
-                        <td><p>Fertilización</p>
+                        <td><p>Caña de azúcar A-1</p>
+                        <p style="color:#8B8383; font-size:14px;">Datos</p></td>
                         <td>dd/mm/aaaa</td>
-                        <td>Nombre</td>
-                        <td>NPK 10-10-10 20kg</td>
-                        <td>Pendiente</td>
+                        <td>dd/mm/aaaa</td>
+                        <td>00 ha</td>
+                        <td>En crecimiento</td>
                         <td class="acciones">
+                             <button class="Boton-icono"><img src="iconos/palomita.png" alt="palomita"></button>
                             <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
                             <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
                         </td>
                     </tr>
                     <tr>
-                        <td><p>Fumigación</p>
+                        <td><p>Caña de azúcar A-1</p>
+                        <p style="color:#8B8383; font-size:14px;">Datos</p></td>
                         <td>dd/mm/aaaa</td>
-                        <td>Nombre</td>
-                        <td>Insecticida: 20L</td>
-                        <td>Completo</td>
+                        <td>dd/mm/aaaa</td>
+                        <td>00 ha</td>
+                        <td>En crecimiento</td>
                         <td class="acciones">
+                            <button class="Boton-icono"><img src="iconos/palomita.png" alt="palomita"></button>
                             <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
                             <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
                         </td>

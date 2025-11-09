@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap" rel="stylesheet">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <link rel="stylesheet" href="estilos/formulariosedit.css">
+    </head>
+    <body>
+        <form action="agregaritem.php" method="post">
+            <p></p>
+            <h1 class="inder-regular">Agregar Ítem</h1><br>
+            <div align="center">
+
+                    <label for="nombreitem">Nombre</label><br>
+                    <select id="nombreitem" name="nombreitem">
+                        <option value="">Seleccionar el ítem a agregar</option>
+                        <option value="item1">Ítem 1</option>
+                        <option value="item2">ítem 2</option>
+                    </select>
+                    <label for="cantidad">Cantidad</label><br>
+                    <input type="number" id="cantidad" name="cantidad" placeholder="0" required><br>
+                    <br><input type="submit" value="Guardar Ítem">
+        </form>
+    </body>         
+</html>

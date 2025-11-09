@@ -1,0 +1,130 @@
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="estilos/pantallasCultivos.css">
+        <style>
+            .seleccion button{
+                width: 130px;
+            }
+            .seleccion button:hover{
+                width: 130px;
+            }
+            .seleccion button.activo{
+                width: 130px;
+            }
+            .seleccion{
+                width: 410px;
+                height:3px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1> Finanzas y Recursos</h1>
+        <h2>Control de  presupuesto, transporte e inventario</h2>
+
+        <div class="contenedor">
+            <div class="cuadros">
+                <p style="font-weight: bold;">Total Ingresos</p>
+                <text style="color:#316C1B; font-size: 25px; margin-top: 30px;">$40,000</text><br>
+                <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Mes actual</text>
+            </div>
+            <div class="cuadros">
+                <p style="font-weight: bold;">Total Gastos</p>
+                <text style="color:#C51B1B; font-size: 25px; margin-top: 30px;">$10,000</text><br>
+                <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Mes actual</text>
+            </div>
+            <div class="cuadros">
+                <p style="font-weight: bold;">Balance</p>
+                <text style="color:#316C1B; font-size: 25px; margin-top: 30px;">$40,000</text><br>
+                <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Resultado Neto</text>
+            </div>
+        </div>
+
+        <div class="seleccion" style="gap:10px;">
+            <form action="FinanzasyRecursos-Presupuesto.html" style="margin-top: 17px;">
+                <button>
+                    <img src="iconos/dolar.png" alt="Icono dolar" width="14" height="14">  
+                    Presupuesto</button>
+            </form>
+            <form action="FinanzasyRecursos-Transporte.html" style="margin-top: 17px;">
+            <button>
+                 <img src="iconos/camion.png" alt="Icono Transporte" width="14" height="14">  
+                Transporte</button>
+            </form>
+            <form action="FinanzasyRecursos-Inventario.html" style="margin-top: 17px;">
+                <button class="activo">
+                 <img src="iconos/proveedor2.png" alt="Icono inventario" width="14" height="14">  
+                Inventario</button>
+            </form>
+        </div>
+            <div class="contenido" style="height: 500px; gap: 5px;">
+                <div class="arriba" style="justify-content: space-between; padding-bottom: 5px; margin-bottom:0 ;">
+                <text>Inventario y Herramientas</text>
+                <div class="bot">
+                    <form action="FinanzasyRecursos-FormularioRegistrarItem.html">
+                        <button style=" margin-top:-10px; margin-right: 0px"><img src="iconos/anadir.png" alt="anadir"  width="14" height="14">Registrar Ítem</button>
+                    </form>
+                    <form action="FinanzasyRecursos-FormularioAgregarItem.html">
+                        <button style=" margin-top:-10px; margin-right: -140px"><img src="iconos/anadir.png" alt="anadir"  width="14" height="14">Agregar Ítem</button>
+                    </form>
+                </div>
+                </div>
+                <table class="tabla-inventario" style="margin-top: 10px;">
+                    <tr>
+                        <th style="font-size: 14px;">Nombre</th>
+                        <th style="font-size: 14px;">Categoría</th>
+                        <th style="font-size: 14px;">Cantidad</th>
+                        <th style="font-size: 14px;">Ubicación</th>
+                        <th style="font-size: 14px;">Último Mantenimiento</th>
+                        <th style="font-size: 14px;">Acciones</th>
+                    </tr>
+                    <tr>
+                        <td>*Nombre*Fertilizante</td>
+                        <td>Fertilizante</td>
+                        <td>00 Kg</td>
+                        <td>Almacén A</td>
+                        <td>Disponible</td>
+                        <td class="acciones">
+                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
+                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>*Nombre*Insecticida</td>
+                        <td>Insecticida</td>
+                        <td>00 L</td>
+                        <td>Almacén A</td>
+                        <td>Bajo</td>
+                        <td class="acciones">
+                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
+                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Machetes</td>
+                        <td>Herramienta</td>
+                        <td>00 Unidades</td>
+                        <td>Almacén A</td>
+                        <td>Disponible</td>
+                        <td class="acciones">
+                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
+                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>*Nombre*Herbicida</td>
+                        <td>Herbicida</td>
+                        <td>00 L</td>
+                        <td>Almacén A</td>
+                        <td>Bajo</td>
+                        <td class="acciones">
+                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
+                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+    </body>
+</html>

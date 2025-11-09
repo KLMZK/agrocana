@@ -1,0 +1,89 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap" rel="stylesheet">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <link rel="stylesheet" href="estilos/formulariosedit.css">
+        <style>
+            .contenedor{
+                display: flex;
+                gap: 10px;
+                width: 100%;
+            }
+            .form{
+                display: flex;
+                flex-direction: column;
+                flex: 1px;
+            }
+            .contenedor input{
+                flex: 1px;
+                display: flex;
+                flex-direction: column;
+            }
+            .form label{
+                display: block;
+                margin-bottom: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="actividadesagricolas.php" method="post">
+            <p></p>
+            <h1 class="inder-regular">Nueva Actividad</h1><br>
+            <h2 >Registro de una nueva actividad</h2><br>
+            <div align="center">
+
+            <div class="contenedor">
+                <div class="form">
+                    <label for="actividad">Tipo de Actividad</label>
+                    <select id="actividad" name="actividad">
+                        <option value="">Seleccionar Actividad</option>
+                        <option value="act1">Actividad 1</option>
+                        <option value="act2">Actividad 2</option>
+                    </select>
+                </div>
+                <div class="form">
+                    <label for="fecha/actividad">Fecha de realización</label>
+                    <input type="date" id="fecha/actividad" name="fecha/actividad" placeholder="dd/mm/aaaa" required>
+                </div>
+            </div>
+            <label for="responsable">Responsable</label><br>
+                   <select id="responsable" name="responsable">
+                        <option value="">Seleccionar Trabajador</option>
+                        <option value="act1">Trabajador 1</option>
+                        <option value="act2">Trabajador 2</option>
+                    </select>
+            <div class="contenedor">
+                <div class="form">
+                    <label for="insumos">Insumos utilizados</label>
+                    <select id="insumos" name="insumos">
+                        <option value="">Seleccionar Insumo</option>
+                        <option value="act1">Insumo 1</option>
+                        <option value="act2">Insumo 2</option>
+                    </select>
+                </div>
+                <div class="form">
+                    <label for="cantidad/insumo">Cantidad del Insumo utilizado</label>
+                    <input type="number" id="cantidad/insumo" name="cantidad/insumo" placeholder="0" required>
+                </div>
+            </div>
+             <div class="contenedor">
+                <div class="form">
+                    <label for="costo">Costo de la Actividad</label>
+                    <input type="float" id="costo" name="costo" placeholder="0.0" required>
+                </div>
+                <div class="form" >
+                    <label for="lote/cultivo" >Lote del cultivo</label>
+                    <input type="text" id="lote/cultivo" name="lote/cultivo" placeholder="Caña de azúcar A-1" required >
+                </div>
+            </div><br>
+            <label for="observaciones" style="margin-top: -25px";>Observaciones</label><br>
+            <input type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales" required><br><br>
+            <input type="submit" value="Guardar Actividad">
+            </div>   
+        </form>
+    </body>         
+</html>

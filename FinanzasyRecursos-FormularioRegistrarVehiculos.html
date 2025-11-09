@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap" rel="stylesheet">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <link rel="stylesheet" href="estilos/formulariosedit.css">
+        <style>
+            .contenedor{
+                display: flex;
+                gap: 20px;
+                width: 100%;
+            }
+            .form{
+                display: flex;
+                flex-direction: column;
+                flex: 1px;
+            }
+            .contenedor input{
+                flex: 1px;
+                display: flex;
+                flex-direction: column;
+            }
+            .form label{
+                display: block;
+                margin-bottom: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="vehiculos.php" method="post">
+            <p></p>
+            <h1 class="inder-regular">Nueva Vehículo</h1><br>
+            <h2 >Registra o edita un vehículo</h2><br>
+            <div align="center">
+
+            <div class="contenedor">
+                <div class="form">
+                    <label for="vehiculo">Tipo de Vehículo</label>
+                    <select id="vehiculo" name="vehiculo">
+                        <option value="">Seleccionar el tipo</option>
+                        <option value="vehiculo1">Vehículo 1</option>
+                        <option value="vehiculo2">Vehículo 2</option>
+                    </select>
+                </div>
+                <div class="form">
+                    <label for="marca">Marca del Vehículo</label>
+                    <select id="marca" name="marca">
+                        <option value="">Selecciona una marca</option>
+                        <option value="marca1">Marca 1</option>
+                        <option value="marca2">Marca 2</option>
+                    </select>
+                </div>
+            </div>
+            <label for="placa">Placa/ID</label><br>
+            <input type="text" id="placa" name="placa" placeholder="Placas" required>
+            <div class="contenedor">
+                <div class="form">
+                    <label for="fechaMan">Fecha del Mantenimiento</label>
+                    <input type="date" id="fechaMan" name="fechaMan" required>
+                </div>
+                <div class="form">
+                    <label for="costo">Costo</label>
+                    <input type="float" id="costo" name="costo" placeholder="0.0" required>
+                </div>
+            </div><br>
+            <label for="observaciones" style="margin-top: -20px";>Observaciones</label><br>
+            <input type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales" required><br><br>
+            <input type="submit" value="Guardar Vehículo">
+            </div>   
+        </form>
+    </body>         
+</html>
