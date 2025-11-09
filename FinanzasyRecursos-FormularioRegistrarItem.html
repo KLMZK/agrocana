@@ -1,0 +1,113 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap" rel="stylesheet">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <link rel="stylesheet" href="estilos/formulariosedit.css">
+        <style>
+            .contenedor{
+                display: flex;
+                gap: 20px;
+                width: 100%;
+            }
+            .form{
+                display: flex;
+                flex-direction: column;
+                flex: 1px;
+            }
+            .contenedor input{
+                flex: 1px;
+                display: flex;
+                flex-direction: column;
+            }
+            .form label{
+                display: block;
+                margin-bottom: 10px;
+            }
+            .Boton-icono {
+                justify-content: center;
+                align-items: center;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                border: none;
+                background-color: transparent;
+                padding: 4px 6px 6px 6px;
+                cursor: pointer;
+                border-radius: 6px;
+            }
+            .Boton-icono img{
+                width: 20px;
+                height: 20px;
+            }
+            .boton {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                width: 100%;
+            }
+            .boton input{
+                flex-grow: 1;
+                margin-right: 0px;
+            }
+            .Boton-icono:hover {
+                background-color: #E6E6E6;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="registraritem.php" method="post">
+            <p></p>
+            <h1 class="inder-regular">Nueva Ítem</h1><br>
+            <h2 >Registra o edita un ítem</h2><br>
+            <div align="center">
+                <label for="nomitem">Nombre</label><br>
+                <input type="text" id="nomitem" name="nomitem" placeholder="Nombre del Insumo/Herramienta..." required>
+                <label for="categoria">Categoría</label><br>
+                <select id="categoria" name="categoria">
+                    <option value="">Seleccionar Categoría</option>
+                    <option value="categoria1">Categoría 1</option>
+                    <option value="categoria2">Categoría 2</option>
+                </select>
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="cantidad">Cantidad</label>
+                        <input type="number" id="cantidad" name="cantidad" placeholder="0" required>
+                    </div>
+                    <div class="form">
+                        <label for="unidad">Unidad</label>
+                        <select id="unidad" name="unidad">
+                            <option value="">Unidad</option>
+                            <option value="unidad1">L</option>
+                            <option value="unidad2">Kg</option>
+                            <option value="unidad3">unidades</option>
+                        </select>
+                    </div>
+                    <div class="form">
+                        <label for="costo">Costo Unitario</label>
+                        <input type="float" id="costo" name="costo" placeholder="$$$" required>
+                    </div>
+                </div>
+                <label for="proveedor">Proveedor</label><br>
+                <input type="text" id="proveedor" name="proveedor" placeholder="Nombre del proveedor o empresa" required>
+                <label for="ubicacion">Ubicación</label><br>
+                <div class="boton">
+                    <input type="text" id="ubicacion" name="ubicacion" placeholder="Almacén, bodega..." required>
+                    <form action="FinanzasyRecursos-FormularioNuevaUbicacion.html">
+                        <button class="Boton-icono"><img src="iconos/agregar.png" alt="agregar"></button>
+                    </form>
+                </div>
+                <label for="estado">Estado</label><br>
+                <select id="estado" name="estado">
+                    <option value="">Estado</option>
+                    <option value="estado1">Disponible</option>
+                    <option value="estado2">Bajo</option>
+                </select><br>
+                <br><input type="submit" value="Guardar Ítem">
+            </div>   
+        </form>
+    </body>         
+</html>

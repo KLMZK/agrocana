@@ -1,0 +1,169 @@
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="estilos/pantallasCultivos.css">
+        <style>
+            .seleccion button{
+                width: 130px;
+            }
+            .seleccion button:hover{
+                width: 130px;
+            }
+            .seleccion button.activo{
+                width: 130px;
+            }
+            .seleccion{
+                width: 410px;
+                height:3px;
+            }
+            .categoria,.valor{
+                font-family: "Inter", sans-serif;
+                font-size: 16px; 
+            }
+            .info{
+                border: 1px solid #D9D9D9;
+                background-color: transparent;
+                border-radius: 10px;
+                padding: 20px;
+                font-family: "Inter", sans-serif;
+                font-size: 16px; 
+                width: 50%;
+                height: 600px;
+            }
+            .titulo{
+                margin-top: 0px;
+                margin-bottom: 40px;
+                font-family: "Inter", sans-serif;
+                font-size: 16px; 
+            }
+            .gastos{
+                margin-bottom: 30px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .dato{
+                align-items: left;
+                flex-direction: column;
+                margin-top: 19px;
+                font-family: "Inter", sans-serif;
+                font-size: 14px;
+                color:#8B8383;
+            }
+            .detalle{
+                display: flex;
+                flex-direction: column;
+                margin-right: 15px;
+                flex-grow: 1px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1> Finanzas y Recursos</h1>
+        <h2>Control de  presupuesto, transporte e inventario</h2>
+
+        <div class="contenedor">
+            <div class="cuadros">
+                <p style="font-weight: bold;">Total Ingresos</p>
+                <text style="color:#316C1B; font-size: 25px; margin-top: 30px;">$40,000</text><br>
+                <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Mes actual</text>
+            </div>
+            <div class="cuadros">
+                <p style="font-weight: bold;">Total Gastos</p>
+                <text style="color:#C51B1B; font-size: 25px; margin-top: 30px;">$10,000</text><br>
+                <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Mes actual</text>
+            </div>
+            <div class="cuadros">
+                <p style="font-weight: bold;">Balance</p>
+                <text style="color:#316C1B; font-size: 25px; margin-top: 30px;">$40,000</text><br>
+                <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Resultado Neto</text>
+            </div>
+        </div>
+
+        <div class="seleccion" style="gap:10px;">
+                <button class="activo">
+                    <img src="iconos/dolar.png" alt="Icono dolar" width="14" height="14">  
+                    Presupuesto</button>
+            <form action="FinanzasyRecursos-Transporte.html" style="margin-top: 17px;">
+            <button>
+                 <img src="iconos/camion.png" alt="Icono Transporte" width="14" height="14">  
+                Transporte</button>
+            </form>
+            <form action="FinanzasyRecursos-Inventario.html" style="margin-top: 17px;">
+                <button>
+                 <img src="iconos/proveedor2.png" alt="Icono inventario" width="14" height="14">  
+                Inventario</button>
+            </form>
+        </div>
+        <form>
+            <div class="contenedor" style="gap: 20px;">
+                <div class="info">
+                    <p class="titulo">Gastos por Categoría</p>
+                <div class="gastos">
+                    <text class="categoria">Insumos</text>
+                    <text class="valor">$00,000<br></text>
+                </div>
+                <div class="gastos">
+                    <text class="categoria">Mano de Obra</text>
+                    <text class="valor">$00,000<br></text>
+                </div>
+                <div class="gastos">
+                    <text class="categoria">Transporte</text>
+                    <text class="valor">$00,000<br></text>
+                </div>
+                <div class="gastos">
+                    <text class="categoria">Herramientas</text>
+                    <text class="valor">$00,000<br></text>
+                </div>
+                </div>
+                <div class="info">
+                    <p class="titulo">Registros por movimiento</p>
+                    <div class="gastos" style="border-bottom: 1px solid #D9D9D9;">
+                        <div class="detalle">
+                            <text class="categoria">Fertilizantes NPK</text>
+                            <p class="dato">Insumos - dd/mm/aaaa</p>
+                        </div>
+                        <text class="valor" style="color:#C51B1B;">$00,000<br></text>
+                    </div>
+                    <div class="gastos" style="border-bottom: 1px solid #D9D9D9;">
+                        <div class="detalle">
+                            <text class="categoria">Pago Trabajadores</text>
+                            <p class="dato">Mano de Obra - dd/mm/aaaa</p>
+                        </div>
+                        <text class="valor" style="color:#C51B1B;">$00,000<br></text>
+                    </div>
+                    <div class="gastos" style="border-bottom: 1px solid #D9D9D9;">
+                        <div class="detalle">
+                            <text class="categoria">Combustible</text>
+                            <p class="dato">Transporte - dd/mm/aaaa</p>
+                        </div>
+                        <text class="valor" style="color:#C51B1B;">$00,000<br></text>
+                    </div>
+                    <div class="gastos" style="border-bottom: 1px solid #D9D9D9;">
+                        <div class="detalle">
+                            <text class="categoria">Venta de cosecha</text>
+                            <p class="dato">Venta - dd/mm/aaaa</p>
+                        </div>
+                        <text class="valor" style="color:#346E19;">$00,000<br></text>
+                    </div>
+                    <div class="gastos" style="border-bottom: 1px solid #D9D9D9;">
+                        <div class="detalle">
+                            <text class="categoria">Reparación</text>
+                            <p class="dato">Herramientas - dd/mm/aaaa</p>
+                        </div>
+                        <text class="valor" style="color:#C51B1B;">$00,000<br></text>
+                    </div>
+                    <div class="gastos" style="border-bottom: 1px solid #D9D9D9;">
+                        <div class="detalle">
+                            <text class="categoria">Venta</text>
+                            <p class="dato">Venta - dd/mm/aaaa</p>
+                        </div>
+                        <text class="valor" style="color:#346E19;">$00,000<br></text>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </body>
+</html>
