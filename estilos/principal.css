@@ -1,0 +1,177 @@
+body {
+    margin: 0;
+    padding: 20px;
+    padding-top: 25px;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    overflow: hidden;
+}
+.titulo {
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+.nivel1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 36%;
+    margin-bottom: 5px;
+}
+.nivel2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 25%;
+    margin-bottom: 12px;
+}
+h1 {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+h2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 5px;
+    color: #8B8383;
+}
+.contenido {
+    padding: 20px;
+    padding-top: 10px;
+    background-color: #FFFFFF;
+}
+
+h3 {
+    font-size: 16px;
+    font-weight: normal;
+}
+.cultivos {
+    padding: 15px;
+    padding-top: 10px;
+    padding-left: 20px;
+    display: block;
+    border: 2px solid #D9D9D9;
+    border-radius: 4px;
+    height: 80%;
+    width: 28%;
+    border-radius: 10px;
+}
+.subtitulo {
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.numero {
+    font-size: 30px;
+    font-weight: normal;
+    margin: 0;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.des {
+    font-size: 14px;
+    color: black;
+    margin: 0;
+}
+.des2 {
+    font-size: 14px;
+    color: #8B8383;
+    margin: 0;
+}
+.cosecha {
+    padding: 15px;
+    padding-top: 10px;
+    display: block;
+    border: 2px solid #D9D9D9;
+    border-radius: 4px;
+    height: 80%;
+    width: 28%;
+    border-radius: 10px;
+}
+.finanzas {
+    padding: 15px;
+    padding-top: 10px;
+    display: block;
+    border: 2px solid #D9D9D9;
+    border-radius: 4px;
+    height: 80%;
+    width: 28%;
+    border-radius: 10px;
+}
+.riego {
+    padding: 15px;
+    padding-top: 10px;
+    display: block;
+    border: 2px solid #D9D9D9;
+    border-radius: 4px;
+    height: 80%;
+    width: 45%;
+    border-radius: 10px;
+}
+.actividades {
+    padding: 15px;
+    padding-top: 10px;
+    display: block;
+    border: 2px solid #D9D9D9;
+    border-radius: 4px;
+    height: 80%;
+    width: 45%;
+    border-radius: 10px;
+}
+.envios {
+    padding: 15px;
+    padding-top: 5px;
+    display: block;
+    border: 2px solid #D9D9D9;
+    border-radius: 4px;
+    height: 22%;
+    width: 97%;
+    border-radius: 10px;
+}
+.detalles{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.estado{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
+    background-color: #D9D9D9;
+    border: 2px solid #D9D9D9;
+    border-radius: 10px;
+    width: 120px;
+    padding-block: 2px;
+}
+.actividad {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #D9D9D9;
+}
+.envio {
+    display: block;
+    border: 2px solid #D9D9D9;
+    border-radius: 10px;
+    padding: 10px;
+    padding-left: 15px  ;
+    padding-top: 3px;
+    height: 60%;
+    width: 25%;
+}
+#cliente {
+    font-weight: bold;
+    color: #8B8383;
+    font-size: 14px;
+}
+#envio-fecha {
+    font-weight: bold;
+    color: black;
+    font-size: 18px;
+}
