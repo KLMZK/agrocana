@@ -5,31 +5,31 @@ function principal() {
     document.getElementById("nombre").innerText = "Panel Principal";
 }
 function cultivos() {
-    document.querySelector("iframe").src = "Cultivos.html";
+    document.querySelector("iframe").src = "Cultivos-CultivosRegistrados.html";
     quitarColores();
     document.getElementById("cultivos").style.backgroundColor = "#EAEAEA";
     document.getElementById("nombre").innerText = "Cultivos";
 }
 function finanzas() {
-    document.querySelector("iframe").src = "Finanzas.html";
+    document.querySelector("iframe").src = "FinanzasyRecursos-Presupuesto.html";
     quitarColores();
     document.getElementById("finanzas").style.backgroundColor = "#EAEAEA";
     document.getElementById("nombre").innerText = "Finanzas y Recursos";
 }
 function personal() {
-    document.querySelector("iframe").src = "Personal.html";
+    document.querySelector("iframe").src = "PersonalyProveedores-Trabajadores.html";
     quitarColores();
     document.getElementById("personal").style.backgroundColor = "#EAEAEA";
     document.getElementById("nombre").innerText = "Personal y Proveedores";
 }
 function clientes() {
-    document.querySelector("iframe").src = "Clientes.html";
+    document.querySelector("iframe").src = "ClientesyPedidos-GestionClientes.html";
     quitarColores();
     document.getElementById("clientes").style.backgroundColor = "#EAEAEA";
     document.getElementById("nombre").innerText = "Clientes y Pedidos";
 }
 function envios() {
-    document.querySelector("iframe").src = "Envios.html";
+    document.querySelector("iframe").src = "EnviosyLogistica.html";
     quitarColores();
     document.getElementById("envios").style.backgroundColor = "#EAEAEA";
     document.getElementById("nombre").innerText = "Envíos y Logistica";
