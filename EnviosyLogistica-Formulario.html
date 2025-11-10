@@ -1,0 +1,89 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap" rel="stylesheet">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <link rel="stylesheet" href="estilos/formulariosedit.css">
+        <style>
+            label {
+                margin-top: 15px;
+                font-weight: bold;
+            }
+            input[type=submit] {
+                margin-top: 20px;
+            }
+            body {
+                margin-top: 30px;
+            }
+            .centrado {
+                display: flex;
+                justify-content: space-between;
+            }
+            .centrado div {
+                width: 48%;
+            }
+            form {
+                width: 40%;
+                padding-top: 30px;
+            }
+            h1 {
+                margin-left: 0px;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="Envios.php" method="post">
+            <h1>Programar Nuevo Envío</h1><br>
+            <h2 style="color: #8B8383;">Programa la entrega</h2>
+            <div class="centrado">
+                <div>
+                    <label for="pedido">Pedido</label><br>
+                    <select id="pedido" required>
+                        <option disabled selected >Selecciona Pedido</option>
+                        <option value="1">Seleccionar pedido</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="vehiculo">Vehículo</label><br>
+                    <select id="vehiculo" required>
+                        <option disabled selected>Selecciona Vehículo</option>
+                        <option value="1">Vehículo 1</option>
+                    </select>
+                </div>
+            </div>
+            <label for="conductor">Conductor</label><br>
+            <select id="conductor" required>
+                <option disabled selected>Selecciona Conductor</option>
+                <option id="1">Conductor 1</option>
+            </select><br>
+            <div class="centrado">
+                <div>
+                    <label for="origen">Origen</label><br>
+                    <input type="text" value="AgroCaña Lara" id="origen" required/>
+                </div>
+                <div>
+                    <label for="destino">Destino</label><br>
+                    <input type="text" placeholder="Direccion de entrega" id="destino" required/>
+                </div>
+            </div>
+            <div class="centrado">
+                <div>
+                    <label for="salida">Fecha y Hora de salida</label><br>
+                    <input type="datetime" placeholder="dd/mm/aaaa hh:mm" id="salida" required/>
+                </div>
+                <div>
+                    <label for="llegada">Fecha y Hora estimada de llegada</label><br>
+                    <input type="datetime" placeholder="dd/mm/aaaa hh:mm" id="llegada" required/>
+                </div>
+            </div>
+            <label for="observaciones">Observaciones</label><br>
+            <textarea id="observaciones" placeholder="Notas del Envío" style="size: 100px;" required></textarea><br>
+            <div align="center">
+                <input type="submit" value="Guardar Envío" />
+            </div>
+        </form>
+    </body>
+</html>

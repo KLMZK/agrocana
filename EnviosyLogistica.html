@@ -1,0 +1,255 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <style>
+            body {
+                margin: 0;
+                padding: 20px;
+                padding-top: 25px;
+                font-family: "Inter", sans-serif;
+                font-optical-sizing: auto;
+                font-style: normal;
+            }
+            .titulo {
+                margin-left: 20px;
+                margin-bottom: 5px;
+            }
+            .envios {
+                border: 2px solid #D9D9D9;
+                border-radius: 10px;
+                padding: 20px 30px;
+                margin-top: 20px;
+            }
+            .envio {
+                border: 2px solid #D9D9D9;
+                border-radius: 10px;
+                padding: 15px 30px;
+                margin-top: 10px;    
+            }
+            .nivel {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                height: 13%;
+                margin-bottom: 5px;
+            }
+            .sublevel {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .imagen {
+                width: 40px;
+                height: 40px;
+                margin-right: 10px;
+            }
+            h1 {
+                font-size: 30px;
+                font-weight: bold;
+                margin-bottom: 0px;
+            }
+            h2 {
+                font-size: 18px;
+                font-weight: 500;
+                margin-top: 5px;
+                color: #8B8383;
+            }
+            h3 {
+                font-size: 20px;
+                font-weight: 600;
+                margin-bottom: 10px;
+            }
+            .contenido {
+                padding: 20px;
+                padding-top: 10px;
+                background-color: #FFFFFF;
+            }
+            button {
+                background-color: #346E19;
+                color: #FFFFFF;
+                border-radius: 10px;
+                border: 0px;
+                font-size: 16px;
+                padding: 10px 40px;
+            }
+            .centrado {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            select {
+                background-color: #EBEAEA;
+                border: 0px;
+                border-radius: 10px;
+                color: #4C4C4C;
+                padding: 10px 15px;
+            }
+            .text1 {
+                margin-block: 0px;
+                color: #000;
+                font-size: 18px;
+                font-weight: 500;
+            }
+            .text2 {
+                margin-block: 0px;
+                color: #8B8383;
+                font-size: 18px;
+                font-weight: 500px;
+            }
+            .text3 {
+                font-size: 17px;
+                font-weight: 500;
+                margin-right: 20px;
+                margin-bottom: 3px;
+            }
+            .seleccion {
+                background-color: #524A4A;
+                border-radius: 20px;
+                padding: 0px 25px;
+                height: 30px;
+                color: #FFFFFF;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .informacion {
+                border: 2px solid #D9D9D9;
+                border-radius: 10px;
+                padding: 20px 30px;
+                margin-bottom: 20px;  
+                width: 26%;
+                height: 150px;
+            }
+            .numero {
+                font-size: 30px;
+                font-weight: normal;
+                margin: 0;
+                margin-top: 50px;
+                margin-bottom: 10px;
+            }
+            table {
+                margin-top: 10px;
+                width: 100%;
+            }
+            tr {
+                height: 30px;
+            }
+            .edicion {
+                width: 25;
+                height: 25;
+                cursor: pointer;
+                margin: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="titulo">
+            <h1>Envíos y Logística</h1>
+            <h2>Control de entrega, asignación de vehículos y seguimiento de rutas</h2>
+        </div>
+        <div class="contenido">
+            <div class="centrado">
+                <div class="informacion">
+                    <p class="text1">Programados</p>
+                    <p class="numero">0</p>
+                    <p class="text2">Pendientes por salir</p>
+                </div>
+                <div class="informacion">
+                    <p class="text1">En Tránsito</p>
+                    <p class="numero">0</p>
+                    <p class="text2">En camino</p>
+                </div>
+                <div class="informacion">
+                    <p class="text1">Entregados</p>
+                    <p class="numero">0</p>
+                    <p class="text2">Completados</p>
+                </div>                    
+            </div>
+            <div align="right" style="margin-right: 10px;">
+                <a href="EnviosyLogistica-Formulario.html">
+                    <button>+ Programar Envío</button>
+                </a>
+            </div>
+            <div class="envios">
+                <div class="centrado">
+                    <h3>Envíos y Entregas</h3>
+                    <select id="filtro">
+                        <option value="todos">Todos los estados</option>
+                        <option value="Estado 1">Estado 1</option>
+                    </select>
+                </div>
+                <div class="envio">
+                    <div class="centrado">
+                        <div style="display: flex; align-items: center;">
+                            <p class="text3">Envio #1 </p>
+                            <div class="seleccion">
+                                En tránsito
+                            </div>
+                        </div>
+                        <div>
+                            <img src="iconos/editar.png" alt="icono editar" class="edicion" onclick="editar()"/>
+                            <img src="iconos/eliminar.png" alt="icono eliminar" class="edicion" onclick="eliminar()"/>
+                        </div>
+                    </div>
+                    <p class="text2">Cliente: Nombre del Cliente</p>
+                    <div style="border-bottom: 2px solid #D9D9D9;">
+                        <div class="nivel">
+                            <div class="sublevel">
+                                <img src="iconos/caja.png" alt="icono caja" class="imagen" />
+                                <div class="descripcion">
+                                    <p class="text1" id="objeto">Objeto de entrega</p>
+                                    <p class="text2" id="objeto-cantidad">Cantidad</p>
+                                </div>
+                            </div>
+                            <div class="sublevel">
+                                <img src="iconos/marcador.png" alt="icono marcador" class="imagen" />
+                                <div class="descripcion">
+                                    <p class="text2" id="objeto">Origen</p>
+                                    <p class="text1" id="objeto-cantidad">Dirección</p>
+                                </div>
+                            </div>
+                            <div class="sublevel">
+                                <button style="opacity: 0;">Marcar Completado</button>
+                            </div>
+                        </div>
+                        <div class="nivel">
+                            <div class="sublevel">
+                                <img src="iconos/camion.png" alt="icono camion" class="imagen" />
+                                <div class="descripcion">
+                                    <p class="text1" id="objeto">Vehículo en uso</p>
+                                    <p class="text2" id="objeto-cantidad">Conductor: Nombre</p>
+                                </div>
+                            </div>
+                            <div class="sublevel">
+                                <img src="iconos/avion.png" alt="icono avion" class="imagen" />
+                                <div class="descripcion">
+                                    <p class="text2" id="objeto">Destino</p>
+                                    <p class="text1" id="objeto-cantidad">Dirección</p>
+                                </div>
+                            </div>
+                            <div class="sublevel">
+                                <button onclick="EnvioCompletado()" id="completado">Marcar Completado</button>
+                            </div>
+                        </div>
+                    </div>
+                    <table>
+                        <tr>
+                            <td><p class="text2">Salida</p></td>
+                            <td><p class="text2">Llega Estimada</p></td>
+                            <td><p class="text2">Distancia</p></td>
+                            <td><p class="text2">Observaciones</p></td>
+                        </tr>
+                        <tr>
+                            <td><p class="text1" id="salida">01/01/2024 10:00 AM</p></td>
+                            <td><p class="text1" id="llegada">01/01/2024 02:00 PM</p></td>
+                            <td><p class="text1" id="distancia">200 km</p></td>
+                            <td><p class="text1" id="Observaciones">Ninguna</p></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
