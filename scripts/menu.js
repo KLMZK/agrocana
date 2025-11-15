@@ -46,3 +46,14 @@ function quitarColores() {
         b.style.backgroundColor = '';
     });
 }
+function usuario() {
+    var datos = window.usuariodata;
+    document.querySelectorAll('#user').forEach(p => {
+        p.textContent = datos[4];
+    })
+    document.querySelectorAll('#perfil').forEach(p => {
+        p.src = "perfil/" + datos[0] + datos[1] + datos[2] + ".jpg";
+        p.style.width = "32px";
+        p.style.height = "32px";
+    })
+}

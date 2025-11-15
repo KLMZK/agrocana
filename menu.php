@@ -7,7 +7,7 @@
         <link rel="stylesheet" type="text/css" href="estilos/menu.css"/>
         <script type="text/javascript" src="scripts/menu.js"></script>
     </head>
-    <body>
+    <body onload="usuario()">
         <div class="menu">
             <div class="empresa">
                 <img src="iconos/logo.png" alt="Logo AgroCaña" width="65" height="65" />
@@ -30,9 +30,9 @@
             </div>
             <div class="usuario">
                 <div class="fondo-usuario">
-                    <img src="iconos/usuario.png" width="25" height="25"/>
+                    <img src="iconos/usuario.png" width="25" height="25" id="perfil"/>
                 </div>
-                <h1>Usuario</h1>
+                <p id="user">Usuario</p>
             </div>
         </div>
         <div class="pagina">
@@ -40,9 +40,9 @@
                 <div><img src="iconos/tabla.png" width="auto" height="36"/> <p id="nombre">Panel Principal</p></div>
                 <div>
                     <div class="fondo-usuario">
-                        <img src="iconos/usuario.png" width="25" height="25"/>
+                        <img src="iconos/usuario.png" width="25" height="25" id="perfil"/>
                     </div>
-                    <h1 class="usuario2">Usuario</h1>
+                    <p class="usuario" id="user">Usuario</p>
                 </div>
             </div>
             <div id="frame">
@@ -50,4 +50,23 @@
             </div>
         </div>
     </body>
+    <?php 
+    session_start();
+
+    if ($_SESSION['id'] == null){
+        header("location: index.html");
+    } else {
+        
+        include "conexion/conexion.php";
+
+        $id = $_SESSION['id'];
+
+        $sql = "SELECT `NOMBRE`, `APELLIDO_P`, `APELLIDO_M`, `TIPO`, `USER` FROM usuarios WHERE cve_usuario = '".$id."'";
+        $resultado = mysqli_query($conexion, $sql);
+        $usuario = mysqli_fetch_array($resultado);
+        echo '<script>
+        window.usuariodata = ' . json_encode($usuario) .';
+        </script>';
+    }
+    ?>
 </html>
