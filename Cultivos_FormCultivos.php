@@ -5,6 +5,7 @@ if(isset($_POST['lote'])){
 
     $lote= $_POST ['lote'];
     $fsiembra= $_POST ['fsiembra'];
+    $fcosecha = date("Y-m-d", strtotime($fsiembra . " +15 months"));
     $hectareas= $_POST ['hectareas'];
     $observaciones= $_POST ['observaciones'];
 
@@ -13,7 +14,7 @@ if(isset($_POST['lote'])){
     $ejecutarInsertar=mysqli_query ($conexion, $insertarDatos);
 
     $idterreno = mysqli_insert_id($conexion);
-    $insertCultivos = "INSERT INTO cultivos VALUES ('','$idActividad','$fsiembra','','En crecimiento','$observaciones')";
+    $insertCultivos = "INSERT INTO cultivos VALUES ('','$idterreno','$fsiembra','$fcosecha','En crecimiento','$observaciones')";
 
     mysqli_query($conexion, $insertCultivos);
     
