@@ -65,7 +65,7 @@
         </style>
     </head>
     <body>
-        <form action="trabajador.php" method="post">
+        <form action="PersonalyProveedores_FormAgregarTrabajador.php" method="post">
             <p></p>
             <h1 class="inder-regular">Nuevo Trabajador</h1><br>
             <h2 >Registro o edita un nuevo trabajador</h2><br>
@@ -75,11 +75,23 @@
                         <img src="iconos/imagen.png" alt="Icono subir foto">
                     </div>
                     <text class="subida">Subir foto</text>
-                    <input type="file" accept="imagen/*">
+                    <input type="file" accept="imagen/*"><br>
                 </label><br>
                 <input type="file" id="imagen" accept="imagen"required>
-                <label for="nombre">Nombre Completo</label><br>
-                <input type="text" id="nombre" name="nombre" placeholder="Nombre">
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Nombre">
+                    </div>
+                    <div class="form">
+                        <label for="apellidop">Apellido Paterno</label>
+                        <input type="text" id="apellidop" name="apellidop" placeholder="Ap.Paterno">
+                    </div>
+                    <div class="form">
+                        <label for="apellidom">Apellido Materno</label>
+                        <input type="text" id="apellidom" name="apellidom" placeholder="Ap.Materno">
+                    </div>
+                </div>
                 <label for="tipo">Tipo de Trabajador</label><br>
                 <select id="tipo" name="tipo">
                     <option value="">Seleccionar Tipo</option>

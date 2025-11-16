@@ -9,16 +9,23 @@
         <link rel="stylesheet" href="estilos/formulariosedit.css">
     </head>
     <body>
-        <form action="ubicacion.php" method="post">
+        <form action="FinanzasyRecursos_FormUbicacion.php" method="post">
             <p></p>
             <h1 class="inder-regular">Agregar Nueva Ubicación</h1><br>
              <h2 >Registra nueva ubicación</h2><br>
             <div align="center">
 
-                    <label for="nomubi">Nombre de la nueva ubicación</label><br>
-                    <input type="text" id="nomubi" name="nomubi" placeholder="Nombre de la nueva ubicación" required>
+                    <label for="NomUbi">Nombre de la nueva ubicación</label><br>
+                    <input type="text" id="NomUbi" name="NomUbi" placeholder="Nombre de la nueva ubicación" required>
                     <label for="direccion">Dirección</label><br>
                     <input type="text" id="direccion" name="direccion" placeholder="Dirección" required><br>
+                    <label for="Colonia">Colonia</label><br>
+                    <select id="colonia" name="Colonia">
+                        <option value="">Colonias</option>
+                        <option value="1">Colonia1</option>
+                        <option value="2">Colonia2</option>
+                        <option value="3">Colonia3</option>
+                    </select>
                     <br><input type="submit" value="Guardar Ubicación">
         </form>
     </body>         

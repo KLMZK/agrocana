@@ -59,13 +59,13 @@
         </style>
     </head>
     <body>
-        <form action="registraritem.php" method="post">
+        <form action="FinanzasyRecursos_FormNuevoItem.php" method="post">
             <p></p>
-            <h1 class="inder-regular">Nueva Ítem</h1><br>
+            <h1 class="inder-regular">Nuevo Ítem</h1><br>
             <h2 >Registra o edita un ítem</h2><br>
             <div align="center">
-                <label for="nomitem">Nombre</label><br>
-                <input type="text" id="nomitem" name="nomitem" placeholder="Nombre del Insumo/Herramienta..." required>
+                <label for="Nomitem">Nombre</label><br>
+                <input type="text" id="Nomitem" name="Nomitem" placeholder="Nombre del Insumo/Herramienta..." required>
                 <label for="categoria">Categoría</label><br>
                 <select id="categoria" name="categoria">
                     <option value="">Seleccionar Categoría</option>
@@ -92,7 +92,12 @@
                     </div>
                 </div>
                 <label for="proveedor">Proveedor</label><br>
-                <input type="text" id="proveedor" name="proveedor" placeholder="Nombre del proveedor o empresa" required>
+                <select id="proveedor" name="proveedor">
+                    <option value="">Proveedor</option>
+                    <option value="1">Proveedor1</option>
+                    <option value="2">Proveedor2</option>
+                    <option value="3">Proveedor3</option>
+                </select>
                 <label for="ubicacion">Ubicación</label><br>
                 <div class="boton">
                     <input type="text" id="ubicacion" name="ubicacion" placeholder="Almacén, bodega..." required>
