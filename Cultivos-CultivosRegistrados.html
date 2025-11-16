@@ -9,11 +9,8 @@
         <h1>Cultivos</h1>
         <h2>Registro y seguimiento de las cañas</h2>
         <div class="bot">
-            <form action="Cultivos-FormularioAgregarCultivo.html" style="margin-top: 17px;">
-            <button>
-                <img src="iconos/anadir.png" alt="anadir" width="14" height="14">
-                Agregar Cultivo
-            </button>
+            <form action="Cultivos-FormularioAgregarCultivo.html">
+            <button><img src="iconos/anadir.png" alt="anadir" width="14" height="14">Agregar Cultivo</button>
             </form>
         </div>
         <div class="seleccion">
@@ -42,55 +39,47 @@
                 <button class="filtrar"><img src="iconos/filtrar.png" alt="filtrar"  width="14" height="14">Filtrar</button>
                 </div>
                 <table class="tabla-cultivos">
-                    <tr>
-                        <th style="font-size: 14px;">Tipo/Lote</th>
-                        <th style="font-size: 14px;">Siembra</th>
-                        <th style="font-size: 14px;">Cosecha Estimada</th>
-                        <th style="font-size: 14px;">Hectáreas</th>
-                        <th style="font-size: 14px;">Estado</th>
-                        <th style="font-size: 14px;">Acciones</th>
-                    </tr>
-                    <tr>
-                        <td><p>Caña de azúcar A-1</p>
-                        <p style="color:#8B8383; font-size:14px;">Datos</p></td>
-                        <td>dd/mm/aaaa</td>
-                        <td>dd/mm/aaaa</td>
-                        <td>00 ha</td>
-                        <td>En crecimiento</td>
-                        <td class="acciones">
-                            <button class="Boton-icono"><img src="iconos/palomita.png" alt="palomita"></button>
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><p>Caña de azúcar A-1</p>
-                        <p style="color:#8B8383; font-size:14px;">Datos</p></td>
-                        <td>dd/mm/aaaa</td>
-                        <td>dd/mm/aaaa</td>
-                        <td>00 ha</td>
-                        <td>En crecimiento</td>
-                        <td class="acciones">
-                             <button class="Boton-icono"><img src="iconos/palomita.png" alt="palomita"></button>
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><p>Caña de azúcar A-1</p>
-                        <p style="color:#8B8383; font-size:14px;">Datos</p></td>
-                        <td>dd/mm/aaaa</td>
-                        <td>dd/mm/aaaa</td>
-                        <td>00 ha</td>
-                        <td>En crecimiento</td>
-                        <td class="acciones">
-                            <button class="Boton-icono"><img src="iconos/palomita.png" alt="palomita"></button>
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th style="font-size: 14px;">Tipo/Lote</th>
+                            <th style="font-size: 14px;">Siembra</th>
+                            <th style="font-size: 14px;">Cosecha Estimada</th>
+                            <th style="font-size: 14px;">Hectáreas</th>
+                            <th style="font-size: 14px;">Estado</th>
+                            <th style="font-size: 14px;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaCultivos">
+                    </tbody>
                 </table>
             </div>
         </form>
+        <script>
+            fetch("ConsultaCultivos.php")
+                .then(res => res.json())
+                .then(data => {
+                    let tabla = document.getElementById("tablaCultivos");
+                    tabla.innerHTML = "";
+                    data.forEach(cultivos => {
+                        tabla.innerHTML += `
+                            <tr>
+                                <td>
+                                    <p>${cultivos.NOMBRE}</p>
+                                    <p style="color:#8B8383; font-size:14px;">${cultivos.OBSERVACIONES}</p>
+                                </td>
+                                <td>${cultivos.FECHASIEMBRA}</td>
+                                <td>${cultivos.FECHACOSECHA}</td>
+                                <td>${cultivos.HECTAREAS} ha</td>
+                                <td>${cultivos.ESTADO}</td>
+                                <td class="acciones">
+                                    <button class="Boton-icono"><img src="iconos/palomita.png"></button>
+                                    <button class="Boton-icono"><img src="iconos/editar.png"></button>
+                                    <button class="Boton-icono"><img src="iconos/eliminar.png"></button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                });
+        </script>
     </body>
 </html>

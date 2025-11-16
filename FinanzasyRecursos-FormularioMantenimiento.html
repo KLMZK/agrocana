@@ -30,36 +30,24 @@
         </style>
     </head>
     <body>
-        <form action="FinanzasyRecursos_FormVehiculos.php" method="post">
+        <form action="FinanzasyRecursos-FormMantenimiento.php" method="post">
             <p></p>
-            <h1 class="inder-regular">Nuevo Vehículo</h1><br>
-            <h2 >Registra o edita un vehículo</h2><br>
+            <h1 class="inder-regular">Nuevo registro de Mantenimiento</h1><br>
+            <h2 >Registra un Mantenimiento</h2><br>
             <div align="center">
 
-            <div class="contenedor">
-                <div class="form">
-                    <label for="vehiculo">Tipo de Vehículo</label>
-                    <select id="vehiculo" name="vehiculo">
-                        <option value="">Seleccionar el tipo</option>
-                        <option value="vehiculo1">Vehículo 1</option>
-                        <option value="vehiculo2">Vehículo 2</option>
-                    </select>
-                </div>
-                <div class="form">
-                    <label for="modelo">Modelo del Vehículo</label>
-                    <select id="modelo" name="modelo">
-                        <option value="">Selecciona una marca</option>
-                        <option value="1">modelo 1</option>
-                        <option value="2">modelo 2</option>
-                    </select>
-                </div>
-            </div>
+            <label for="trabajador">Trabajador</label><br>
+            <select id="trabajador" name="trabajador">
+                <option value="">Seleccionar el trabajador</option>
+                <option value="1">Trabajador 1</option>
+                <option value="1">Trabajador 2</option>
+            </select>
             <label for="placa">Placa/ID</label><br>
             <input type="text" id="placa" name="placa" placeholder="Placas" required>
             <div class="contenedor">
                 <div class="form">
-                    <label for="fecha">Fecha del Registro</label>
-                    <input type="date" id="fecha" name="fecha" required>
+                    <label for="fechaMan">Fecha del Mantenimiento</label>
+                    <input type="date" id="fechaMan" name="fechaMan" required>
                 </div>
                 <div class="form">
                     <label for="costo">Costo</label>
@@ -68,7 +56,7 @@
             </div><br>
             <label for="observaciones" style="margin-top: -20px";>Observaciones</label><br>
             <input type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales" required><br><br>
-            <input type="submit" value="Guardar Vehículo">
+            <input type="submit" value="Guardar Registro">
             </div>   
         </form>
     </body>         
