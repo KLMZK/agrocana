@@ -59,19 +59,25 @@
         </style>
     </head>
     <body>
-        <form action="FinanzasyRecursos_FormNuevoItem.php" method="post">
+        <form action="FinanzasyRecursos_FormNuevoItem.php" method="post" style="width: 500px; height: 550px;">
             <p></p>
             <h1 class="inder-regular">Nuevo Ítem</h1><br>
             <h2 >Registra o edita un ítem</h2><br>
             <div align="center">
-                <label for="Nomitem">Nombre</label><br>
-                <input type="text" id="Nomitem" name="Nomitem" placeholder="Nombre del Insumo/Herramienta..." required>
-                <label for="categoria">Categoría</label><br>
-                <select id="categoria" name="categoria">
-                    <option value="">Seleccionar Categoría</option>
-                    <option value="categoria1">Categoría 1</option>
-                    <option value="categoria2">Categoría 2</option>
-                </select>
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="Nomitem">Nombre</label>
+                        <input type="text" id="Nomitem" name="Nomitem" placeholder="Nombre del Insumo/Herramienta..." required>
+                    </div>
+                    <div class="form">
+                        <label for="categoria">Categoría</label>
+                        <select id="categoria" name="categoria">
+                            <option value="">Seleccionar Categoría</option>
+                            <option value="categoria1">Categoría 1</option>
+                            <option value="categoria2">Categoría 2</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="contenedor">
                     <div class="form">
                         <label for="cantidad">Cantidad</label>

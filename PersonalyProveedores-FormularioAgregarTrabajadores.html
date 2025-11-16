@@ -65,7 +65,7 @@
         </style>
     </head>
     <body>
-        <form action="PersonalyProveedores_FormAgregarTrabajador.php" method="post">
+        <form action="PersonalyProveedores_FormAgregarTrabajador.php" method="post" style="width:500px;height:575px;">
             <p></p>
             <h1 class="inder-regular">Nuevo Trabajador</h1><br>
             <h2 >Registro o edita un nuevo trabajador</h2><br>
@@ -92,14 +92,21 @@
                         <input type="text" id="apellidom" name="apellidom" placeholder="Ap.Materno">
                     </div>
                 </div>
-                <label for="tipo">Tipo de Trabajador</label><br>
-                <select id="tipo" name="tipo">
-                    <option value="">Seleccionar Tipo</option>
-                    <option value="tipo1">Recurrente</option>
-                    <option value="tipo2">Temporal</option>
-                </select>
-                <label for="rol">Rol/Tarea Asignada</label><br>
-                <input type="text" id="rol" name="rol" placeholder="Rol">
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="tipo">Tipo de Trabajador</label>
+                        <select id="tipo" name="tipo">
+                            <option value="">Seleccionar Tipo</option>
+                            <option value="tipo1">Recurrente</option>
+                            <option value="tipo2">Temporal</option>
+                        </select>
+                    </div>
+                    <div class="form">
+                        <label for="rol">Rol/Tarea Asignada</label>
+                        <input type="text" id="rol" name="rol" placeholder="Rol">
+                    </div>
+                </div>
+                </div>
                 <label for="telefono">Contacto</label><br>
                 <input type="text" id="telefono" name="telefono" placeholder="000-0000" required>
                 <div class="contenedor">
