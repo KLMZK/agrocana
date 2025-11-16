@@ -9,7 +9,8 @@ $consulta = $conexion->query("
         cultivos.ESTADO,
         cultivos.OBSERVACIONES,
         cultivos.CVE_TERRENO,
-        terrenos.HECTAREAS
+        terrenos.HECTAREAS,
+        terrenos.NOMBRE
     FROM cultivos
     INNER JOIN terrenos
     ON cultivos.CVE_TERRENO = terrenos.CVE_TERRENO
