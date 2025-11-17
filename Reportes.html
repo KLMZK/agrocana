@@ -82,11 +82,19 @@
                 font-weight: 600;
                 padding-bottom: 10px;
             }
-            img {
+            .edicion {
+                border: none;
+                background-color: transparent;
+                padding: 4px 6px 6px 6px;
+                cursor: pointer;
+                border-radius: 6px;
+                margin-bottom: 30px;
                 width: 20;
                 height: 20;
-                margin: 5px;
-                cursor: pointer;
+            }
+
+            .edicion:hover {
+                background-color: #E6E6E6;
             }
         </style>
     </head>
@@ -124,10 +132,10 @@
                         <td style="padding-left: 90px;">
                             <p class="text1">Administrador</p>
                         </td>
-                        <td align="center">
-                            <img src="iconos/ojo.png" alt="visualizar" />
-                            <img src="iconos/descargar.png" alt="descargar" />
-                            <img src="iconos/eliminar.png" alt="eliminar" />
+                        <td style="display: flex; align-items: center; justify-content: center;">
+                            <img src="iconos/ojo.png" alt="visualizar" class="edicion"/>
+                            <img src="iconos/descargar.png" alt="descargar" class="edicion"/>
+                            <img src="iconos/eliminar.png" alt="eliminar" class="edicion"/>
                         </td>
                     </tr>
                 </table>
