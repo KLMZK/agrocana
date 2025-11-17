@@ -9,7 +9,10 @@ $sql = "SELECT cve_usuario FROM usuarios WHERE user = '".$user."' AND password =
 $resultado = mysqli_query($conexion, $sql);
 
 if(mysqli_num_rows($resultado) <= 0) {
-    $correcto = false;
+    echo "<script>
+        localStorage.setItem('ingreso','incorrecto');
+        window.location.href = 'index.html';
+    </script>";
 } else {
     $_SESSION['id'] = mysqli_fetch_array($resultado)[0];
     header("location: menu.php");

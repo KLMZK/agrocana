@@ -68,11 +68,14 @@
             }
             button {
                 background-color: #346E19;
-                color: #FFFFFF;
-                border-radius: 10px;
-                border: 0px;
-                font-size: 16px;
-                padding: 10px 40px;
+                color: white; 
+                border: none; 
+                padding: 8px 15px; 
+                border-radius: 8px; 
+                font-weight: bold; 
+                cursor: pointer; 
+                display: flex; 
+                align-items: center; gap: 5px;
             }
             .centrado {
                 display: flex;
@@ -80,11 +83,14 @@
                 justify-content: space-between;
             }
             select {
+                font-size: 16px;
+                border: 10px;
                 background-color: #EBEAEA;
-                border: 0px;
                 border-radius: 10px;
-                color: #4C4C4C;
-                padding: 10px 15px;
+                width: 173px;
+                height: 43px;
+                color:#4C4C4C;
+                padding: 10px;
             }
             .text1 {
                 margin-block: 0px;
@@ -138,10 +144,18 @@
                 height: 30px;
             }
             .edicion {
+                border: none;
+                background-color: transparent;
+                padding: 4px 6px 6px 6px;
+                cursor: pointer;
+                border-radius: 6px;
+                margin-bottom: 30px;
                 width: 25;
                 height: 25;
-                cursor: pointer;
-                margin: 10px;
+            }
+
+            .edicion:hover {
+                background-color: #E6E6E6;
             }
         </style>
     </head>
@@ -170,7 +184,7 @@
             </div>
             <div align="right" style="margin-right: 10px;">
                 <a href="EnviosyLogistica-Formulario.html">
-                    <button>+ Programar Envío</button>
+                    <button><span style="font-size: 18px;"><img src="iconos/anadir.png" alt="clientes" style="width: 14px; height: 14;"></span> Nuevo Pedido</button>
                 </a>
             </div>
             <div class="envios">
