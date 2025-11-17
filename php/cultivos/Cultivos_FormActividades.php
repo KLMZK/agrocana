@@ -1,5 +1,5 @@
 <?php
-include "conexion/conexion.php";
+include "../../conexion/conexion.php";
 
 if(isset($_POST['actividad'])){
 
@@ -23,7 +23,7 @@ if(isset($_POST['actividad'])){
 
             echo "<script>
                 alert('Actividad guardada exitosamente');
-                window.location.href = 'Cultivos-ActividadesAgricolas.html';
+                window.location.href = '../../Cultivos-ActividadesAgricolas.html';
               </script>";
 
     } else {
