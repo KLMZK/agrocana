@@ -1,0 +1,159 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap" rel="stylesheet">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <link rel="stylesheet" href="estilos/formulariosedit.css">
+        <style>
+            .contenedor{
+                display: flex;
+                gap: 10px;
+                width: 100%;
+            }
+            .form{
+                display: flex;
+                flex-direction: column;
+                flex: 1px;
+            }
+            .contenedor input{
+                flex: 1px;
+                display: flex;
+                flex-direction: column;
+            }
+            .form label{
+                display: block;
+                margin-bottom: 5px;
+            }
+            input[type=button]{
+                background-color: #395018;
+                color: white;
+                padding: 10px 20px;
+                margin-top: 1px;
+                border: none;
+                cursor: pointer;
+                width: 90%;
+                border-radius: 10px;
+                font-size: 17px;
+                font-weight:540;
+            }
+            input[type=button]:hover{
+                background-color: #2a3c11;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="" method="post">
+            <p></p>
+            <h1 class="inder-regular">Nueva Actividad</h1><br>
+            <h2 >Registro de una nueva actividad</h2><br>
+            <div align="center">
+            <input type="hidden" id="id" value="">
+            <div class="contenedor">
+                <div class="form">
+                    <label for="actividad">Actividad</label>
+                    <input type="text" id="actividad" name="actividad" placeholder="Actividad Realizada" required>
+                </div>
+                <div class="form">
+                    <label for="fecha">Fecha de realización</label>
+                    <input type="date" id="fecha" name="fecha" placeholder="dd/mm/aaaa" required>
+                </div>
+            </div>
+            <label for="responsable">Responsable</label><br>
+                   <select id="responsable" name="responsable">
+                        <option value="">Seleccionar Trabajador</option>
+                    </select>
+            <div class="contenedor">
+                <div class="form">
+                    <label for="insumos">Insumos utilizados</label>
+                    <select id="insumos" name="insumos">
+                        <option value="">Seleccionar Insumo</option>
+                    </select>
+                </div>
+                <div class="form">
+                    <label for="cinsumo">Cantidad del Insumo utilizado</label>
+                    <input type="number" id="cinsumo" name="cinsumo" placeholder="0" required>
+                </div>
+            </div>
+             <div class="contenedor">
+                <div class="form">
+                    <label for="costo">Costo de la Actividad</label>
+                    <input type="float" id="costo" name="costo" placeholder="0.0" required>
+                </div>
+                <div class="form" >
+                    <label for="ccultivo">Cultivos</label>
+                    <select id="ccultivo" name="ccultivo">
+                        <option value="">Seleccionar Cultivo</option>
+                    </select>
+                </div>
+            </div><br>
+            <label for="observaciones" style="margin-top: -25px";>Observaciones</label><br>
+            <textarea type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales"></textarea><br><br>
+            <input type="button" onclick="guardarCambios()" value="Guardar Cambios">
+            </div>   
+        </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', async () => {
+                const responsableSelect = document.getElementById('responsable');
+                const insumosSelect = document.getElementById('insumos');
+                const ccultivoSelect = document.getElementById('ccultivo');
+                const urlParams = new URLSearchParams(window.location.search);
+                const id = urlParams.get('id');
+
+                async function cargarSelect(url, select, valorKey, textoKey) {
+                    const res = await fetch(url);
+                    const data = await res.json();
+                    select.innerHTML = '';
+                    data.forEach(item => {
+                        const option = document.createElement('option');
+                        option.value = item[valorKey];
+                        option.textContent = item[textoKey];
+                        select.appendChild(option);
+                    });
+                }
+                await cargarSelect('php/cultivos/Cultivos-SelectTrabajador.php', responsableSelect, 'CVE_USUARIO', 'NOMBRE');
+                await cargarSelect('php/cultivos/Cultivos-SelectInsumos.php', insumosSelect, 'CVE_ITEM', 'NOMBRE');
+                await cargarSelect('php/cultivos/Cultivos-SelectCultivos.php', ccultivoSelect, 'CVE_TERRENO', 'NOMBRE');
+
+                const resActividad = await fetch(`php/cultivos/Cultivos-ObtenerActividad.php?id=${id}`);
+                const actividad = await resActividad.json();
+
+                document.getElementById("id").value = id;
+                document.getElementById("actividad").value = actividad.TIPO;
+                document.getElementById("fecha").value = actividad.FECHA;
+                responsableSelect.value = actividad.CVE_RESPONSABLE;
+                insumosSelect.value = actividad.CVE_ITEM;
+                document.getElementById("cinsumo").value = actividad.CANTIDAD;
+                document.getElementById("costo").value = actividad.COSTO;
+                ccultivoSelect.value = actividad.CVE_TERRENO;
+                document.getElementById("observaciones").value = actividad.OBSERVACIONES;
+            });
+
+            function guardarCambios() {
+                const datos = {
+                    id: document.getElementById("id").value,
+                    actividad: document.getElementById("actividad").value,
+                    fecha: document.getElementById("fecha").value,
+                    responsable: document.getElementById("responsable").value,
+                    insumos: document.getElementById("insumos").value,
+                    cinsumo: document.getElementById("cinsumo").value,
+                    costo: document.getElementById("costo").value,
+                    ccultivo: document.getElementById("ccultivo").value,
+                    observaciones: document.getElementById("observaciones").value
+                };
+                fetch("php/cultivos/Cultivos-ActualizarActividad.php", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(datos)
+                })
+                .then(res => res.text())
+                .then(resp => {
+                    alert("Actividad actualizada correctamente");
+                    window.location.href = "Cultivos-ActividadesAgricolas.html";
+                });
+            }
+        </script>
+    </body>         
+</html>
