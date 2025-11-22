@@ -12,6 +12,7 @@ $cinsumo = $conexion->real_escape_string($data["cinsumo"]);
 $costo = $conexion->real_escape_string($data["costo"]);
 $ccultivo = $conexion->real_escape_string($data["ccultivo"]);
 $observaciones = $conexion->real_escape_string($data["observaciones"]);
+$estado=$conexion->real_escape_string($data["estado"]);
 
 $result = $conexion->query("SELECT CVE_CULTIVO FROM cultivos WHERE CVE_TERRENO='$ccultivo'");
 $row = $result->fetch_assoc();
@@ -24,7 +25,8 @@ UPDATE actividades SET
     TIPO='$actividad',
     FECHA='$fecha',
     OBSERVACIONES='$observaciones',
-    COSTO='$costo'
+    COSTO='$costo',
+    ESTADO='$estado'
 WHERE CVE_ACTIVIDAD='$id'
 ";
 

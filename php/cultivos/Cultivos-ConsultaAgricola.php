@@ -7,7 +7,7 @@ $consulta = $conexion->query("
         actividades.FECHA AS FECHA,
         actividades.TIPO AS TIPO,
         actividades.ESTADO AS ESTADO,
-        items.NOMBRE AS INSUMO,
+        IFNULL(items.NOMBRE, 'Sin insumos') AS INSUMO,
         usuarios.NOMBRE AS RESPONSABLE
     FROM actividades
     LEFT JOIN utiliza

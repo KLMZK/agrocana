@@ -50,7 +50,7 @@
             <h1 class="inder-regular">Nueva Actividad</h1><br>
             <h2 >Registro de una nueva actividad</h2><br>
             <div align="center">
-            <input type="hidden" id="id" value="">
+            <input type="hidden" id="id" name="id" value="">
             <div class="contenedor">
                 <div class="form">
                     <label for="actividad">Actividad</label>
@@ -61,10 +61,18 @@
                     <input type="date" id="fecha" name="fecha" placeholder="dd/mm/aaaa" required>
                 </div>
             </div>
-            <label for="responsable">Responsable</label><br>
+            <div class="contenedor">
+                <div class="form">
+                    <label for="responsable">Responsable</label>
                    <select id="responsable" name="responsable">
                         <option value="">Seleccionar Trabajador</option>
                     </select>
+                </div>
+                <div class="form">
+                    <label for="estado">Estado de la actividad</label>
+                    <input type="text" id="estado" name="estado" placeholder="Pendiente..." required>
+                </div>
+            </div>
             <div class="contenedor">
                 <div class="form">
                     <label for="insumos">Insumos utilizados</label>
@@ -119,6 +127,7 @@
 
                 const resActividad = await fetch(`php/cultivos/Cultivos-ObtenerActividad.php?id=${id}`);
                 const actividad = await resActividad.json();
+                console.log(actividad); 
 
                 document.getElementById("id").value = id;
                 document.getElementById("actividad").value = actividad.TIPO;
@@ -129,6 +138,7 @@
                 document.getElementById("costo").value = actividad.COSTO;
                 ccultivoSelect.value = actividad.CVE_TERRENO;
                 document.getElementById("observaciones").value = actividad.OBSERVACIONES;
+                document.getElementById("estado").value = actividad.ESTADO;
             });
 
             function guardarCambios() {
@@ -141,7 +151,8 @@
                     cinsumo: document.getElementById("cinsumo").value,
                     costo: document.getElementById("costo").value,
                     ccultivo: document.getElementById("ccultivo").value,
-                    observaciones: document.getElementById("observaciones").value
+                    observaciones: document.getElementById("observaciones").value,
+                    estado: document.getElementById("estado").value
                 };
                 fetch("php/cultivos/Cultivos-ActualizarActividad.php", {
                     method: "POST",

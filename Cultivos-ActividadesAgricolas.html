@@ -4,6 +4,19 @@
         <meta charset="UTF-8">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="estilos/pantallasCultivos.css">
+        <style>
+            .tabla-agricola {
+                display: block;
+                max-height: 400px;
+                overflow-y: auto;
+            }
+            .tabla-agricola thead, 
+            .tabla-agricola tbody tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed; 
+            }
+        </style>
     </head>
     <body>
         <h1>Actividades Agrícolas</h1>
@@ -33,15 +46,12 @@
                 <label style="margin-left: 100px;">Tipo de Actividad:</label>
                 <select id="tipo" name="tipo" style="margin-left: 5px;">
                     <option value="">Tipo</option>
-                    <option value="Riego">Riego</option>
-                    <option value="Fertilizacion">Fertilizacion</option>
-                    <option value="Fumigación">Fumigación</option>
                 </select>
                 <label>Fecha de la Actividad:</label>
                 <input type="date" id="fecha" name="fecha">
                 <button class="filtrar"><img src="iconos/filtrar.png" alt="filtrar"  width="14" height="14">Filtrar</button>
                 </div>
-                <table class="tabla-cultivos">
+                <table class="tabla-agricola">
                     <tr>
                         <th style="font-size: 14px;">Tipo</th>
                         <th style="font-size: 14px;">Fecha</th>
@@ -91,7 +101,7 @@
                     });
                 }
                 function eliminar(id) {
-                    if(confirm("¿Estás seguro de que deseas eliminar este cultivo?")) {
+                    if(confirm("¿Estás seguro de que deseas eliminar esta actividad?")) {
                         fetch("php/cultivos/Cultivo-eliminarRegistroAgricola.php", {
                             method: "POST",
                             headers: {"Content-Type": "application/x-www-form-urlencoded"},
@@ -104,6 +114,38 @@
                         });
                     }
                 }
+                document.querySelector(".filtrar").addEventListener("click", function (e) {
+                    e.preventDefault();
+
+                    const tipoFiltro = document.getElementById("tipo").value.trim();
+                    const fechaFiltro = document.getElementById("fecha").value.trim();
+                    const filas = document.querySelectorAll("#tablaAgricola tr");
+                    filas.forEach(fila => {
+                        const tipo = fila.children[0].textContent.trim();
+                        const fecha = fila.children[1].textContent.trim();
+                        let mostrar = true;
+                        if (tipoFiltro && tipo !== tipoFiltro) {
+                            mostrar = false;
+                        }
+                        if (fechaFiltro && fecha !== fechaFiltro) {
+                            mostrar = false;
+                        }
+                        fila.style.display = mostrar ? "" : "none";
+                    });
+                });
+                document.addEventListener('DOMContentLoaded', () => {
+                fetch('php/cultivos/Cultivos-SelectFiltroActividad.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        const select = document.getElementById('tipo');
+                        data.forEach(actividad => {
+                            const option = document.createElement('option');
+                            option.value = actividad.TIPO;
+                            option.textContent = actividad.TIPO;
+                            select.appendChild(option);
+                        });
+                    })
+            });
         </script>
     </body>
 </html>

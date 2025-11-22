@@ -5,6 +5,7 @@ $id = $conexion->real_escape_string($_GET["id"]);
 
 $sql = "
 SELECT 
+    actividades.ESTADO,
     actividades.CVE_RESPONSABLE,
     items.CVE_ITEM,
     terrenos.CVE_TERRENO,
