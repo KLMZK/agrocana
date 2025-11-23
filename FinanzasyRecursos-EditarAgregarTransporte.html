@@ -1,0 +1,154 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap" rel="stylesheet">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <link rel="stylesheet" href="estilos/formulariosedit.css">
+        <style>
+            .contenedor{
+                display: flex;
+                gap: 20px;
+                width: 100%;
+            }
+            .form{
+                display: flex;
+                flex-direction: column;
+                flex: 1px;
+            }
+            .contenedor input{
+                flex: 1px;
+                display: flex;
+                flex-direction: column;
+            }
+            .form label{
+                display: block;
+                margin-bottom: 10px;
+            }
+            .Boton-icono {
+                justify-content: center;
+                align-items: center;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                border: none;
+                background-color: transparent;
+                padding: 4px 6px 6px 6px;
+                cursor: pointer;
+                border-radius: 6px;
+            }
+            .Boton-icono img{
+                width: 20px;
+                height: 20px;
+            }
+            .boton {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                width: 100%;
+            }
+            .boton input{
+                flex-grow: 1;
+                margin-right: 0px;
+            }
+            .Boton-icono:hover {
+                background-color: #E6E6E6;
+            }
+        </style>
+    </head>
+    <body>
+        <form>
+            <p></p>
+            <h1 class="inder-regular">Nuevo Vehículo</h1><br>
+            <h2 >Registra o edita un vehículo</h2><br>
+
+            <div class="contenedor">
+                <div class="form">
+                    <label for="tipo">Tipo de Vehículo</label>
+                    <input type="text" id="tipo" name="tipo" placeholder="Camion, Camioneta..">
+                </div>
+                <div class="form">
+                    <label for="modelo">Modelo del Vehículo</label>
+                    <input type="text" id="modelo" name="modelo" placeholder="Camion, Camioneta..">
+                </div>
+            </div>
+            <label for="marca">Marca</label><br>
+            <div class="boton">
+                <select id="marca" name="marca">
+                    <option value="">Selecciona una Marca</option>
+                </select>
+                <button onclick="location.href='FinanzasyRecursos-FormularioNuevaMarca.html'" class="Boton-icono"><img src="iconos/agregar.png" alt="agregar"></button>
+            </div>
+            <input type=hidden id="placa" name="placa" placeholder="Placas" required>
+            <div class="contenedor">
+                <div class="form">
+                    <label for="fecha">Fecha del Registro</label>
+                    <input type="date" id="fecha" name="fecha" required>
+                </div>
+                <div class="form">
+                    <label for="estado">Estado</label>
+                    <input type="text" id="estado" name="estado" placeholder="Ocupado..">
+                </div>
+            </div>
+            <br><label for="observaciones" style="margin-top: -25px">Observaciones</label><br>
+            <textarea  id="observaciones" name="observaciones" placeholder="Notas Adicionales"></textarea><br><br>
+            <input type="submit" onclick="guardarCambios()" value="Guardar Cambios">  
+        </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', async () => {
+                const marcaSelect = document.getElementById('marca');
+                const urlParams = new URLSearchParams(window.location.search);
+                const placa = urlParams.get('placa');
+
+                async function cargarSelect(url, select, valorKey, textoKey) {
+                    const res = await fetch(url);
+                    const data = await res.json();
+                    select.innerHTML = '';
+                    data.forEach(marca => {
+                        const option = document.createElement('option');
+                        option.value = marca[valorKey];
+                        option.textContent = marca[textoKey];
+                        select.appendChild(option);
+                    });
+                }
+                await cargarSelect('php/finanzasyrecursos/FinanzasyRecursos-SelectMarca.php', marcaSelect, 'CVE_MARCA', 'NOMBRE');
+
+                const resMarca = await fetch(`php/finanzasyrecursos/FinanzasyRecursos-ObtenerTransporte.php?placa=${placa}`);
+                const vehiculos = await resMarca.json();
+                console.log(vehiculos); 
+
+                document.getElementById("tipo").value = vehiculos.TIPO;
+                document.getElementById("placa").value = vehiculos.PLACA;
+                document.getElementById("fecha").value = vehiculos.FECHA;
+                document.getElementById("modelo").value = vehiculos.MODELO;
+                marcaSelect.value = vehiculos.MARCA;
+                document.getElementById("observaciones").value = vehiculos.OBSERVACIONES;
+                document.getElementById("estado").value = vehiculos.ESTADO;
+            });
+
+            function guardarCambios() {
+                const datos = {
+                    placa: document.getElementById("placa").value,
+                    tipo: document.getElementById("tipo").value,
+                    fecha: document.getElementById("fecha").value,
+                    marca: document.getElementById("marca").value,
+                    modelo: document.getElementById("modelo").value,
+                    observaciones: document.getElementById("observaciones").value,
+                    estado: document.getElementById("estado").value
+                };
+                fetch("php/finanzasyrecursos/FinanzasyRecursos-ActualizarTransporte.php", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(datos)
+                })
+                .then(res => res.text())
+                .then(resp => {
+                    alert("Transporte actualizado correctamente");
+                    window.location.href = "FinanzasyRecursos-Transporte.html";
+                });
+            }
+        </script>
+    </body>         
+</html>

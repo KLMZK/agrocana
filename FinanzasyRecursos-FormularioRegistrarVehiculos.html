@@ -27,49 +27,89 @@
                 display: block;
                 margin-bottom: 10px;
             }
+            .Boton-icono {
+                justify-content: center;
+                align-items: center;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                border: none;
+                background-color: transparent;
+                padding: 4px 6px 6px 6px;
+                cursor: pointer;
+                border-radius: 6px;
+            }
+            .Boton-icono img{
+                width: 20px;
+                height: 20px;
+            }
+            .boton {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                width: 100%;
+            }
+            .boton input{
+                flex-grow: 1;
+                margin-right: 0px;
+            }
+            .Boton-icono:hover {
+                background-color: #E6E6E6;
+            }
         </style>
     </head>
     <body>
-        <form action="FinanzasyRecursos_FormVehiculos.php" method="post">
+        <form action="php/finanzasyrecursos/FinanzasyRecursos_FormVehiculos.php" method="post">
             <p></p>
             <h1 class="inder-regular">Nuevo Vehículo</h1><br>
             <h2 >Registra o edita un vehículo</h2><br>
-            <div align="center">
 
             <div class="contenedor">
                 <div class="form">
-                    <label for="vehiculo">Tipo de Vehículo</label>
-                    <select id="vehiculo" name="vehiculo">
-                        <option value="">Seleccionar el tipo</option>
-                        <option value="vehiculo1">Vehículo 1</option>
-                        <option value="vehiculo2">Vehículo 2</option>
-                    </select>
+                    <label for="tipo">Tipo de Vehículo</label>
+                    <input type="text" id="tipo" name="tipo" placeholder="Camion, Camioneta..">
                 </div>
                 <div class="form">
                     <label for="modelo">Modelo del Vehículo</label>
-                    <select id="modelo" name="modelo">
-                        <option value="">Selecciona una marca</option>
-                        <option value="1">modelo 1</option>
-                        <option value="2">modelo 2</option>
-                    </select>
+                    <input type="text" id="modelo" name="modelo" placeholder="Camion, Camioneta..">
                 </div>
             </div>
-            <label for="placa">Placa/ID</label><br>
-            <input type="text" id="placa" name="placa" placeholder="Placas" required>
             <div class="contenedor">
                 <div class="form">
-                    <label for="fecha">Fecha del Registro</label>
-                    <input type="date" id="fecha" name="fecha" required>
+                    <label for="marca">Marca</label>
+                    <div class="boton">
+                        <select id="marca" name="marca">
+                            <option value="">Selecciona una Marca</option>
+                        </select>
+                        <button onclick="location.href='FinanzasyRecursos-FormularioNuevaMarca.html'" class="Boton-icono"><img src="iconos/agregar.png" alt="agregar"></button>
+                    </div>
                 </div>
                 <div class="form">
-                    <label for="costo">Costo</label>
-                    <input type="float" id="costo" name="costo" placeholder="0.0" required>
+                    <label for="placa">Placa/ID</label>
+                    <input type="text" id="placa" name="placa" placeholder="Placas" required>
                 </div>
-            </div><br>
-            <label for="observaciones" style="margin-top: -20px";>Observaciones</label><br>
-            <input type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales" required><br><br>
+            </div>
+            <label for="fecha">Fecha del Registro</label><br>
+            <input type="date" id="fecha" name="fecha" required><br>
+            <br><label for="observaciones" style="margin-top: -25px">Observaciones</label><br>
+            <textarea type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales"></textarea><br><br>
             <input type="submit" value="Guardar Vehículo">
             </div>   
         </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                fetch('php/finanzasyrecursos/FinanzasyRecursos-SelectMarca.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        const select = document.getElementById('marca');
+                        data.forEach(marca => {
+                            const option = document.createElement('option');
+                            option.value = marca.CVE_MARCA;
+                            option.textContent = marca.NOMBRE;
+                            select.appendChild(option);
+                        });
+                    })
+            });
+        </script>
     </body>         
 </html>

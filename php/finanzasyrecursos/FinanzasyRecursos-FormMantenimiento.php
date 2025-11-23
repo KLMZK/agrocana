@@ -1,23 +1,21 @@
 <?php
-include "conexion/conexion.php";
+include "../../conexion/conexion.php";
 
 if(isset($_POST['trabajador'])){
 
     $trabajador= $_POST ['trabajador'];
-    $placa= $_POST ['placa'];
+    $placas= $_POST ['placas'];
     $fechaMan= $_POST ['fechaMan'];
     $costo= $_POST ['costo'];
     $observaciones= $_POST ['observaciones'];
 
-    $insertarDatos="INSERT INTO mantenimientos VALUES('','$trabajador','$placa','$fechaMan','$costo','$observaciones')";
+    $insertarDatos="INSERT INTO mantenimientos VALUES('','$trabajador','$placas','$fechaMan','$costo','$observaciones')";
 
     $ejecutarInsertar=mysqli_query ($conexion, $insertarDatos);
 
-    mysqli_query($conexion, $insertman);
-
             echo "<script>
                 alert('Mantenimiento registrado exitosamente');
-                window.location.href = 'FinanzasyRecursos-Transporte.html';
+                window.location.href = '../../FinanzasyRecursos-Transporte.html';
               </script>";
 
     } else {

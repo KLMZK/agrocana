@@ -1,5 +1,5 @@
 <?php
-include "conexion/conexion.php";
+include "../../conexion/conexion.php";
 
 if(isset($_POST['Nomitem'])){
 
@@ -10,15 +10,14 @@ if(isset($_POST['Nomitem'])){
     $costo= $_POST ['costo'];
     $proveedor= $_POST ['proveedor'];
     $ubicacion= $_POST ['ubicacion'];
-    $estado= $_POST ['estado'];
 
-    $insertarDatos="INSERT INTO items VALUES('','$proveedor','$Nomitem','$categoria','$cantidad','$unidad','$estado','$costo')";
+    $insertarDatos="INSERT INTO items VALUES('','$proveedor','$nombre','$categoria','$cantidad','$unidad','Disponible','$costo')";
 
     $ejecutarInsertar=mysqli_query ($conexion, $insertarDatos);
 
             echo "<script>
                 alert('Ítem guardado exitosamente');
-                window.location.href = 'FinanzasyRecursos-Inventario.html';
+                window.location.href = '../../FinanzasyRecursos-Inventario.html';
               </script>";
 
     } else {

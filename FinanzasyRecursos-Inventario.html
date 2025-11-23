@@ -76,54 +76,34 @@
                         <th style="font-size: 14px;">Categoría</th>
                         <th style="font-size: 14px;">Cantidad</th>
                         <th style="font-size: 14px;">Ubicación</th>
-                        <th style="font-size: 14px;">Último Mantenimiento</th>
+                        <th style="font-size: 14px;">Estado</th>
                         <th style="font-size: 14px;">Acciones</th>
                     </tr>
-                    <tr>
-                        <td>*Nombre*Fertilizante</td>
-                        <td>Fertilizante</td>
-                        <td>00 Kg</td>
-                        <td>Almacén A</td>
-                        <td>Disponible</td>
-                        <td class="acciones">
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>*Nombre*Insecticida</td>
-                        <td>Insecticida</td>
-                        <td>00 L</td>
-                        <td>Almacén A</td>
-                        <td>Bajo</td>
-                        <td class="acciones">
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Machetes</td>
-                        <td>Herramienta</td>
-                        <td>00 Unidades</td>
-                        <td>Almacén A</td>
-                        <td>Disponible</td>
-                        <td class="acciones">
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>*Nombre*Herbicida</td>
-                        <td>Herbicida</td>
-                        <td>00 L</td>
-                        <td>Almacén A</td>
-                        <td>Bajo</td>
-                        <td class="acciones">
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
+                  <tbody id="tablaInventario"></tbody>
                 </table>
             </div>
+            <script>
+                fetch("php/finanzasyrecursos/FinanzasyRecursos-ConsultaIventario.php")
+                    .then(res => res.json())
+                    .then(data => {
+                        let tabla = document.getElementById("tablaInventario");
+                        tabla.innerHTML = "";
+                        data.forEach(inventario => {
+                            tabla.innerHTML += `
+                                <tr>
+                                    <td>${inventario.NOMBRE}</td>
+                                    <td>${inventario.CATEGORIA}</td>
+                                    <td>${inventario.CANTIDAD}</td>
+                                    <td>${inventario.UBICACION}</td>
+                                    <td>${inventario.ESTADO}</td>
+                                    <td class="acciones">
+                                        <button type="button" class="Boton-icono" onclick="window.location.href='FinanzasyRecursos-EditarAgregarTransporte.html?id=${inventario.CVE_ITEM}'"><img src="iconos/editar.png"></button>
+                                        <button class="Boton-icono" onclick="eliminar('${inventario.CVE_ITEM}')"><img src="iconos/eliminar.png"></button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    });
+            </script>
     </body>
 </html>
