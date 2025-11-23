@@ -1,0 +1,118 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap" rel="stylesheet">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <link rel="stylesheet" href="estilos/formulariosedit.css">
+        <style>
+            .contenedor{
+                display: flex;
+                gap: 10px;
+                width: 100%;
+            }
+            .form{
+                display: flex;
+                flex-direction: column;
+                flex: 1px;
+            }
+            .contenedor input{
+                flex: 1px;
+                display: flex;
+                flex-direction: column;
+            }
+            .form label{
+                display: block;
+                margin-bottom: 5px;
+            }
+            input[type=button]{
+                background-color: #395018;
+                color: white;
+                padding: 10px 20px;
+                margin-top: 1px;
+                border: none;
+                cursor: pointer;
+                width: 90%;
+                border-radius: 10px;
+                font-size: 17px;
+                font-weight:540;
+            }
+            input[type=button]:hover{
+                background-color: #2a3c11;
+            }
+        </style>
+    </head>
+    <body>
+        <form id="editar" method="post">
+            <p></p>
+            <h1 class="inder-regular">Editar Cultivo</h1><br>
+            <h2 >Editable de cultivo</h2><br>
+            <div align="center">
+                <input type="hidden" id="id" value="">
+                <label for="tipo/lote">Tipo/Lote</label><br>
+                <input type="text" id="lote" name="lote" placeholder="Caña de azúcar A-1" required><br>
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="fecha/siembra">Fecha de siembra</label>
+                        <input type="date" id="fsiembra" name="fsiembra" placeholder="dd/mm/aaaa" required>
+                    </div>
+                    <div class="form">
+                        <label for="fecha/siembra">Fecha de cosecha</label>
+                        <input type="date" id="fcosecha" name="fcosecha" placeholder="dd/mm/aaaa" required>
+                    </div>
+                </div>
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="hectareas">Héctareas</label>
+                        <input type="float" id="hectareas" name="hectareas" placeholder="0.0" required>
+                    </div>
+                    <div class="form">
+                        <label for="estado">Estado de la cosecha</label>
+                        <input type="text" id="estado" name="estado" placeholder="En crecimiento..." required>
+                    </div>
+                </div>
+                <label for="observaciones">Observaciones</label><br>
+                <textarea type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales"></textarea><br><br>
+                <input type="button" onclick="guardarCambios()" value="Guardar Cambios">
+            </div>   
+        </form>
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            fetch("php/cultivos/Cultivos-ObtenerCultivo.php?id=" + id)
+            .then(res => res.json())
+            .then(cultivos => {
+                document.getElementById("id").value = id;
+                document.getElementById("lote").value = cultivos.NOMBRE;
+                document.getElementById("observaciones").value = cultivos.OBSERVACIONES;
+                document.getElementById("fsiembra").value = cultivos.FECHASIEMBRA;
+                document.getElementById("fcosecha").value = cultivos.FECHACOSECHA;
+                document.getElementById("hectareas").value = cultivos.HECTAREAS;
+                document.getElementById("estado").value = cultivos.ESTADO;
+            });
+            function guardarCambios() {
+                const datos = {
+                    id: document.getElementById("id").value,
+                    lote: document.getElementById("lote").value,
+                    observaciones: document.getElementById("observaciones").value,
+                    fsiembra: document.getElementById("fsiembra").value,
+                    fcosecha: document.getElementById("fcosecha").value,
+                    hectareas: document.getElementById("hectareas").value,
+                    estado: document.getElementById("estado").value
+                };
+                fetch("php/cultivos/Cultivos-ActualizarCultivo.php", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(datos)
+                })
+                .then(res => res.text())
+                .then(resp => {
+                    alert("Cultivo actualizado correctamente");
+                    window.location.href = "Cultivos-CultivosRegistrados.html";
+                });
+            }
+        </script>
+    </body>         
+</html>

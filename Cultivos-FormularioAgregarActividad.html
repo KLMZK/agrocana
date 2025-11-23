@@ -30,7 +30,7 @@
         </style>
     </head>
     <body>
-        <form action="Cultivos_FormActividades.php" method="post">
+        <form action="php/cultivos/Cultivos_FormActividades.php" method="post">
             <p></p>
             <h1 class="inder-regular">Nueva Actividad</h1><br>
             <h2 >Registro de una nueva actividad</h2><br>
@@ -49,21 +49,18 @@
             <label for="responsable">Responsable</label><br>
                    <select id="responsable" name="responsable">
                         <option value="">Seleccionar Trabajador</option>
-                        <option value="act1">Trabajador 1</option>
-                        <option value="act2">Trabajador 2</option>
                     </select>
             <div class="contenedor">
                 <div class="form">
                     <label for="insumos">Insumos utilizados</label>
-                    <select id="insumos" name="insumo">
+                    <select id="insumos" name="insumos">
                         <option value="">Seleccionar Insumo</option>
-                        <option value="act1">Insumo 1</option>
-                        <option value="act2">Insumo 2</option>
+                        <option value="0">S/I</option>
                     </select>
                 </div>
                 <div class="form">
                     <label for="cinsumo">Cantidad del Insumo utilizado</label>
-                    <input type="number" id="cinsumo" name="cinsumo" placeholder="0" required>
+                    <input type="number" id="cinsumo" name="cinsumo" placeholder="0">
                 </div>
             </div>
              <div class="contenedor">
@@ -74,16 +71,55 @@
                 <div class="form" >
                     <label for="ccultivo">Cultivos</label>
                     <select id="ccultivo" name="ccultivo">
-                        <option value="">Seleccionar Insumo</option>
-                        <option value="1">Cultivo 1</option>
-                        <option value="2">Cultivo 2</option>
+                        <option value="">Seleccionar Cultivo</option>
                     </select>
                 </div>
             </div><br>
             <label for="observaciones" style="margin-top: -25px";>Observaciones</label><br>
-            <input type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales" required><br><br>
+            <textarea type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales"></textarea><br><br>
             <input type="submit" value="Guardar Actividad">
             </div>   
         </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                fetch('php/cultivos/Cultivos-SelectTrabajador.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        const select = document.getElementById('responsable');
+                        data.forEach(usuarios => {
+                            const option = document.createElement('option');
+                            option.value = usuarios.CVE_USUARIO;
+                            option.textContent = usuarios.NOMBRE;
+                            select.appendChild(option);
+                        });
+                    })
+            });
+            document.addEventListener('DOMContentLoaded', () => {
+                fetch('php/cultivos/Cultivos-SelectInsumos.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        const select = document.getElementById('insumos');
+                        data.forEach(items => {
+                            const option = document.createElement('option');
+                            option.value = items.CVE_ITEM;
+                            option.textContent = items.NOMBRE;
+                            select.appendChild(option);
+                        });
+                    })
+            });
+            document.addEventListener('DOMContentLoaded', () => {
+                fetch('php/cultivos/Cultivos-SelectCultivos.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        const select = document.getElementById('ccultivo');
+                        data.forEach(cultivos => {
+                            const option = document.createElement('option');
+                            option.value = cultivos.CVE_TERRENO;
+                            option.textContent = cultivos.NOMBRE;
+                            select.appendChild(option);
+                        });
+                    })
+            });
+        </script>
     </body>         
 </html>

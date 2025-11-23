@@ -9,21 +9,24 @@
         <link rel="stylesheet" href="estilos/formulariosedit.css">
     </head>
     <body>
-        <form action="php/cultivos/Cultivos_FormCultivos.php" method="post">
+    <script>
+    </script>
+        <form action="php/cultivos/Cultivos-ReplantarGuardar.php" method="post">
             <p></p>
             <h1 class="inder-regular">Nuevo Cultivo</h1><br>
-            <h2 >Registro de nuevo cultivo</h2><br>
+            <h2 >Registro de replantar</h2><br>
             <div align="center">
-            <label for="tipo/lote">Tipo/Lote</label><br>
-            <input type="text" id="lote" name="lote" placeholder="Caña de azúcar A-1" required><br><br>
+            <input type="hidden" id="id" name="id" value="">
             <label for="fecha/siembra">Fecha de siembra</label><br>
             <input type="date" id="fsiembra" name="fsiembra" placeholder="dd/mm/aaaa" required><br><br>
-            <label for="hectareas">Héctareas</label><br>
-            <input type="float" id="hectareas" name="hectareas" placeholder="0.0" required><br><br>
             <label for="observaciones">Observaciones</label><br>
             <textarea type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales"></textarea><br><br>
             <input type="submit" value="Guardar Cultivo">
             </div>   
         </form>
+        <script>
+            const params = new URLSearchParams(window.location.search);
+            document.getElementById("id").value = params.get("id");
+        </script>
     </body>         
 </html>

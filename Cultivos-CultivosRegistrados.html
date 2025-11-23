@@ -4,6 +4,19 @@
         <meta charset="UTF-8">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="estilos/pantallasCultivos.css">
+        <style>
+            .tabla-cultivos {
+                display: block;
+                max-height: 400px;
+                overflow-y: auto;
+            }
+            .tabla-cultivos thead, 
+            .tabla-cultivos tbody tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed; 
+            }
+        </style>
     </head>
     <body>
         <h1>Cultivos</h1>
@@ -33,9 +46,9 @@
                     <option value="Listo para cosecha">Listo para cosecha</option>
                 </select>
                 <label>Fecha de Siembra:</label>
-                <input type="date" id="fecha" name="fecha">
+                <input type="date" id="fechaSiembra" name="fechaSiembra">
                 <label>Fecha Estimada:</label>
-                <input type="date" id="fecha" name="fecha">
+                <input type="date" id="fechaCosecha" name="fechaCosecha">
                 <button class="filtrar"><img src="iconos/filtrar.png" alt="filtrar"  width="14" height="14">Filtrar</button>
                 </div>
                 <table class="tabla-cultivos">
@@ -55,7 +68,7 @@
             </div>
         </form>
         <script>
-            fetch("ConsultaCultivos.php")
+            fetch("php/cultivos/Cultivos-ConsultaCultivos.php")
                 .then(res => res.json())
                 .then(data => {
                     let tabla = document.getElementById("tablaCultivos");
@@ -72,14 +85,65 @@
                                 <td>${cultivos.HECTAREAS} ha</td>
                                 <td>${cultivos.ESTADO}</td>
                                 <td class="acciones">
-                                    <button class="Boton-icono"><img src="iconos/palomita.png"></button>
-                                    <button class="Boton-icono"><img src="iconos/editar.png"></button>
-                                    <button class="Boton-icono"><img src="iconos/eliminar.png"></button>
+                                    <button class="Boton-icono" onclick="cambiarEstado(${cultivos.CVE_CULTIVO})"><img src="iconos/palomita.png"></button>
+                                    <button type="button" class="Boton-icono" onclick="window.location.href='Cultivos-EditarAgregarCultivo.html?id=${cultivos.CVE_CULTIVO}'"><img src="iconos/editar.png"></button>
+                                    <button class="Boton-icono" onclick="eliminar(${cultivos.CVE_CULTIVO})"><img src="iconos/eliminar.png"></button>
+                                    <button type="button" class="Boton-icono" onclick="window.location.href='Cultivos-Replantar.html?id=${cultivos.CVE_CULTIVO}'"><img src="iconos/replantar.png"></button>
                                 </td>
                             </tr>
                         `;
                     });
                 });
+                function cambiarEstado(idCultivo) {
+                    fetch("php/cultivos/Cultivo-CambiarEstado.php", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                        body: "id=" + idCultivo
+                    })
+                    .then(res => res.text())
+                    .then(resp => {
+                        alert(resp);
+                        location.reload();
+                    });
+                }
+                function eliminar(id) {
+                    if(confirm("¿Estás seguro de que deseas eliminar este cultivo?")) {
+                        fetch("php/cultivos/Cultivo-eliminarRegistro.php", {
+                            method: "POST",
+                            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                            body: "id=" + id
+                        })
+                        .then(res => res.text())
+                        .then(resp => {
+                            alert(resp);
+                            location.reload();
+                        });
+                    }
+                }
+                document.querySelector(".filtrar").addEventListener("click", function (e) {
+                    e.preventDefault();
+
+                    const estadoFiltro = document.getElementById("estado").value.trim();
+                    const fechaSiembraFiltro = document.getElementById("fechaSiembra").value.trim();
+                    const fechaCosechaFiltro = document.getElementById("fechaCosecha").value.trim();
+                    const filas = document.querySelectorAll("#tablaCultivos tr");
+                    filas.forEach(fila => {
+                        const estado = fila.children[4].textContent.trim();
+                        const fechaSiembra = fila.children[1].textContent.trim();
+                        const fechaCosecha = fila.children[2].textContent.trim();
+                        let mostrar = true;
+                        if (estadoFiltro && estado !== estadoFiltro) {
+                            mostrar = false;
+                        }
+                        if (fechaSiembraFiltro && fechaSiembra !== fechaSiembraFiltro) {
+                            mostrar = false;
+                        }
+                        if (fechaCosechaFiltro && fechaCosecha !== fechaCosechaFiltro) {
+                            mostrar = false;
+                        }
+                        fila.style.display = mostrar ? "" : "none";
+                    });
+                }); 
         </script>
     </body>
 </html>

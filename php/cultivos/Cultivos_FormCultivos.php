@@ -1,5 +1,5 @@
 <?php
-include "conexion/conexion.php";
+include "../../conexion/conexion.php";
 
 if(isset($_POST['lote'])){
 
@@ -21,7 +21,7 @@ if(isset($_POST['lote'])){
 
             echo "<script>
                 alert('Cultivo guardado exitosamente');
-                window.location.href = 'Cultivos-CultivosRegistrados.html';
+                window.location.href = '../../Cultivos-CultivosRegistrados.html';
               </script>";
 
     } else {

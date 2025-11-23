@@ -4,6 +4,19 @@
         <meta charset="UTF-8">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="estilos/pantallasCultivos.css">
+        <style>
+            .tabla-agricola {
+                display: block;
+                max-height: 400px;
+                overflow-y: auto;
+            }
+            .tabla-agricola thead, 
+            .tabla-agricola tbody tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed; 
+            }
+        </style>
     </head>
     <body>
         <h1>Actividades Agrícolas</h1>
@@ -33,15 +46,12 @@
                 <label style="margin-left: 100px;">Tipo de Actividad:</label>
                 <select id="tipo" name="tipo" style="margin-left: 5px;">
                     <option value="">Tipo</option>
-                    <option value="Riego">Riego</option>
-                    <option value="Fertilizacion">Fertilizacion</option>
-                    <option value="Fumigación">Fumigación</option>
                 </select>
                 <label>Fecha de la Actividad:</label>
                 <input type="date" id="fecha" name="fecha">
                 <button class="filtrar"><img src="iconos/filtrar.png" alt="filtrar"  width="14" height="14">Filtrar</button>
                 </div>
-                <table class="tabla-cultivos">
+                <table class="tabla-agricola">
                     <tr>
                         <th style="font-size: 14px;">Tipo</th>
                         <th style="font-size: 14px;">Fecha</th>
@@ -50,41 +60,92 @@
                         <th style="font-size: 14px;">Estado</th>
                         <th style="font-size: 14px;">Acciones</th>
                     </tr>
-                    <tr>
-                        <td><p>Riego</p>
-                        <td>dd/mm/aaaa</td>
-                        <td>Nombre</td>
-                        <td>Agua 20L</td>
-                        <td>Completado</td>
-                        <td class="acciones">
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><p>Fertilización</p>
-                        <td>dd/mm/aaaa</td>
-                        <td>Nombre</td>
-                        <td>NPK 10-10-10 20kg</td>
-                        <td>Pendiente</td>
-                        <td class="acciones">
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><p>Fumigación</p>
-                        <td>dd/mm/aaaa</td>
-                        <td>Nombre</td>
-                        <td>Insecticida: 20L</td>
-                        <td>Completo</td>
-                        <td class="acciones">
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
+                    <tbody id="tablaAgricola">
+                    </tbody>
                 </table>
             </div>
         </form>
+        <script>
+            fetch("php/cultivos/Cultivos-ConsultaAgricola.php")
+            .then(res => res.json())
+            .then(data => {
+                let tabla = document.getElementById("tablaAgricola");
+                tabla.innerHTML = "";
+                data.forEach(actividades => {
+                    tabla.innerHTML += `
+                        <tr>
+                            <td>${actividades.TIPO}</td>
+                            <td>${actividades.FECHA}</td>
+                            <td>${actividades.RESPONSABLE}</td>
+                            <td>${actividades.INSUMO}</td>
+                            <td>${actividades.ESTADO}</td>
+                            <td class="acciones">
+                                <button class="Boton-icono" onclick="cambiarEstado(${actividades.CVE_ACTIVIDAD})"><img src="iconos/palomita.png"></button>
+                                <button type="button" class="Boton-icono" onclick="window.location.href='Cultivos-EditarAgregarActividad.html?id=${actividades.CVE_ACTIVIDAD}'"><img src="iconos/editar.png"></button>
+                                <button class="Boton-icono" onclick="eliminar(${actividades.CVE_ACTIVIDAD})"><img src="iconos/eliminar.png"></button>
+                            </td>
+                        </tr>
+                    `;
+                    });
+                });
+                function cambiarEstado(id) {
+                    fetch("php/cultivos/Cultivo-CambiarEstadoAgricola.php", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                        body: "id=" + id
+                    })
+                    .then(res => res.text())
+                    .then(resp => {
+                        alert(resp);
+                        location.reload();
+                    });
+                }
+                function eliminar(id) {
+                    if(confirm("¿Estás seguro de que deseas eliminar esta actividad?")) {
+                        fetch("php/cultivos/Cultivo-eliminarRegistroAgricola.php", {
+                            method: "POST",
+                            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                            body: "id=" + id
+                        })
+                        .then(res => res.text())
+                        .then(resp => {
+                            alert(resp);
+                            location.reload();
+                        });
+                    }
+                }
+                document.querySelector(".filtrar").addEventListener("click", function (e) {
+                    e.preventDefault();
+
+                    const tipoFiltro = document.getElementById("tipo").value.trim();
+                    const fechaFiltro = document.getElementById("fecha").value.trim();
+                    const filas = document.querySelectorAll("#tablaAgricola tr");
+                    filas.forEach(fila => {
+                        const tipo = fila.children[0].textContent.trim();
+                        const fecha = fila.children[1].textContent.trim();
+                        let mostrar = true;
+                        if (tipoFiltro && tipo !== tipoFiltro) {
+                            mostrar = false;
+                        }
+                        if (fechaFiltro && fecha !== fechaFiltro) {
+                            mostrar = false;
+                        }
+                        fila.style.display = mostrar ? "" : "none";
+                    });
+                });
+                document.addEventListener('DOMContentLoaded', () => {
+                fetch('php/cultivos/Cultivos-SelectFiltroActividad.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        const select = document.getElementById('tipo');
+                        data.forEach(actividad => {
+                            const option = document.createElement('option');
+                            option.value = actividad.TIPO;
+                            option.textContent = actividad.TIPO;
+                            select.appendChild(option);
+                        });
+                    })
+            });
+        </script>
     </body>
 </html>
