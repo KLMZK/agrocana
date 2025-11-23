@@ -30,34 +30,55 @@
         </style>
     </head>
     <body>
-        <form action="FinanzasyRecursos-FormMantenimiento.php" method="post">
+        <form action="php/finanzasyrecursos/FinanzasyRecursos-FormMantenimiento.php" method="post">
             <p></p>
             <h1 class="inder-regular">Nuevo registro de Mantenimiento</h1><br>
             <h2 >Registra un Mantenimiento</h2><br>
-            <div align="center">
 
             <label for="trabajador">Trabajador</label><br>
             <select id="trabajador" name="trabajador">
                 <option value="">Seleccionar el trabajador</option>
-                <option value="1">Trabajador 1</option>
-                <option value="1">Trabajador 2</option>
             </select>
-            <label for="placa">Placa/ID</label><br>
-            <input type="text" id="placa" name="placa" placeholder="Placas" required>
-            <div class="contenedor">
-                <div class="form">
-                    <label for="fechaMan">Fecha del Mantenimiento</label>
-                    <input type="date" id="fechaMan" name="fechaMan" required>
-                </div>
-                <div class="form">
-                    <label for="costo">Costo</label>
-                    <input type="float" id="costo" name="costo" placeholder="0.0" required>
-                </div>
-            </div><br>
-            <label for="observaciones" style="margin-top: -20px";>Observaciones</label><br>
-            <input type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales" required><br><br>
+            <label for="placas">Placa/ID</label><br>
+            <select id="placas" name="placas">
+                <option value="">Seleccionar placas</option><br>
+            </select>
+            <label for="fechaMan">Fecha del Mantenimiento</label><br>
+            <input type="date" id="fechaMan" name="fechaMan" required>
+            <label for="costo">Costo</label><br>
+            <input type="number" id="costo" name="costo" placeholder="0.0" required><br>
+            <br><label for="observaciones" style="margin-top: -20px";>Observaciones</label><br>
+            <textarea type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales"></textarea><br><br>
             <input type="submit" value="Guardar Registro">
-            </div>   
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    fetch('php/finanzasyrecursos/FinanzasyRecursos-SelectTrabajador.php')
+                        .then(response => response.json())
+                        .then(data => {
+                            const select = document.getElementById('trabajador');
+                            data.forEach(trabajador => {
+                                const option = document.createElement('option');
+                                option.value = trabajador.CVE_USUARIO;
+                                option.textContent = trabajador.NOMBRE;
+                                select.appendChild(option);
+                            });
+                        })
+                });
+                document.addEventListener('DOMContentLoaded', () => {
+                    fetch('php/finanzasyrecursos/FinanzasyRecursos-SelectPlacas.php')
+                        .then(response => response.json())
+                        .then(data => {
+                            const select = document.getElementById('placas');
+                            data.forEach(placas => {
+                                const option = document.createElement('option');
+                                option.value = placas.PLACA;
+                                option.textContent = placas.PLACA;
+                                select.appendChild(option);
+                            });
+                        })
+                });
+        </script>
         </form>
     </body>         
 </html>

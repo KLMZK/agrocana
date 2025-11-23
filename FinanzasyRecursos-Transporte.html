@@ -18,6 +18,17 @@
                 width: 410px;
                 height:3px;
             }
+            .tabla-vehiculos {
+                display: block;
+                max-height: 400px;
+                overflow-y: auto;
+            }
+            .tabla-vehiculos thead, 
+            .tabla-vehiculos tbody tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed; 
+            }
         </style>
     </head>
     <body>
@@ -76,55 +87,60 @@
                         <th style="font-size: 14px;">Tipo</th>
                         <th style="font-size: 14px;">Placa</th>
                         <th style="font-size: 14px;">Estado</th>
-                        <th style="font-size: 14px;">Responsable</th>
                         <th style="font-size: 14px;">Último Mantenimiento</th>
                         <th style="font-size: 14px;">Acciones</th>
                     </tr>
-                    <tr>
-                        <td>Tractor_Marca</td>
-                        <td>Placas*</td>
-                        <td>Disponible</td>
-                        <td>Nombre</td>
-                        <td>dd/mm/aaaa</td>
-                        <td class="acciones">
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Carro_Marca</td>
-                        <td>Placas*</td>
-                        <td>Disponible</td>
-                        <td>Nombre</td>
-                        <td>dd/mm/aaaa</td>
-                        <td class="acciones">
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Remolque_Marca</td>
-                        <td>Placas*</td>
-                        <td>Disponible</td>
-                        <td>Nombre</td>
-                        <td>dd/mm/aaaa</td>
-                        <td class="acciones">
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Camión_Marca</td>
-                        <td>Placas*</td>
-                        <td>Disponible</td>
-                        <td>Nombre</td>
-                        <td>dd/mm/aaaa</td>
-                        <td class="acciones">
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
+                    <tbody id="tablaTransporte"></tbody>
                 </table>
             </div>
+            <script>
+                fetch("php/finanzasyrecursos/FinanzasyRecursos-ConsultaTransporte.php")
+                    .then(res => res.json())
+                    .then(data => {
+                        let tabla = document.getElementById("tablaTransporte");
+                        tabla.innerHTML = "";
+                        data.forEach(transporte => {
+                            tabla.innerHTML += `
+                                <tr>
+                                    <td>${transporte.TIPO}</td>
+                                    <td>${transporte.PLACA}</td>
+                                    <td>${transporte.ESTADO}</td>
+                                    <td>${transporte.FECHA}</td>
+                                    <td class="acciones">
+                                        <button class="Boton-icono" onclick="cambiarEstado('${transporte.PLACA}')"><img src="iconos/cambiar.png"></button>
+                                        <button type="button" class="Boton-icono" onclick="window.location.href='FinanzasyRecursos-EditarAgregarTransporte.html?placa=${transporte.PLACA}'"><img src="iconos/editar.png"></button>
+                                        <button class="Boton-icono" onclick="eliminar('${transporte.PLACA}')"><img src="iconos/eliminar.png"></button>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    });
+                function cambiarEstado(placa) {
+                    fetch("php/finanzasyrecursos/FinanzasyRecursos-CambiarEstado.php", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                        body: "placa=" + encodeURIComponent(placa)
+                    })
+                    .then(res => res.text())
+                    .then(resp => {
+                        alert(resp);
+                        location.reload();
+                    });
+                }
+                function eliminar(placa) {
+                    if(confirm("¿Estás seguro de que deseas eliminar este vehiculo?")) {
+                        fetch("php/finanzasyrecursos/FinanzasyRecursos-eliminarRegistro.php", {
+                            method: "POST",
+                            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                            body: "placa=" + placa
+                        })
+                        .then(res => res.text())
+                        .then(resp => {
+                            alert(resp);
+                            location.reload();
+                        });
+                    }
+                }
+            </script>
     </body>
 </html>

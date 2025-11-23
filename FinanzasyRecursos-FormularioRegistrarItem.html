@@ -66,16 +66,12 @@
             <div align="center">
                 <div class="contenedor">
                     <div class="form">
-                        <label for="Nomitem">Nombre</label>
-                        <input type="text" id="Nomitem" name="Nomitem" placeholder="Nombre del Insumo/Herramienta..." required>
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Nombre del Insumo/Herramienta..." required>
                     </div>
                     <div class="form">
                         <label for="categoria">Categoría</label>
-                        <select id="categoria" name="categoria">
-                            <option value="">Seleccionar Categoría</option>
-                            <option value="categoria1">Categoría 1</option>
-                            <option value="categoria2">Categoría 2</option>
-                        </select>
+                        <input type="text" id="categoria" name="categoria" placeholder="Fertilizante, Agroquimicos..." required>
                     </div>
                 </div>
                 <div class="contenedor">
@@ -86,37 +82,56 @@
                     <div class="form">
                         <label for="unidad">Unidad</label>
                         <select id="unidad" name="unidad">
-                            <option value="">Unidad</option>
-                            <option value="unidad1">L</option>
-                            <option value="unidad2">Kg</option>
-                            <option value="unidad3">unidades</option>
+                            <option value="">Selecciona una Unidad</option>
+                            <option value="Litros">L</option>
+                            <option value="Kilogramos">Kg</option>
+                            <option value="unidades">unidades</option>
                         </select>
                     </div>
                     <div class="form">
                         <label for="costo">Costo Unitario</label>
-                        <input type="float" id="costo" name="costo" placeholder="$$$" required>
+                        <input type="number" id="costo" name="costo" placeholder="$$$" required>
                     </div>
                 </div>
                 <label for="proveedor">Proveedor</label><br>
                 <select id="proveedor" name="proveedor">
-                    <option value="">Proveedor</option>
-                    <option value="1">Proveedor1</option>
-                    <option value="2">Proveedor2</option>
-                    <option value="3">Proveedor3</option>
                 </select>
                 <label for="ubicacion">Ubicación</label><br>
                 <div class="boton">
-                    <input type="text" id="ubicacion" name="ubicacion" placeholder="Almacén, bodega..." required>
+                    <select id="ubicacion" name="ubicacion">
+                        <option>Selecciona una Ubicación</option>
                         <button onclick="location.href='FinanzasyRecursos-FormularioNuevaUbicacion.html'" class="Boton-icono"><img src="iconos/agregar.png" alt="agregar"></button>
                 </div>
-                <label for="estado">Estado</label><br>
-                <select id="estado" name="estado">
-                    <option value="">Estado</option>
-                    <option value="estado1">Disponible</option>
-                    <option value="estado2">Bajo</option>
-                </select><br>
                 <br><input type="submit" value="Guardar Ítem">
             </div>   
         </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                fetch('php/finanzasyrecursos/FinanzasyRecursos-SelectProveedor.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        const select = document.getElementById('proveedor');
+                        data.forEach(proveedor => {
+                            const option = document.createElement('option');
+                            option.value = proveedor.CVE_COMPRADOR;
+                            option.textContent = proveedor.NOMBRE;
+                            select.appendChild(option);
+                            });
+                        })
+                });
+            document.addEventListener('DOMContentLoaded', () => {
+                fetch('php/finanzasyrecursos/FinanzasyRecursos-SelectUbicacion.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        const select = document.getElementById('ubicacion');
+                        data.forEach(ubicacion => {
+                            const option = document.createElement('option');
+                            option.value = ubicacion.CVE_BODEGA;
+                            option.textContent = ubicacion.NOMBRE;
+                            select.appendChild(option);
+                            });
+                        })
+                });
+        </script>
     </body>         
 </html>
