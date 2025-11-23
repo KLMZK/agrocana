@@ -46,7 +46,7 @@ label{
     text-align: justify;
     font-weight:550;
 }
-input[type=text], textarea, input[type=date], input[type=float], select, input[type=number], input[type=password],input[type=email],input[type=datetime]{
+input[type=text], textarea, input[type=date], input[type=float], select, input[type=number], input[type=password],input[type=email],input[type=datetime-local]{
     width: 100%;
     padding: 12px 20px;
     margin: 5px 0;

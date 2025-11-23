@@ -24,6 +24,7 @@
             }
             .centrado div {
                 width: 48%;
+                padding-inline: 3px;
             }
             form {
                 width: 40%;
@@ -54,29 +55,69 @@
                     </select>
                 </div>
             </div>
-            <label for="conductor">Conductor</label><br>
-            <select id="conductor" required>
-                <option disabled selected>Selecciona Conductor</option>
-                <option id="1">Conductor 1</option>
-            </select><br>
             <div class="centrado">
                 <div>
-                    <label for="origen">Origen</label><br>
-                    <input type="text" value="AgroCaña Lara" id="origen" required/>
+                    <label for="conductor">Conductor</label><br>
+                    <select id="conductor" required>
+                        <option disabled selected>Selecciona Conductor</option>
+                        <option id="1">Conductor 1</option>
+                    </select><br>
                 </div>
                 <div>
-                    <label for="destino">Destino</label><br>
-                    <input type="text" placeholder="Direccion de entrega" id="destino" required/>
+                    <label for="costo">Costo</label><br>
+                    <input type="number" placeholder="$00.00" id="costo" required />
+                </div>
+            </div>
+            <label style="font-size: 18px;">Origen</label><br>
+            <div class="centrado">
+                <div>
+                    <label for="origen-municipio">Municipio</label><br>
+                    <select id="origen-municipio" required>
+                        <option disabled selected>Selecciona municipio</option>
+                        <option value="Tabasco">Tabasco</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="origen-colonia">Colonia</label><br>
+                    <select id="origen-colonia" required>
+                        <option disabled selected>Selecciona colonia</option>
+                        <option value="Pob C-28">Poblado C-28</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="origen-calle">Calle</label><br>
+                    <input type="text" value="AgroCaña Lara" id="origen-calle" required/>
+                </div>
+            </div>
+            <label style="font-size: 18px;">Destino</label><br>
+            <div class="centrado">
+                <div>
+                    <label for="destino-municipio">Municipio</label><br>
+                    <select id="destino-municipio" required>
+                        <option disabled selected>Selecciona municipio</option>
+                        <option value="Tabasco">Tabasco</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="destino-colonia">Colonia</label><br>
+                    <select id="destino-colonia" required>
+                        <option disabled selected>Selecciona colonia</option>
+                        <option value="Pob C-28">Poblado C-28</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="destino-calle">Calle</label><br>
+                    <input type="text" placeholder="Ingrese el nombre de la calle" id="destino-calle" required/>
                 </div>
             </div>
             <div class="centrado">
                 <div>
                     <label for="salida">Fecha y Hora de salida</label><br>
-                    <input type="datetime" placeholder="dd/mm/aaaa hh:mm" id="salida" required/>
+                    <input type="datetime-local" placeholder="dd/mm/aaaa hh:mm" id="salida" required/>
                 </div>
                 <div>
                     <label for="llegada">Fecha y Hora estimada de llegada</label><br>
-                    <input type="datetime" placeholder="dd/mm/aaaa hh:mm" id="llegada" required/>
+                    <input type="datetime-local" placeholder="dd/mm/aaaa hh:mm" id="llegada" required/>
                 </div>
             </div>
             <label for="observaciones">Observaciones</label><br>
@@ -86,4 +127,11 @@
             </div>
         </form>
     </body>
+    <script>
+        fetch("Envios-form.php")
+        .then(res => res.json())
+        .then(datos => {
+
+        });
+    </script>
 </html>
