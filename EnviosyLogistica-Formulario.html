@@ -27,16 +27,20 @@
                 padding-inline: 3px;
             }
             form {
+                margin-top: 200px;
                 width: 40%;
                 padding-top: 30px;
             }
             h1 {
                 margin-left: 0px;
             }
+            select.invalid {
+                outline: 2px solid #e53935;
+            }
         </style>
     </head>
-    <body>
-        <form action="Envios.php" method="post">
+    <body onload="inicio()">
+        <form action="php/envios/Envios-form.php" method="post" onsubmit="invalido(e)">
             <h1>Programar Nuevo Envío</h1><br>
             <h2 style="color: #8B8383;">Programa la entrega</h2>
             <div class="centrado">
@@ -44,14 +48,12 @@
                     <label for="pedido">Pedido</label><br>
                     <select id="pedido" required>
                         <option disabled selected >Selecciona Pedido</option>
-                        <option value="1">Seleccionar pedido</option>
                     </select>
                 </div>
                 <div>
                     <label for="vehiculo">Vehículo</label><br>
                     <select id="vehiculo" required>
                         <option disabled selected>Selecciona Vehículo</option>
-                        <option value="1">Vehículo 1</option>
                     </select>
                 </div>
             </div>
@@ -60,7 +62,6 @@
                     <label for="conductor">Conductor</label><br>
                     <select id="conductor" required>
                         <option disabled selected>Selecciona Conductor</option>
-                        <option id="1">Conductor 1</option>
                     </select><br>
                 </div>
                 <div>
@@ -71,17 +72,13 @@
             <label style="font-size: 18px;">Origen</label><br>
             <div class="centrado">
                 <div>
-                    <label for="origen-municipio">Municipio</label><br>
-                    <select id="origen-municipio" required>
-                        <option disabled selected>Selecciona municipio</option>
-                        <option value="Tabasco">Tabasco</option>
-                    </select>
+                    <label for="origen-cp">Codigo Postal</label><br>
+                    <input type="text" id="origen-cp" placeholder="Ingrese el codigo postal" required onchange="coloniasO()"/>
                 </div>
                 <div>
                     <label for="origen-colonia">Colonia</label><br>
                     <select id="origen-colonia" required>
                         <option disabled selected>Selecciona colonia</option>
-                        <option value="Pob C-28">Poblado C-28</option>
                     </select>
                 </div>
                 <div>
@@ -92,17 +89,13 @@
             <label style="font-size: 18px;">Destino</label><br>
             <div class="centrado">
                 <div>
-                    <label for="destino-municipio">Municipio</label><br>
-                    <select id="destino-municipio" required>
-                        <option disabled selected>Selecciona municipio</option>
-                        <option value="Tabasco">Tabasco</option>
-                    </select>
+                    <label for="destino-cp">Codigo Postal</label><br>
+                    <input type="text" id="destino-cp" placeholder="Ingrese el codigo postal" required onchange="coloniasD()"/>
                 </div>
                 <div>
                     <label for="destino-colonia">Colonia</label><br>
                     <select id="destino-colonia" required>
                         <option disabled selected>Selecciona colonia</option>
-                        <option value="Pob C-28">Poblado C-28</option>
                     </select>
                 </div>
                 <div>
@@ -123,15 +116,97 @@
             <label for="observaciones">Observaciones</label><br>
             <textarea id="observaciones" placeholder="Notas del Envío" style="size: 100px;" required></textarea><br>
             <div align="center">
-                <input type="submit" value="Guardar Envío" />
+                <input type="submit" value="Guardar Envío"/>
             </div>
         </form>
     </body>
     <script>
-        fetch("Envios-form.php")
-        .then(res => res.json())
-        .then(datos => {
+        function inicio() {
+            fetch("php/envios/SelectConductores.php")
+            .then(res => res.json())
+            .then(datos => {
+                var select = document.getElementById("conductor");
+                datos.forEach(conductor => {
+                    const option = document.createElement('option');
+                    option.value = conductor.CVE_USUARIO;
+                    option.textContent = conductor.NOMBRE + " " + conductor.APELLIDO_P + " " + conductor.APELLIDO_M;
+                    select.appendChild(option);
+                });
+            });
+            fetch("php/envios/SelectPedidos.php")
+            .then(res => res.json())
+            .then(datos => {
+                var select = document.getElementById("pedido");
+                datos.forEach(pedido => {
+                    const option = document.createElement('option');
+                    option.value = pedido.CVE_PEDIDO;
+                    option.textContent = pedido.CVE_PEDIDO;
+                    select.appendChild(option);
+                });
+            });
+            fetch("php/envios/SelectVehiculos.php")
+            .then(res => res.json())
+            .then(datos => {
+                var select = document.getElementById("vehiculo");
+                datos.forEach(pedido => {
+                    const option = document.createElement('option');
+                    option.value = pedido.PLACA;
+                    option.textContent = pedido.PLACA;
+                    select.appendChild(option);
+                });
+            });
+            const form = document.querySelector('form');
 
+        form.addEventListener('submit', (e) => {
+            const selects = Array.from(form.querySelectorAll('select'));
+            const invalid = selects.filter(s => !s.value || s.selectedIndex === 0);
+
+            if (invalid.length) {
+                e.preventDefault();
+                invalid.forEach(s => s.classList.add('invalid'));
+                invalid[0].focus();
+                alert('Por favor selecciona una opción en todos los desplegables antes de enviar.');
+                return false;
+            }
         });
+        
+        document.querySelectorAll('select').forEach(s => {
+            s.addEventListener('change', () => s.classList.remove('invalid'));
+        });
+        }
+        function coloniasO() {
+            const cp = document.getElementById("origen-cp").value.trim();
+            const select = document.getElementById("origen-colonia");
+            Array.from(select.options).forEach((opt, idx) => { if (idx !== 0) opt.remove(); });
+            if (!cp) return;
+            fetch("php/envios/SelectColonias.php?id=" + encodeURIComponent(cp))
+                .then(res => res.json())
+                .then(datos => {
+                    var select = document.getElementById("origen-colonia");
+                    datos.forEach(colonia => {
+                        const option = document.createElement('option');
+                        option.value = colonia.CVE_COLONIA;
+                        option.textContent = colonia.NOMBRE;
+                        select.appendChild(option);
+                    });
+                });
+        }
+        function coloniasD() {
+            const cp = document.getElementById("destino-cp").value.trim();
+            const select = document.getElementById("destino-colonia");
+            Array.from(select.options).forEach((opt, idx) => { if (idx !== 0) opt.remove(); });
+            if (!cp) return;
+            fetch("php/envios/SelectColonias.php?id=" + encodeURIComponent(cp))
+                .then(res => res.json())
+                .then(datos => {
+                    var select = document.getElementById("destino-colonia");
+                    datos.forEach(colonia => {
+                        const option = document.createElement('option');
+                        option.value = colonia.CVE_COLONIA;
+                        option.textContent = colonia.NOMBRE;
+                        select.appendChild(option);
+                    });
+                });
+        }
     </script>
 </html>
