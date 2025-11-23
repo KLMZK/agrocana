@@ -9,24 +9,55 @@
         <link rel="stylesheet" href="estilos/formulariosedit.css">
     </head>
     <body>
-        <form action="FinanzasyRecursos_FormUbicacion.php" method="post">
+        <form action="php/finanzasyrecursos/FinanzasyRecursos_FormUbicacion.php" method="post">
             <p></p>
             <h1 class="inder-regular">Agregar Nueva Ubicación</h1><br>
              <h2 >Registra nueva ubicación</h2><br>
-            <div align="center">
 
                     <label for="NomUbi">Nombre de la nueva ubicación</label><br>
-                    <input type="text" id="NomUbi" name="NomUbi" placeholder="Nombre de la nueva ubicación" required>
+                    <input type="text" id="NomUbi" name="NomUbi" placeholder="Nombre de la nueva bodega.." required>
                     <label for="direccion">Dirección</label><br>
                     <input type="text" id="direccion" name="direccion" placeholder="Dirección" required><br>
-                    <label for="Colonia">Colonia</label><br>
-                    <select id="colonia" name="Colonia">
-                        <option value="">Colonias</option>
-                        <option value="1">Colonia1</option>
-                        <option value="2">Colonia2</option>
-                        <option value="3">Colonia3</option>
+                    <label for="ciudad">Ciudad</label><br>
+                    <select id="ciudad" name="ciudad">
+                        <option value="">Selecciona una ciudad</option>
                     </select>
-                    <br><input type="submit" value="Guardar Ubicación">
+                    <label for="colonia">Colonia</label><br>
+                    <select id="colonia" name="colonia">
+                        <option value="">Selecciona una colonia</option>
+                    </select>
+                    <br><br><input type="submit" value="Guardar Ubicación">
         </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                fetch('php/finanzasyrecursos/FinanzasyRecursos-SelectCiudad.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        const select = document.getElementById('ciudad');
+                        data.forEach(ciudad => {
+                            const option = document.createElement('option');
+                            option.value = ciudad.CVE_CIUDAD;
+                            option.textContent = ciudad.NOMBRE;
+                            select.appendChild(option);
+                            });
+                        })
+                });
+                document.getElementById("ciudad").addEventListener("change", function() {
+                    const ciudadID = this.value;
+                    fetch("php/finanzasyrecursos/FinanzasyRecursos-SelectColonias.php?ciudad=" + ciudadID)
+                        .then(response => response.json())
+                        .then(data => {
+                            const coloniaSelect = document.getElementById("colonia");
+                            coloniaSelect.innerHTML = '<option value="">Selecciona una colonia</option>';
+                            data.forEach(col => {
+                                const option = document.createElement("option");
+                                option.value = col.CVE_COLONIA;
+                                option.textContent = col.NOMBRE;
+                                coloniaSelect.appendChild(option);
+                            });
+
+                        });
+                });
+        </script>
     </body>         
 </html>

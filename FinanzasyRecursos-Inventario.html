@@ -18,6 +18,17 @@
                 width: 410px;
                 height:3px;
             }
+            .tabla-inventario {
+                display: block;
+                max-height: 400px;
+                overflow-y: auto;
+            }
+            .tabla-inventario thead, 
+            .tabla-inventario tbody tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed; 
+            }
         </style>
     </head>
     <body>
@@ -97,13 +108,40 @@
                                     <td>${inventario.UBICACION}</td>
                                     <td>${inventario.ESTADO}</td>
                                     <td class="acciones">
-                                        <button type="button" class="Boton-icono" onclick="window.location.href='FinanzasyRecursos-EditarAgregarTransporte.html?id=${inventario.CVE_ITEM}'"><img src="iconos/editar.png"></button>
+                                        <button class="Boton-icono" onclick="cambiarEstado('${inventario.CVE_ITEM}')"><img src="iconos/cambiar.png"></button>
+                                        <button type="button" class="Boton-icono" onclick="window.location.href='FinanzasyRecursos-EditarAgregarItem.html?id=${inventario.CVE_ITEM}'"><img src="iconos/editar.png"></button>
                                         <button class="Boton-icono" onclick="eliminar('${inventario.CVE_ITEM}')"><img src="iconos/eliminar.png"></button>
                                     </td>
                                 </tr>
                             `;
                         });
                     });
+                function cambiarEstado(id) {
+                    fetch("php/finanzasyrecursos/FinanzasyRecursos-CambiarEstadoItem.php", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                        body: "id=" + encodeURIComponent(id)
+                    })
+                    .then(res => res.text())
+                    .then(resp => {
+                        alert(resp);
+                        location.reload();
+                    });
+                }
+                function eliminar(id) {
+                    if(confirm("¿Estás seguro de que deseas eliminar este Item?")) {
+                        fetch("php/finanzasyrecursos/FinanzasyRecursos-EliminarRegistroItem.php", {
+                            method: "POST",
+                            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                            body: "id=" + id
+                        })
+                        .then(res => res.text())
+                        .then(resp => {
+                            alert(resp);
+                            location.reload();
+                        });
+                    }
+                }
             </script>
     </body>
 </html>

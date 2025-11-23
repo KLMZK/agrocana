@@ -55,15 +55,31 @@
             .Boton-icono:hover {
                 background-color: #E6E6E6;
             }
+            input[type=button]{
+                background-color: #395018;
+                color: white;
+                padding: 10px 20px;
+                margin-top: 1px;
+                border: none;
+                cursor: pointer;
+                width: 90%;
+                border-radius: 10px;
+                font-size: 17px;
+                font-weight:540;
+            }
+            input[type=button]:hover{
+                background-color: #2a3c11;
+            }
         </style>
     </head>
     <body>
-        <form action="php/finanzasyrecursos/FinanzasyRecursos_FormNuevoItem.php" method="post">
+        <form>
             <p></p>
             <h1 class="inder-regular">Nuevo Ítem</h1><br>
             <h2 >Registra o edita un ítem</h2><br>
             <div align="center">
                 <div class="contenedor">
+                    <input type="hidden" id="id" name="id" value="">
                     <div class="form">
                         <label for="Nomitem">Nombre</label>
                         <input type="text" id="Nomitem" name="Nomitem" placeholder="Nombre del Insumo/Herramienta..." required>
@@ -103,36 +119,68 @@
                     </select>
                         <button onclick="location.href='FinanzasyRecursos-FormularioNuevaUbicacion.html'" class="Boton-icono"><img src="iconos/agregar.png" alt="agregar"></button>
                 </div>
-               <br> <input type="submit" value="Guardar Ítem">
+               <br> <input type="button" onclick="guardarCambios()" value="Guardar Ítem">
             </div>   
         </form>
         <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                fetch('php/finanzasyrecursos/FinanzasyRecursos-SelectProveedor.php')
-                    .then(response => response.json())
-                    .then(data => {
-                        const select = document.getElementById('proveedor');
-                        data.forEach(proveedor => {
-                            const option = document.createElement('option');
-                            option.value = proveedor.CVE_COMPRADOR;
-                            option.textContent = proveedor.NOMBRE;
-                            select.appendChild(option);
-                            });
-                        })
+            document.addEventListener('DOMContentLoaded', async () => {
+                const unidadSelect = document.getElementById('unidad');
+                const proveedorSelect = document.getElementById('proveedor');
+                const ubicacionSelect = document.getElementById('ubicacion');
+                const urlParams = new URLSearchParams(window.location.search);
+                const id = urlParams.get('id');
+
+                async function cargarSelect(url, select, valorKey, textoKey) {
+                    const res = await fetch(url);
+                    const data = await res.json();
+                    select.innerHTML = '';
+                    data.forEach(items => {
+                        const option = document.createElement('option');
+                        option.value = items[valorKey];
+                        option.textContent = items[textoKey];
+                        select.appendChild(option);
+                    });
+                }
+                await cargarSelect('php/finanzasyrecursos/FinanzasyRecursos-SelectProveedor.php', proveedorSelect, 'CVE_COMPRADOR', 'NOMBRE');
+                await cargarSelect('php/finanzasyrecursos/FinanzasyRecursos-SelectUbicacion.php', ubicacionSelect, 'CVE_BODEGA', 'NOMBRE');
+
+
+                const resItem = await fetch(`php/finanzasyrecursos/FinanzasyRecursos-ObtenerItem.php?id=${id}`);
+                const Items = await resItem.json();
+                console.log(Items);
+
+                document.getElementById("id").value = id;
+                document.getElementById("Nomitem").value = Items.NOMBRE;
+                document.getElementById("categoria").value = Items.CATEGORIA;
+                document.getElementById("cantidad").value = Items.CANTIDAD;
+                unidadSelect.value = Items.UNIDAD;
+                document.getElementById("costo").value = Items.COSTO;
+                proveedorSelect.value = Items.PROVEEDOR;
+                ubicacionSelect.value = Items.BODEGA;
+            });
+
+            function guardarCambios() {
+                const datos = {
+                    id: document.getElementById("id").value,
+                    nombre: document.getElementById("Nomitem").value,
+                    categoria: document.getElementById("categoria").value,
+                    cantidad: document.getElementById("cantidad").value,
+                    unidad: document.getElementById("unidad").value,
+                    costo: document.getElementById("costo").value,
+                    proveedor: document.getElementById("proveedor").value,
+                    bodega: document.getElementById("ubicacion").value,
+                };
+                fetch("php/finanzasyrecursos/FinanzasyRecursos-ActualizarItem.php", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(datos)
+                })
+                .then(res => res.text())
+                .then(resp => {
+                    alert("Item actualizado correctamente");
+                    window.location.href = "FinanzasyRecursos-Inventario.html";
                 });
-            document.addEventListener('DOMContentLoaded', () => {
-                fetch('php/finanzasyrecursos/FinanzasyRecursos-SelectUbicacion.php')
-                    .then(response => response.json())
-                    .then(data => {
-                        const select = document.getElementById('ubicacion');
-                        data.forEach(ubicacion => {
-                            const option = document.createElement('option');
-                            option.value = ubicacion.CVE_BODEGA;
-                            option.textContent = ubicacion.NOMBRE;
-                            select.appendChild(option);
-                            });
-                        })
-                });
+            }
         </script>
     </body>         
 </html>

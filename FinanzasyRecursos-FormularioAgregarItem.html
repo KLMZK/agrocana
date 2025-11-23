@@ -9,20 +9,31 @@
         <link rel="stylesheet" href="estilos/formulariosedit.css">
     </head>
     <body>
-        <form action="FinanzasyRecursos_FormAgregarItem.php" method="post">
+        <form action="php/finanzasyrecursos/FinanzasyRecursos_FormAgregarItem.php" method="post">
             <p></p>
             <h1 class="inder-regular">Agregar Ítem</h1><br>
-            <div align="center">
-
-                    <label for="nombreitem">Nombre</label><br>
-                    <select id="nombreitem" name="nombreitem">
+                    <label for="item">Nombre</label><br>
+                    <select id="item" name="item">
                         <option value="">Seleccionar el ítem a agregar</option>
-                        <option value="item1">Ítem 1</option>
-                        <option value="item2">ítem 2</option>
                     </select>
                     <label for="cantidad">Cantidad</label><br>
                     <input type="number" id="cantidad" name="cantidad" placeholder="0" required><br>
                     <br><input type="submit" value="Guardar Ítem">
         </form>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                fetch('php/finanzasyrecursos/FinanzasyRecursos_SelectItem.php')
+                    .then(response => response.json())
+                    .then(data => {
+                        const select = document.getElementById('item');
+                        data.forEach(item => {
+                            const option = document.createElement('option');
+                            option.value = item.CVE_ITEM;
+                            option.textContent = item.NOMBRE;
+                            select.appendChild(option);
+                            });
+                        })
+                });
+        </script>
     </body>         
 </html>
