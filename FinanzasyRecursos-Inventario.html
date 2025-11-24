@@ -38,20 +38,21 @@
         <div class="contenedor">
             <div class="cuadros">
                 <p style="font-weight: bold;">Total Ingresos</p>
-                <text style="color:#316C1B; font-size: 25px; margin-top: 30px;">$40,000</text><br>
+                <text id="ingresosMes" style="color:#316C1B; font-size:25px; margin-top: 30px;">Cargando...</text><br>
                 <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Mes actual</text>
             </div>
             <div class="cuadros">
                 <p style="font-weight: bold;">Total Gastos</p>
-                <text style="color:#C51B1B; font-size: 25px; margin-top: 30px;">$10,000</text><br>
+                <text id="gastosMes" style="color:#C51B1B; font-size: 25px; margin-top: 30px;">Cargando...</text><br>
                 <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Mes actual</text>
             </div>
             <div class="cuadros">
                 <p style="font-weight: bold;">Balance</p>
-                <text style="color:#316C1B; font-size: 25px; margin-top: 30px;">$40,000</text><br>
+                <text id="balanceMes" style="color:#316C1B; font-size: 25px; margin-top: 30px;">Cargando...</text><br>
                 <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Resultado Neto</text>
             </div>
         </div>
+
 
         <div class="seleccion" style="gap:10px;">
             <form action="FinanzasyRecursos-Presupuesto.html" style="margin-top: 17px;">
@@ -94,6 +95,35 @@
                 </table>
             </div>
             <script>
+                let ingresos = 0;
+                let gastos = 0;
+
+                const Ingr = fetch("php/finanzasyrecursos/FinanzasyRecursos_VistaIngreso.php")
+                    .then(res => res.json())
+                    .then(data => {
+                        ingresos = Number(data.totalIngresos);
+                        document.getElementById("ingresosMes").textContent =
+                            "$" + ingresos.toLocaleString();
+                    });
+                const Gast = fetch("php/finanzasyrecursos/FinanzasyRecursos_VistaGasto.php")
+                    .then(res => res.json())
+                    .then(data => {
+                        gastos = Number(data.totalGastos);
+                        document.getElementById("gastosMes").textContent =
+                            "$" + gastos.toLocaleString();
+                    });
+
+                Promise.all([Ingr, Gast]).then(() => {
+                    const balance = ingresos - gastos;
+
+                    document.getElementById("balanceMes").textContent =
+                        "$" + balance.toLocaleString();
+                    if (balance < 0) {
+                        document.getElementById("balanceMes").style.color = "#C51B1B";
+                    } else {
+                        document.getElementById("balanceMes").style.color = "#346E19"; 
+                    }
+                });
                 fetch("php/finanzasyrecursos/FinanzasyRecursos-ConsultaIventario.php")
                     .then(res => res.json())
                     .then(data => {

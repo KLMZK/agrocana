@@ -77,7 +77,7 @@
             </div>
             <div class="cuadros">
                 <p style="font-weight: bold;">Balance</p>
-                <text style="color:#316C1B; font-size: 25px; margin-top: 30px;">$40,000</text><br>
+                <text id="balanceMes" style="color:#316C1B; font-size: 25px; margin-top: 30px;">Cargando...</text><br>
                 <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Resultado Neto</text>
             </div>
         </div>
@@ -103,80 +103,92 @@
                     <p class="titulo">Gastos por Categoría</p>
                 <div class="gastos">
                     <text class="categoria">Insumos</text>
-                    <text class="valor">$00,000<br></text>
+                    <text class="valor" id="gastoInsumos">$00,000<br></text>
                 </div>
                 <div class="gastos">
                     <text class="categoria">Mano de Obra</text>
-                    <text class="valor">$00,000<br></text>
+                    <text class="valor" id="gastoActividades">$00,000<br></text>
                 </div>
                 <div class="gastos">
-                    <text class="categoria">Transporte</text>
-                    <text class="valor">$00,000<br></text>
+                    <text class="categoria">Envios</text>
+                    <text class="valor" id="gastoEnvios">$00,000<br></text>
                 </div>
                 <div class="gastos">
-                    <text class="categoria">Herramientas</text>
-                    <text class="valor">$00,000<br></text>
+                    <text class="categoria">Mantenimiento</text>
+                    <text class="valor" id="gastoMantenimiento">$00,000<br></text>
                 </div>
                 </div>
-                <div class="info">
+                <div class="info" style="display: block; overflow-y: auto;">
                     <p class="titulo">Registros por movimiento</p>
-                    <div class="gastos" style="border-bottom: 1px solid #D9D9D9;">
-                        <div class="detalle">
-                            <text class="categoria">Fertilizantes NPK</text>
-                            <p class="dato">Insumos - dd/mm/aaaa</p>
-                        </div>
-                        <text class="valor" style="color:#C51B1B;">$00,000<br></text>
-                    </div>
-                    <div class="gastos" style="border-bottom: 1px solid #D9D9D9;">
-                        <div class="detalle">
-                            <text class="categoria">Pago Trabajadores</text>
-                            <p class="dato">Mano de Obra - dd/mm/aaaa</p>
-                        </div>
-                        <text class="valor" style="color:#C51B1B;">$00,000<br></text>
-                    </div>
-                    <div class="gastos" style="border-bottom: 1px solid #D9D9D9;">
-                        <div class="detalle">
-                            <text class="categoria">Combustible</text>
-                            <p class="dato">Transporte - dd/mm/aaaa</p>
-                        </div>
-                        <text class="valor" style="color:#C51B1B;">$00,000<br></text>
-                    </div>
-                    <div class="gastos" style="border-bottom: 1px solid #D9D9D9;">
-                        <div class="detalle">
-                            <text class="categoria">Venta de cosecha</text>
-                            <p class="dato">Venta - dd/mm/aaaa</p>
-                        </div>
-                        <text class="valor" style="color:#346E19;">$00,000<br></text>
-                    </div>
-                    <div class="gastos" style="border-bottom: 1px solid #D9D9D9;">
-                        <div class="detalle">
-                            <text class="categoria">Reparación</text>
-                            <p class="dato">Herramientas - dd/mm/aaaa</p>
-                        </div>
-                        <text class="valor" style="color:#C51B1B;">$00,000<br></text>
-                    </div>
-                    <div class="gastos" style="border-bottom: 1px solid #D9D9D9;">
-                        <div class="detalle">
-                            <text class="categoria">Venta</text>
-                            <p class="dato">Venta - dd/mm/aaaa</p>
-                        </div>
-                        <text class="valor" style="color:#346E19;">$00,000<br></text>
-                    </div>
+                        <div id="listaMovimientos"></div>
                 </div>
             </div>
         </form>
         <script>
-            fetch("php/finanzasyrecursos/FinanzasyRecursos_VistaIngreso.php")
+            let ingresos = 0;
+            let gastos = 0;
+
+            const Ingr = fetch("php/finanzasyrecursos/FinanzasyRecursos_VistaIngreso.php")
                 .then(res => res.json())
                 .then(data => {
+                    ingresos = Number(data.totalIngresos);
                     document.getElementById("ingresosMes").textContent =
-                        "$" + Number(data.totalIngresos).toLocaleString();
+                        "$" + ingresos.toLocaleString();
                 });
+            const Gast = fetch("php/finanzasyrecursos/FinanzasyRecursos_VistaGasto.php")
+                .then(res => res.json())
+                .then(data => {
+                    gastos = Number(data.totalGastos);
+                    document.getElementById("gastosMes").textContent =
+                        "$" + gastos.toLocaleString();
+                });
+
+            Promise.all([Ingr, Gast]).then(() => {
+                const balance = ingresos - gastos;
+
+                document.getElementById("balanceMes").textContent =
+                    "$" + balance.toLocaleString();
+                if (balance < 0) {
+                    document.getElementById("balanceMes").style.color = "#C51B1B";
+                } else {
+                    document.getElementById("balanceMes").style.color = "#346E19"; 
+                }
+            });
             fetch("php/finanzasyrecursos/FinanzasyRecursos_VistaGasto.php")
                 .then(res => res.json())
                 .then(data => {
-                    document.getElementById("gastosMes").textContent =
-                        "$" + Number(data.totalGastos).toLocaleString();
+                    document.getElementById("gastoInsumos").textContent =
+                        "$" + Number(data.gInsumos).toLocaleString();
+
+                    document.getElementById("gastoActividades").textContent =
+                        "$" + Number(data.gActividades).toLocaleString();
+
+                    document.getElementById("gastoEnvios").textContent =
+                        "$" + Number(data.gEnvios).toLocaleString();
+
+                    document.getElementById("gastoMantenimiento").textContent =
+                        "$" + Number(data.gMantenimientos).toLocaleString();
+                });
+                fetch("php/finanzasyrecursos/FinanzasyRecursos_Movimientos.php")
+                .then(res => res.json())
+                .then(data => {
+                    const cont = document.getElementById("listaMovimientos");
+                    cont.innerHTML = "";
+                    data.forEach(m => {
+                        const color = m.tipo == 0 ? "#C51B1B" : "#346E19";
+                        const fecha = new Date(m.FECHA).toLocaleDateString();
+                        cont.innerHTML += `
+                            <div class="gastos" style="border-bottom:1px solid #D9D9D9;">
+                                <div class="detalle">
+                                    <text class="categoria">${m.nombre}</text>
+                                    <p class="dato">${m.categoria} - ${fecha}</p>
+                                </div>
+                                <text class="valor" style="color:${color};">
+                                    $${Number(m.monto).toLocaleString()}<br>
+                                </text>
+                            </div>
+                        `;
+                    });
                 });
         </script>
     </body>
