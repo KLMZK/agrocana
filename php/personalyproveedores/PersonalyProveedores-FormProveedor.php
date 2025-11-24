@@ -1,5 +1,5 @@
 <?php
-include "conexion/conexion.php";
+include "../../conexion/conexion.php";
 
 if(isset($_POST['nombre'])){
 
@@ -17,7 +17,7 @@ if(isset($_POST['nombre'])){
 
             echo "<script>
                 alert('Proveedor guardado exitosamente');
-                window.location.href = 'PersonalyProveedores-Proveedores.html';
+                window.location.href = '../../PersonalyProveedores-Proveedores.html';
               </script>";
 
     } else {
