@@ -23,14 +23,16 @@
                 font-size: 16px; 
             }
             .info{
-                border: 1px solid #D9D9D9;
+                border: 2px solid #D9D9D9;
                 background-color: transparent;
                 border-radius: 10px;
                 padding: 20px;
                 font-family: "Inter", sans-serif;
                 font-size: 16px; 
-                width: 100%;
+                width: 50%;
                 height: 600px;
+                margin-left: 20px;
+                margin-top: 15px;
             }
             .titulo{
                 margin-top: 0px;
@@ -58,6 +60,17 @@
                 margin-right: 15px;
                 flex-grow: 1px;
             }
+            .tabla-proveedores {
+                display: block;
+                max-height: 400px;
+                overflow-y: auto;
+            }
+            .tabla-proveedores thead, 
+            .tabla-proveedores tbody tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed; 
+            }
         </style>
     </head>
     <body>
@@ -77,92 +90,71 @@
                     Proveedores</button>
             </form>
         </div>
-            <div class="contenido" style="height: 500px; gap: 5px;">
-                <div class="arriba" style="justify-content: space-between; padding-bottom: 5px; margin-bottom:0 ;">
-                <text>Lista de Proveedores</text>
-                <div class="bot">
-                    <form action="PersonalyProveedores-FormularioAgregarProveedor.html">
-                    <button ><img src="iconos/anadir.png" alt="anadir"  width="14" height="14">Agregar Proveedor</button>
-                    </form>
+            <div class="contenedor" style="display: block; margin-left: 0;">
+                <div class="contenido" style="height: 500px;">
+                    <div class="arriba" style="justify-content: space-between; padding-bottom: 5px; margin-bottom:0 ;">
+                        <text>Lista de Proveedores</text>
+                        <div class="bot">
+                            <form action="PersonalyProveedores-FormularioAgregarProveedor.html">
+                                <button ><img src="iconos/anadir.png" alt="anadir"  width="14" height="14">Agregar Proveedor</button>
+                            </form>
+                        </div>
+                    </div>
+                    <table class="tabla-proveedores" style="margin-top: 10px;">
+                        <tr>
+                            <th style="font-size: 14px;">Proveedor</th>
+                            <th style="font-size: 14px;">Tipo de Insumo</th>
+                            <th style="font-size: 14px;">Contacto</th>
+                            <th style="font-size: 14px;">Última Compra</th>
+                            <th style="font-size: 14px;">Acciones</th>
+                        </tr>
+                        <tbody id="tablaProveedores">
+                        </tbody>
+                    </table>
                 </div>
-                </div>
-                <table class="tabla-proveedores" style="margin-top: 10px;">
-                    <tr>
-                        <th style="font-size: 14px;">Proveedor</th>
-                        <th style="font-size: 14px;">Tipo de Insumo</th>
-                        <th style="font-size: 14px;">Contacto</th>
-                        <th style="font-size: 14px;">Última Compra</th>
-                        <th style="font-size: 14px;">Acciones</th>
-                    </tr>
-                    <tr>
-                        <td><p>Nombre</p>
-                        <p style="color:#8B8383; font-size:15px;"><img src="iconos/sobre.png" alt="sobre"  width="14" height="14">Correo</p></td>
-                        <td>Insumos</td>
-                        <td><img src="iconos/telefono.png" alt="telefono"  width="14" height="14">000-0000</td>
-                        <td>dd/mm/aaaa</td>
-                        <td class="acciones">
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><p>Nombre</p>
-                        <p style="color:#8B8383; font-size:15px;"><img src="iconos/sobre.png" alt="sobre"  width="14" height="14">Correo</p></td>
-                        <td>Insumos</td>
-                        <td><img src="iconos/telefono.png" alt="telefono"  width="14" height="14">000-0000</td>
-                        <td>dd/mm/aaaa</td>
-                        <td class="acciones">
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><p>Nombre</p>
-                        <p style="color:#8B8383; font-size:15px;"><img src="iconos/sobre.png" alt="sobre"  width="14" height="14">Correo</p></td>
-                        <td>Insumos</td>
-                        <td><img src="iconos/telefono.png" alt="telefono"  width="14" height="14">000-0000</td>
-                        <td>dd/mm/aaaa</td>
-                        <td class="acciones">
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><p>Nombre</p>
-                        <p style="color:#8B8383; font-size:15px;"><img src="iconos/sobre.png" alt="sobre"  width="14" height="14">Correo</p></td>
-                        <td>Insumos</td>
-                        <td><img src="iconos/telefono.png" alt="telefono"  width="14" height="14">000-0000</td>
-                        <td>dd/mm/aaaa</td>
-                        <td class="acciones">
-                            <button class="Boton-icono"><img src="iconos/editar.png" alt="editar"></button>
-                            <button class="Boton-icono"><img src="iconos/eliminar.png" alt="eliminar"></button>
-                        </td>
-                    </tr>
-                </table><br>
-                <br><div class="info">
+                <div class="info">
                         <p class="titulo">Historial de Compras Recientes</p>
-                        <div class="gastos" style="border-bottom: 1px solid #D9D9D9;">
-                            <div class="detalle">
-                                <text class="categoria">Nombre</text>
-                                <p class="dato">Insumo - $$Compra</p>
-                            </div>
-                            <text class="valor">dd/mm/aaaa<br></text>
-                        </div>
-                        <div class="gastos" style="border-bottom: 1px solid #D9D9D9;">
-                            <div class="detalle">
-                                <text class="categoria">Nombre</text>
-                                <p class="dato">Insumo - $$Compra</p>
-                            </div>
-                            <text class="valor">dd/mm/aaaa<br></text>
-                        </div>
-                        <div class="gastos" style="border-bottom: 1px solid #D9D9D9;">
-                            <div class="detalle">
-                                <text class="categoria">Nombre</text>
-                                <p class="dato">Insumo - $$Compra</p>
-                            </div>
-                            <text class="valor">dd/mm/aaaa<br></text>
-                        </div>
+                        <div id="listaHistorial"></div>
                 </div>
             </div>
+            <script>
+                fetch("php/personalyproveedores/PersonasyProveedores-ConsultaProveedores.php")
+                .then(res => res.json())
+                .then(data => {
+                    let tabla = document.getElementById("tablaProveedores");
+                    tabla.innerHTML = "";
+                    data.forEach(proveedores => {
+                        tabla.innerHTML += `
+                            <tr>
+                                <td>${proveedores.NOMBRE}</td>
+                                <td>${proveedores.TIPO}</td>
+                                <td>${proveedores.TELEFONO}</td>
+                                <td>${proveedores.FECHA}</td>
+                                <td class="acciones">
+                                    <button type="button" class="Boton-icono" onclick="window.location.href='PersonalyProveedores-EditarAgregarPersonal.html?id=${proveedores.CVE_COMPRADOR}'"><img src="iconos/editar.png"></button>
+                                    <button class="Boton-icono" onclick="eliminar(${proveedores.CVE_COMPRADOR})"><img src="iconos/eliminar.png"></button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                });
+                fetch("php/personalyproveedores/PersonalyProveedores_Historial.php")
+                .then(res => res.json())
+                .then(data => {
+                    const cont = document.getElementById("listaHistorial");
+                    cont.innerHTML = "";
+                    data.forEach(h => {
+                               cont.innerHTML += `
+                            <div class="gastos" style="border-bottom: 1px solid #D9D9D9;">
+                                <div class="detalle">
+                                    <text class="categoria">${h.NOMBRE}</text>
+                                    <p class="dato">${h.TIPO} - $${Number(h.COSTO).toLocaleString()}</p>
+                                </div>
+                                <text class="valor">${h.FECHA}</text>
+                            </div>
+                        `;
+                    });
+                });
+            </script>
     </body>
 </html>

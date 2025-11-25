@@ -11,9 +11,12 @@ if(isset($_POST['Nomitem'])){
     $proveedor= $_POST ['proveedor'];
     $ubicacion= $_POST ['ubicacion'];
 
-    $insertarDatos="INSERT INTO items VALUES('','$proveedor','$nombre','$categoria','$cantidad','$unidad','Disponible','$costo')";
-
+    $insertarDatos="INSERT INTO items VALUES('','$proveedor','$Nomitem','$categoria','$cantidad','$unidad','Disponible','$costo')";
     $ejecutarInsertar=mysqli_query ($conexion, $insertarDatos);
+
+     $iditem= mysqli_insert_id($conexion);
+    $insertarDatos2="INSERT INTO tiene VALUES('$ubicacion','$iditem')";
+    $ejecutarInsertar2=mysqli_query ($conexion, $insertarDatos2);
 
             echo "<script>
                 alert('Ítem guardado exitosamente');

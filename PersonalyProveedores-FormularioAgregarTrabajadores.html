@@ -65,7 +65,7 @@
         </style>
     </head>
     <body>
-        <form action="PersonalyProveedores_FormAgregarTrabajador.php" method="post" style="width:500px;height:575px;">
+        <form action="php/personalyproveedores/PersonalyProveedores_FormAgregarTrabajador.php" method="post" style="width:500px;height:575px;">
             <p></p>
             <h1 class="inder-regular">Nuevo Trabajador</h1><br>
             <h2 >Registro o edita un nuevo trabajador</h2><br>
@@ -77,7 +77,7 @@
                     <text class="subida">Subir foto</text>
                     <input type="file" accept="imagen/*"><br>
                 </label><br>
-                <input type="file" id="imagen" accept="imagen"required>
+                <input type="file" id="imagen" accept="imagen">
                 <div class="contenedor">
                     <div class="form">
                         <label for="nombre">Nombre</label>
@@ -95,15 +95,15 @@
                 <div class="contenedor">
                     <div class="form">
                         <label for="tipo">Tipo de Trabajador</label>
-                        <select id="tipo" name="tipo">
-                            <option value="">Seleccionar Tipo</option>
-                            <option value="tipo1">Recurrente</option>
-                            <option value="tipo2">Temporal</option>
-                        </select>
+                        <input type="text" id="tipo" name="tipo" placeholder="Supervisor, administrador...">
                     </div>
                     <div class="form">
-                        <label for="rol">Rol/Tarea Asignada</label>
-                        <input type="text" id="rol" name="rol" placeholder="Rol">
+                        <label for="rol">Rol del Trabajador</label>
+                        <select id="rol" name="rol">
+                            <option value="">Seleccionar Rol</option>
+                            <option value="Permanente">Permanente</option>
+                            <option value="Temporal">Temporal</option>
+                        </select>
                     </div>
                 </div>
                 </div>

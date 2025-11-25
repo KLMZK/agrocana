@@ -18,6 +18,17 @@
                 width: 410px;
                 height:3px;
             }
+            .tabla-inventario {
+                display: block;
+                max-height: 400px;
+                overflow-y: auto;
+            }
+            .tabla-inventario thead, 
+            .tabla-inventario tbody tr {
+                display: table;
+                width: 100%;
+                table-layout: fixed; 
+            }
         </style>
     </head>
     <body>
@@ -27,20 +38,21 @@
         <div class="contenedor">
             <div class="cuadros">
                 <p style="font-weight: bold;">Total Ingresos</p>
-                <text style="color:#316C1B; font-size: 25px; margin-top: 30px;">$40,000</text><br>
+                <text id="ingresosMes" style="color:#316C1B; font-size:25px; margin-top: 30px;">Cargando...</text><br>
                 <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Mes actual</text>
             </div>
             <div class="cuadros">
                 <p style="font-weight: bold;">Total Gastos</p>
-                <text style="color:#C51B1B; font-size: 25px; margin-top: 30px;">$10,000</text><br>
+                <text id="gastosMes" style="color:#C51B1B; font-size: 25px; margin-top: 30px;">Cargando...</text><br>
                 <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Mes actual</text>
             </div>
             <div class="cuadros">
                 <p style="font-weight: bold;">Balance</p>
-                <text style="color:#316C1B; font-size: 25px; margin-top: 30px;">$40,000</text><br>
+                <text id="balanceMes" style="color:#316C1B; font-size: 25px; margin-top: 30px;">Cargando...</text><br>
                 <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Resultado Neto</text>
             </div>
         </div>
+
 
         <div class="seleccion" style="gap:10px;">
             <form action="FinanzasyRecursos-Presupuesto.html" style="margin-top: 17px;">
@@ -83,6 +95,35 @@
                 </table>
             </div>
             <script>
+                let ingresos = 0;
+                let gastos = 0;
+
+                const Ingr = fetch("php/finanzasyrecursos/FinanzasyRecursos_VistaIngreso.php")
+                    .then(res => res.json())
+                    .then(data => {
+                        ingresos = Number(data.totalIngresos);
+                        document.getElementById("ingresosMes").textContent =
+                            "$" + ingresos.toLocaleString();
+                    });
+                const Gast = fetch("php/finanzasyrecursos/FinanzasyRecursos_VistaGasto.php")
+                    .then(res => res.json())
+                    .then(data => {
+                        gastos = Number(data.totalGastos);
+                        document.getElementById("gastosMes").textContent =
+                            "$" + gastos.toLocaleString();
+                    });
+
+                Promise.all([Ingr, Gast]).then(() => {
+                    const balance = ingresos - gastos;
+
+                    document.getElementById("balanceMes").textContent =
+                        "$" + balance.toLocaleString();
+                    if (balance < 0) {
+                        document.getElementById("balanceMes").style.color = "#C51B1B";
+                    } else {
+                        document.getElementById("balanceMes").style.color = "#346E19"; 
+                    }
+                });
                 fetch("php/finanzasyrecursos/FinanzasyRecursos-ConsultaIventario.php")
                     .then(res => res.json())
                     .then(data => {
@@ -97,13 +138,40 @@
                                     <td>${inventario.UBICACION}</td>
                                     <td>${inventario.ESTADO}</td>
                                     <td class="acciones">
-                                        <button type="button" class="Boton-icono" onclick="window.location.href='FinanzasyRecursos-EditarAgregarTransporte.html?id=${inventario.CVE_ITEM}'"><img src="iconos/editar.png"></button>
+                                        <button class="Boton-icono" onclick="cambiarEstado('${inventario.CVE_ITEM}')"><img src="iconos/cambiar.png"></button>
+                                        <button type="button" class="Boton-icono" onclick="window.location.href='FinanzasyRecursos-EditarAgregarItem.html?id=${inventario.CVE_ITEM}'"><img src="iconos/editar.png"></button>
                                         <button class="Boton-icono" onclick="eliminar('${inventario.CVE_ITEM}')"><img src="iconos/eliminar.png"></button>
                                     </td>
                                 </tr>
                             `;
                         });
                     });
+                function cambiarEstado(id) {
+                    fetch("php/finanzasyrecursos/FinanzasyRecursos-CambiarEstadoItem.php", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                        body: "id=" + encodeURIComponent(id)
+                    })
+                    .then(res => res.text())
+                    .then(resp => {
+                        alert(resp);
+                        location.reload();
+                    });
+                }
+                function eliminar(id) {
+                    if(confirm("¿Estás seguro de que deseas eliminar este Item?")) {
+                        fetch("php/finanzasyrecursos/FinanzasyRecursos-EliminarRegistroItem.php", {
+                            method: "POST",
+                            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                            body: "id=" + id
+                        })
+                        .then(res => res.text())
+                        .then(resp => {
+                            alert(resp);
+                            location.reload();
+                        });
+                    }
+                }
             </script>
     </body>
 </html>

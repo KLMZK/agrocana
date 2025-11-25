@@ -4,10 +4,13 @@ include "../../conexion/conexion.php";
 header('Content-Type: application/json');
 
 $sqlIngresos = "
-    SELECT SUM(INGRESO) AS total
-    FROM pedidos
-    WHERE MONTH(FECHAPEDIDO) = MONTH(CURDATE())
-      AND YEAR(FECHAPEDIDO) = YEAR(CURDATE())
+SELECT SUM(encarga.CANTIDAD * items.PRECIOU) 
+AS total FROM items
+LEFT JOIN encarga ON encarga.CVE_ITEM = items.CVE_ITEM
+LEFT JOIN pedidos ON pedidos.CVE_PEDIDO = encarga.CVE_PEDIDO
+WHERE MONTH(pedidos.FECHAENTREGA) = MONTH(CURDATE())
+AND YEAR(pedidos.FECHAENTREGA)  = YEAR(CURDATE()) 
+AND pedidos.INGRESO=1
 ";
 
 $result = $conexion->query($sqlIngresos);
