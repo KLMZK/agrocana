@@ -46,13 +46,13 @@
             <div class="centrado">
                 <div>
                     <label for="pedido">Pedido</label><br>
-                    <select id="pedido" required>
+                    <select id="pedido" name="pedido" required>
                         <option disabled selected >Selecciona Pedido</option>
                     </select>
                 </div>
                 <div>
                     <label for="vehiculo">Vehículo</label><br>
-                    <select id="vehiculo" required>
+                    <select id="vehiculo" name="vehiculo" required>
                         <option disabled selected>Selecciona Vehículo</option>
                     </select>
                 </div>
@@ -60,61 +60,61 @@
             <div class="centrado">
                 <div>
                     <label for="conductor">Conductor</label><br>
-                    <select id="conductor" required>
+                    <select id="conductor" name="conductor" required>
                         <option disabled selected>Selecciona Conductor</option>
                     </select><br>
                 </div>
                 <div>
                     <label for="costo">Costo</label><br>
-                    <input type="number" placeholder="$00.00" id="costo" required />
+                    <input type="number" placeholder="$00.00" id="costo" name="costo" required />
                 </div>
             </div>
             <label style="font-size: 18px;">Origen</label><br>
             <div class="centrado">
                 <div>
                     <label for="origen-cp">Codigo Postal</label><br>
-                    <input type="text" id="origen-cp" placeholder="Ingrese el codigo postal" required onchange="coloniasO()"/>
+                    <input type="text" id="origen-cp" name="origen-cp" placeholder="Ingrese el codigo postal" required onchange="coloniasO()"/>
                 </div>
                 <div>
                     <label for="origen-colonia">Colonia</label><br>
-                    <select id="origen-colonia" required>
+                    <select id="origen-colonia" name="origen-colonia" required>
                         <option disabled selected>Selecciona colonia</option>
                     </select>
                 </div>
                 <div>
                     <label for="origen-calle">Calle</label><br>
-                    <input type="text" value="AgroCaña Lara" id="origen-calle" required/>
+                    <input type="text" value="AgroCaña Lara" id="origen-calle" name="origen-calle" required/>
                 </div>
             </div>
             <label style="font-size: 18px;">Destino</label><br>
             <div class="centrado">
                 <div>
                     <label for="destino-cp">Codigo Postal</label><br>
-                    <input type="text" id="destino-cp" placeholder="Ingrese el codigo postal" required onchange="coloniasD()"/>
+                    <input type="text" id="destino-cp" name="destino-cp" placeholder="Ingrese el codigo postal" required onchange="coloniasD()"/>
                 </div>
                 <div>
                     <label for="destino-colonia">Colonia</label><br>
-                    <select id="destino-colonia" required>
+                    <select id="destino-colonia" name="destino-colonia" required>
                         <option disabled selected>Selecciona colonia</option>
                     </select>
                 </div>
                 <div>
                     <label for="destino-calle">Calle</label><br>
-                    <input type="text" placeholder="Ingrese el nombre de la calle" id="destino-calle" required/>
+                    <input type="text" placeholder="Ingrese el nombre de la calle" id="destino-calle" name="destino-calle" required/>
                 </div>
             </div>
             <div class="centrado">
                 <div>
                     <label for="salida">Fecha y Hora de salida</label><br>
-                    <input type="datetime-local" placeholder="dd/mm/aaaa hh:mm" id="salida" required/>
+                    <input type="datetime-local" placeholder="dd/mm/aaaa hh:mm" id="salida" name="salida" required/>
                 </div>
                 <div>
                     <label for="llegada">Fecha y Hora estimada de llegada</label><br>
-                    <input type="datetime-local" placeholder="dd/mm/aaaa hh:mm" id="llegada" required/>
+                    <input type="datetime-local" placeholder="dd/mm/aaaa hh:mm" id="llegada" name="llegada" required/>
                 </div>
             </div>
             <label for="observaciones">Observaciones</label><br>
-            <textarea id="observaciones" placeholder="Notas del Envío" style="size: 100px;" required></textarea><br>
+            <textarea id="observaciones" name="observaciones" placeholder="Notas del Envío" style="size: 100px;" required></textarea><br>
             <div align="center">
                 <input type="submit" value="Guardar Envío"/>
             </div>

@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="estilos/formulariosedit.css">
     </head>
     <body>
-        <form action="ClientesyPedidos_FormClientes.php" method="post">
+        <form action="php/clientesypedidos/ClientesyPedidos_FormClientes.php" method="post">
             <p></p>
             <h1 class="inder-regular">Nuevo Cliente</h1><br>
             <h2>Registra o edita un nuevo cliente</h2>
@@ -18,9 +18,11 @@
                     <label for="nombre">Nombre/Empresa</label><br>
                     <input type="text" id="nombre" name="nombre" placeholder="Nombre del cliente" required><br>
                     <label for="telefono">Teléfono</label><br>
-                    <input type="text" id="telefono" name="telefono" placeholder="000-0000" required><br>
+                    <input type="tel" id="telefono" name="telefono" inputmode="numeric" placeholder="0000000000" maxlength="10" minlength="10" required><br>
                     <label for="corre">Correo Elctrónico</label><br>
                     <input type="email" id="correo" name="correo" placeholder="correo@ejemplo.com" required><br>
+                    <label for="observaciones">Observaciones</label><br>
+                    <textarea placeholder="Ingrese alguna observacion de ser necesaria" id="observaciones" name="observaciones"></textarea><br>
                     <br><input type="submit" value="Guardar Cliente">
         </form>
     </body>         

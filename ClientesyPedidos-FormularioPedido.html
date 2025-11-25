@@ -27,40 +27,75 @@
                 display: block;
                 margin-bottom: 10px;
             }
+            select.invalid {
+                outline: 2px solid #e53935;
+            }
         </style>
     </head>
-    <body>
-        <form action="ClientesyPedidos_FormPedido.php" method="post">
+    <body onload="inicio()">
+        <form action="php/clientesypedidos/ClientesyPedidos_FormPedido.php" method="post">
             <p></p>
             <h1 class="inder-regular">Nuevo Pedido</h1><br>
             <h2 >Registra o edita un nuevo pedido</h2><br>
             <div align="center">
                     <label for="cliente">Cliente</label><br>
                     <select id="cliente" name="cliente">
-                        <option value="">Selecciona un cliente</option>
-                        <option value="cliente1">Cliente 1</option>
-                        <option value="cliente2">Cliente 2</option>
+                        <option disabled selected>Selecciona un cliente</option>
                     </select>
                     <label for="producto">Producto</label><br>
                     <select id="producto" name="producto">
-                        <option value="">Selecciona un producto</option>
-                        <option value="producto1">Producto 1</option>
-                        <option value="producto2">Producto 2</option>
+                        <option disabled selected>Selecciona un producto</option>
                     </select>
                     <label for="cantidad">Cantidad</label><br>
                     <input type="float" id="cantidad" name="cantidad" placeholder="0.0" required>
-                    <div class="contenedor">
-                        <div class="form">
-                            <label for="pedido">Fecha Pedido</label>
-                            <input type="date" id="pedido" name="pedido" required>
-                        </div>
-                        <div class="form">
-                            <label for="entrega">Fecha entrega</label>
-                            <input type="date" id="entrega" name="entrega"required>
-                        </div>
-                    </div>
-            <br><input type="submit" value="Guardar Pedido">
+                    <label for="pedido">Fecha Pedido</label><br>
+                    <input type="date" id="pedido" name="pedido" required><br>
+                    <br><input type="submit" value="Guardar Pedido">
             </div>   
         </form>
-    </body>         
+    </body>     
+    <script>
+        function inicio() {
+            fetch("php/clientesypedidos/SelectClientes.php")
+            .then(res => res.json())
+            .then(datos => {
+                var select = document.getElementById("cliente");
+                datos.forEach(cliente => {
+                    const option = document.createElement('option');
+                    option.value = cliente.CVE_COMPRADOR;
+                    option.textContent = cliente.NOMBRE;
+                    select.appendChild(option);
+                });
+            });
+            fetch("php/clientesypedidos/SelectProductos.php")
+            .then(res => res.json())
+            .then(datos => {
+                var select = document.getElementById("producto");
+                datos.forEach(producto => {
+                    const option = document.createElement("option");
+                    option.value = producto.CVE_ITEM;
+                    option.textContent = producto.NOMBRE;
+                    select.appendChild(option);
+                });
+            });
+            const form = document.querySelector('form');
+
+            form.addEventListener('submit', (e) => {
+                const selects = Array.from(form.querySelectorAll('select'));
+                const invalid = selects.filter(s => !s.value || s.selectedIndex === 0);
+
+                if (invalid.length) {
+                    e.preventDefault();
+                    invalid.forEach(s => s.classList.add('invalid'));
+                    invalid[0].focus();
+                    alert('Por favor selecciona una opción en todos los desplegables antes de enviar.');
+                    return false;
+                }
+            });
+            
+            document.querySelectorAll('select').forEach(s => {
+                s.addEventListener('change', () => s.classList.remove('invalid'));
+            });
+        }
+    </script>    
 </html>

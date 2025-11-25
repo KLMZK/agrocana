@@ -1,21 +1,20 @@
 <?php
-include "conexion/conexion.php";
+include "../../conexion/conexion.php";
 
 if(isset($_POST['nombre'])){
 
     $nombre= $_POST ['nombre'];
     $telefono= $_POST ['telefono'];
     $correo= $_POST ['correo'];
+    $observacion = $_POST ['observaciones']??'';
 
-    $insertarDatos="INSERT INTO compradores VALUES('','$nombre','$telefono','$correo','1','')";
+    $insertarDatos="INSERT INTO compradores VALUES('','$nombre','$telefono','$correo','Cliente','$observacion')";
 
     $ejecutarInsertar=mysqli_query ($conexion, $insertarDatos);
 
-    mysqli_query($conexion, $insertman);
-
             echo "<script>
                 alert('Cliente guardado exitosamente');
-                window.location.href = 'ClientesyPedidos-GestionClientes.html';
+                window.location.href = '../../ClientesyPedidos-GestionClientes.html';
               </script>";
 
     } else {

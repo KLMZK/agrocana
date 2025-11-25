@@ -21,12 +21,10 @@ if(isset($_POST['pedido'])){
 
     echo "<script>
             alert('Actividad guardada exitosamente');
-            window.location.href = 'EnviosyLogistica.html';
+            window.location.href = '../../EnviosyLogistica.html';
         </script>";
 
     } else {
         echo "Error: " . mysqli_error($conexion);
 }
-
-$Consulta = "SELECT CVE_ESTADO";
 ?>
