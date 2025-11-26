@@ -30,15 +30,16 @@
             }
             .nivel {
                 display: flex;
-                align-items: center;
                 justify-content: space-between;
+                align-items: center;
                 height: 13%;
+                margin-left: 20px;
                 margin-bottom: 5px;
             }
             .sublevel {
                 display: flex;
                 align-items: center;
-                justify-content: center;
+                width: 20%;
             }
             .imagen {
                 width: 40px;
@@ -168,103 +169,207 @@
             <div class="centrado">
                 <div class="informacion">
                     <p class="text1">Programados</p>
-                    <p class="numero">0</p>
+                    <p class="numero" id="pendientes">0</p>
                     <p class="text2">Pendientes por salir</p>
                 </div>
                 <div class="informacion">
                     <p class="text1">En Tránsito</p>
-                    <p class="numero">0</p>
+                    <p class="numero" id="camino">0</p>
                     <p class="text2">En camino</p>
                 </div>
                 <div class="informacion">
                     <p class="text1">Entregados</p>
-                    <p class="numero">0</p>
+                    <p class="numero" id="completos">0</p>
                     <p class="text2">Completados</p>
                 </div>                    
             </div>
             <div align="right" style="margin-right: 10px;">
                 <a style="text-decoration: none;" href="EnviosyLogistica-Formulario.html">
-                    <button><span style="font-size: 18px;"><img src="iconos/anadir.png" alt="clientes" style="width: 14px; height: 14;"></span> Nuevo Pedido</button>
+                    <button><span style="font-size: 18px;"><img src="iconos/anadir.png" alt="clientes" style="width: 14px; height: 14;"></span> Nuevo Envío</button>
                 </a>
             </div>
             <div class="envios">
                 <div class="centrado">
                     <h3>Envíos y Entregas</h3>
-                    <select id="filtro">
-                        <option value="todos">Todos los estados</option>
-                        <option value="Estado 1">Estado 1</option>
+                    <select id="filtro" onchange="filtrar()">
+                        <option value="0">Todos los estados</option>
+                        <option value="1">En transito</option>
+                        <option value="2">Entregado</option>
                     </select>
                 </div>
-                <div class="envio">
-                    <div class="centrado">
-                        <div style="display: flex; align-items: center;">
-                            <p class="text3">Envio #1 </p>
-                            <div class="seleccion">
-                                En tránsito
-                            </div>
-                        </div>
-                        <div>
-                            <img src="iconos/editar.png" alt="icono editar" class="edicion" onclick="editar()"/>
-                            <img src="iconos/eliminar.png" alt="icono eliminar" class="edicion" onclick="eliminar()"/>
-                        </div>
-                    </div>
-                    <p class="text2">Cliente: Nombre del Cliente</p>
-                    <div style="border-bottom: 2px solid #D9D9D9;">
-                        <div class="nivel">
-                            <div class="sublevel">
-                                <img src="iconos/caja.png" alt="icono caja" class="imagen" />
-                                <div class="descripcion">
-                                    <p class="text1" id="objeto">Objeto de entrega</p>
-                                    <p class="text2" id="objeto-cantidad">Cantidad</p>
-                                </div>
-                            </div>
-                            <div class="sublevel">
-                                <img src="iconos/marcador.png" alt="icono marcador" class="imagen" />
-                                <div class="descripcion">
-                                    <p class="text2" id="objeto">Origen</p>
-                                    <p class="text1" id="objeto-cantidad">Dirección</p>
-                                </div>
-                            </div>
-                            <div class="sublevel">
-                                <button style="opacity: 0;">Marcar Completado</button>
-                            </div>
-                        </div>
-                        <div class="nivel">
-                            <div class="sublevel">
-                                <img src="iconos/camion.png" alt="icono camion" class="imagen" />
-                                <div class="descripcion">
-                                    <p class="text1" id="objeto">Vehículo en uso</p>
-                                    <p class="text2" id="objeto-cantidad">Conductor: Nombre</p>
-                                </div>
-                            </div>
-                            <div class="sublevel">
-                                <img src="iconos/avion.png" alt="icono avion" class="imagen" />
-                                <div class="descripcion">
-                                    <p class="text2" id="objeto">Destino</p>
-                                    <p class="text1" id="objeto-cantidad">Dirección</p>
-                                </div>
-                            </div>
-                            <div class="sublevel">
-                                <button onclick="EnvioCompletado()" id="completado">Marcar Completado</button>
-                            </div>
-                        </div>
-                    </div>
-                    <table>
-                        <tr>
-                            <td><p class="text2">Salida</p></td>
-                            <td><p class="text2">Llega Estimada</p></td>
-                            <td><p class="text2">Distancia</p></td>
-                            <td><p class="text2">Observaciones</p></td>
-                        </tr>
-                        <tr>
-                            <td><p class="text1" id="salida">01/01/2024 10:00 AM</p></td>
-                            <td><p class="text1" id="llegada">01/01/2024 02:00 PM</p></td>
-                            <td><p class="text1" id="distancia">200 km</p></td>
-                            <td><p class="text1" id="Observaciones">Ninguna</p></td>
-                        </tr>
-                    </table>
+                <div id="envios">
+
                 </div>
             </div>
         </div>
     </body>
+    <script>
+        fetch("php/envios/SelectEnvios.php")
+        .then(res => res.json())
+        .then(data => {
+            let div = document.getElementById("envios");
+            data.forEach(envio => {
+                div.innerHTML += `
+                <div class="envio">
+                    <div class="centrado">
+                <div style="display: flex; align-items: center; margin-left: 20px;">
+                    <p class="text3">Envio #${envio.NENVIO} </p>
+                    <div class="seleccion">
+                        ${envio.ENTREGADO}
+                    </div>
+                </div>
+                <div>
+                    <img src="iconos/editar.png" alt="icono editar" class="edicion" onclick="editar()"/>
+                    <img src="iconos/eliminar.png" alt="icono eliminar" class="edicion" onclick="eliminar()"/>
+                </div>
+            </div>
+            <p style="margin-left:20px;" class="text2">Cliente: ${envio.CLIENTE}</p>
+            <div style="border-bottom: 2px solid #D9D9D9;">
+                <div class="nivel">
+                    <div class="sublevel">
+                        <img src="iconos/caja.png" alt="icono caja" class="imagen" />
+                        <div class="descripcion">
+                            <p class="text1" id="objeto">${envio.ITEM}</p>
+                            <p class="text2" id="objeto-cantidad">${envio.CANTIDAD} ${envio.UNIDAD}</p>
+                        </div>
+                    </div>
+                    <div class="sublevel">
+                        <img src="iconos/marcador.png" alt="icono marcador" class="imagen" />
+                        <div class="descripcion">
+                            <p class="text2" id="objeto">${envio.MORIGEN} ${envio.CORIGEN}</p>
+                            <p class="text1" id="objeto-cantidad">${envio.CALLEORIGEN}</p>
+                        </div>
+                    </div>
+                    <div class="sublevel">
+                        <button style="opacity: 0;">Marcar Completado</button>
+                    </div>
+                </div>
+                <div class="nivel">
+                    <div class="sublevel">
+                        <img src="iconos/camion.png" alt="icono camion" class="imagen" />
+                        <div class="descripcion">
+                            <p class="text1" id="objeto">${envio.VEHICULO} ${envio.PLACA}</p>
+                            <p class="text2" id="objeto-cantidad">Conductor: ${envio.CONDUCTOR} ${envio.CONDUCTOR1} ${envio.CONDUCTOR2}</p>
+                        </div>
+                    </div>
+                    <div class="sublevel">
+                        <img src="iconos/avion.png" alt="icono avion" class="imagen" />
+                        <div class="descripcion">
+                            <p class="text2" id="objeto">${envio.MDESTINO} ${envio.CORIGEN}</p>
+                            <p class="text1" id="objeto-cantidad">${envio.CALLEDESTINO}</p>
+                        </div>
+                    </div>
+                    <div class="sublevel">
+                        <button onclick="EnvioCompletado()" id="completado">Marcar Completado</button>
+                    </div>
+                </div>
+            </div>
+            <table>
+                <tr>
+                    <td><p class="text2">Salida</p></td>
+                    <td><p class="text2">Llega Estimada</p></td>
+                    <td><p class="text2">Costo</p></td>
+                    <td><p class="text2">Observaciones</p></td>
+                </tr>
+                <tr>
+                    <td><p class="text1" id="salida">${envio.FECHASALIDA}</p></td>
+                    <td><p class="text1" id="llegada">${envio.FECHALLEGADA}</p></td>
+                    <td><p class="text1" id="distancia">$${envio.COSTO}</p></td>
+                    <td><p class="text1" id="Observaciones">${envio.NOTA}</p></td>
+                </tr>
+            </table>
+            </div>
+                `;
+            });
+        });
+        fetch("/php/envios/ContadorEnvios.php")
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            document.getElementById('pendientes').textContent = data.pendientes;
+            document.getElementById('camino').textContent = data.camino;
+            document.getElementById('completos').textContent = data.completos;
+        });
+        function filtrar() {
+            fetch("php/envios/SelectEnvios?seleccion="+encodeURIComponent(document.getElementById('filtro').value))
+            .then(res => res.json())
+            .then(data => {
+                let div = document.getElementById("envios");
+                div.innerHTML = ''
+                data.forEach(envio => {
+                    div.innerHTML += `
+                    <div class="envio">
+                        <div class="centrado">
+                    <div style="display: flex; align-items: center; margin-left: 20px;">
+                        <p class="text3">Envio #${envio.NENVIO} </p>
+                        <div class="seleccion">
+                            ${envio.ENTREGADO}
+                        </div>
+                    </div>
+                    <div>
+                        <img src="iconos/editar.png" alt="icono editar" class="edicion" onclick="editar()"/>
+                        <img src="iconos/eliminar.png" alt="icono eliminar" class="edicion" onclick="eliminar()"/>
+                    </div>
+                </div>
+                <p style="margin-left:20px;" class="text2">Cliente: ${envio.CLIENTE}</p>
+                <div style="border-bottom: 2px solid #D9D9D9;">
+                    <div class="nivel">
+                        <div class="sublevel">
+                            <img src="iconos/caja.png" alt="icono caja" class="imagen" />
+                            <div class="descripcion">
+                                <p class="text1" id="objeto">${envio.ITEM}</p>
+                                <p class="text2" id="objeto-cantidad">${envio.CANTIDAD} ${envio.UNIDAD}</p>
+                            </div>
+                        </div>
+                        <div class="sublevel">
+                            <img src="iconos/marcador.png" alt="icono marcador" class="imagen" />
+                            <div class="descripcion">
+                                <p class="text2" id="objeto">${envio.MORIGEN} ${envio.CORIGEN}</p>
+                                <p class="text1" id="objeto-cantidad">${envio.CALLEORIGEN}</p>
+                            </div>
+                        </div>
+                        <div class="sublevel">
+                            <button style="opacity: 0;">Marcar Completado</button>
+                        </div>
+                    </div>
+                    <div class="nivel">
+                        <div class="sublevel">
+                            <img src="iconos/camion.png" alt="icono camion" class="imagen" />
+                            <div class="descripcion">
+                                <p class="text1" id="objeto">${envio.VEHICULO} ${envio.PLACA}</p>
+                                <p class="text2" id="objeto-cantidad">Conductor: ${envio.CONDUCTOR} ${envio.CONDUCTOR1} ${envio.CONDUCTOR2}</p>
+                            </div>
+                        </div>
+                        <div class="sublevel">
+                            <img src="iconos/avion.png" alt="icono avion" class="imagen" />
+                            <div class="descripcion">
+                                <p class="text2" id="objeto">${envio.MDESTINO} ${envio.CORIGEN}</p>
+                                <p class="text1" id="objeto-cantidad">${envio.CALLEDESTINO}</p>
+                            </div>
+                        </div>
+                        <div class="sublevel">
+                            <button onclick="EnvioCompletado()" id="completado">Marcar Completado</button>
+                        </div>
+                    </div>
+                </div>
+                <table>
+                    <tr>
+                        <td><p class="text2">Salida</p></td>
+                        <td><p class="text2">Llega Estimada</p></td>
+                        <td><p class="text2">Costo</p></td>
+                        <td><p class="text2">Observaciones</p></td>
+                    </tr>
+                    <tr>
+                        <td><p class="text1" id="salida">${envio.FECHASALIDA}</p></td>
+                        <td><p class="text1" id="llegada">${envio.FECHALLEGADA}</p></td>
+                        <td><p class="text1" id="distancia">$${envio.COSTO}</p></td>
+                        <td><p class="text1" id="Observaciones">${envio.NOTA}</p></td>
+                    </tr>
+                </table>
+                </div>
+                    `;
+                });
+            });
+        }
+    </script>
 </html>

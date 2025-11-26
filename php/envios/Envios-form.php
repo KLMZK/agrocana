@@ -1,5 +1,5 @@
 <?php
-include "conexion/conexion.php";
+include "../../conexion/conexion.php";
 
 if(isset($_POST['pedido'])){
 
@@ -18,6 +18,12 @@ if(isset($_POST['pedido'])){
     $insertarDatos="INSERT INTO envios VALUES('','$vehiculo','$conductor','$origen_colonia','$destino_colonia','$pedido','$origen_calle','$destino_calle','$salida','$llegada','$observaciones','$costo','0')";
 
     $ejecutarInsertar=mysqli_query ($conexion, $insertarDatos);
+
+    $actualizarconductor="UPDATE usuarios SET ACTIVO = 0 WHERE CVE_USUARIO = '$conductor'";
+    mysqli_query($conexion, $actualizarconductor);
+
+    $actualizarvehiculo="UPDATE vehiculos SET ESTADO = 'Ocupado' WHERE PLACA = '$vehiculo'";
+    mysqli_query($conexion, $actualizarconductor);
 
     echo "<script>
             alert('Actividad guardada exitosamente');

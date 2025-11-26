@@ -10,8 +10,8 @@ $gInsumos = $conexion->query(
 AS total FROM items
 LEFT JOIN encarga ON encarga.CVE_ITEM = items.CVE_ITEM
 LEFT JOIN pedidos ON pedidos.CVE_PEDIDO = encarga.CVE_PEDIDO
-WHERE MONTH(pedidos.FECHAENTREGA) = MONTH(CURDATE())
-AND YEAR(pedidos.FECHAENTREGA)  = YEAR(CURDATE()) 
+WHERE MONTH(pedidos.FECHAPEDIDO) = MONTH(CURDATE())
+AND YEAR(pedidos.FECHAPEDIDO)  = YEAR(CURDATE()) 
 AND pedidos.INGRESO=0")->fetch_assoc()['total'] ?? 0;
 
 $totalGasto = $gActividades + $gMantenimientos + $gEnvios + $gInsumos;

@@ -1,7 +1,7 @@
 <?php
 include "../../conexion/conexion.php";
 
-$sql = "SELECT PLACA FROM vehiculos";
+$sql = "SELECT PLACA FROM vehiculos WHERE ESTADO = 'Desocupado'";
 $result = $conexion->query($sql);
 
 $vehiculos = [];

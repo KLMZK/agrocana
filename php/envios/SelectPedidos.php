@@ -1,7 +1,7 @@
 <?php
 include "../../conexion/conexion.php";
 
-$sql = "SELECT CVE_PEDIDO FROM pedidos EXCEPT (SELECT * FROM pedidos AS p, envios AS E WHERE E.CVE_PEDIDO = P.CVE_PEDIDO)";
+$sql = "SELECT P.CVE_PEDIDO FROM pedidos P LEFT JOIN envios E ON E.CVE_PEDIDO = P.CVE_PEDIDO WHERE E.CVE_PEDIDO IS NULL";
 $result = $conexion->query($sql);
 
 $pedidos = [];

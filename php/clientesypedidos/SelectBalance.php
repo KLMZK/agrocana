@@ -3,7 +3,7 @@ include "../../conexion/conexion.php";
 
 $ingreso = isset($_GET['ingreso']) ? (int)$_GET['ingreso'] : null;
 
-$sqlGan = "SELECT COALESCE(SUM(E.CANTIDAD * I.PRECIOV),0) AS TOTAL
+$sqlGan = "SELECT COALESCE(SUM(E.CANTIDAD * I.PRECIOU),0) AS TOTAL
     FROM pedidos P
     JOIN encarga E ON E.CVE_PEDIDO = P.CVE_PEDIDO
     JOIN items I ON I.CVE_ITEM = E.CVE_ITEM
@@ -15,7 +15,7 @@ if ($res1) {
     $gananciaTotal = (float)($row['TOTAL'] ?? 0);
 }
 
-$sqlGas = "SELECT COALESCE(SUM(E.CANTIDAD * I.PRECIOV),0) AS TOTAL
+$sqlGas = "SELECT COALESCE(SUM(E.CANTIDAD * I.PRECIOU),0) AS TOTAL
     FROM pedidos P
     JOIN encarga E ON E.CVE_PEDIDO = P.CVE_PEDIDO
     JOIN items I ON I.CVE_ITEM = E.CVE_ITEM

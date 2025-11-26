@@ -6,7 +6,7 @@ SELECT
     compradores.NOMBRE,
     compradores.TIPO,
     compradores.TELEFONO,
-    IFNULL(pedidos.FECHAENTREGA,'S/F') AS FECHA
+    IFNULL(pedidos.FECHAPEDIDO,'S/F') AS FECHA
 FROM compradores
 LEFT JOIN pedidos 
     ON pedidos.CVE_COMPRADOR = compradores.CVE_COMPRADOR
