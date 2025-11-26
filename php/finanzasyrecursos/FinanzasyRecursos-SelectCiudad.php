@@ -1,7 +1,7 @@
 <?php
 include "../../conexion/conexion.php";
 
-$sql = "SELECT CVE_CIUDAD, NOMBRE FROM ciudades";
+$sql = "SELECT CVE_MUNICIPIO, NOMBRE FROM municipios";
 $result = $conexion->query($sql);
 
 $ciudades = [];
