@@ -3,7 +3,7 @@ include "../../conexion/conexion.php";
 
 $ciudad = $_GET['ciudad'];
 
-$stmt = $conexion->prepare("SELECT CVE_COLONIA, NOMBRE FROM colonias WHERE CVE_CIUDAD = ?");
+$stmt = $conexion->prepare("SELECT CVE_COLONIA, NOMBRE FROM colonias WHERE CVE_MUNICIPIO = ?");
 $stmt->bind_param("i", $ciudad);
 $stmt->execute();
 $result = $stmt->get_result();

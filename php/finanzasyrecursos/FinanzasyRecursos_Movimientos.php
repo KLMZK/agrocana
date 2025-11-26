@@ -29,23 +29,23 @@ $r = $conexion->query($sql);
 while ($row = $r->fetch_assoc()) $movimientos[] = $row;
 
 $sql = "SELECT 'Compra' AS categoria, items.NOMBRE AS nombre,
-        pedidos.FECHAENTREGA AS FECHA, (encarga.CANTIDAD * items.PRECIOU) AS monto, 0 AS tipo
+        pedidos.FECHAPEDIDO AS FECHA, (encarga.CANTIDAD * items.PRECIOU) AS monto, 0 AS tipo
         FROM items
         LEFT JOIN encarga ON encarga.CVE_ITEM = items.CVE_ITEM
         LEFT JOIN pedidos ON pedidos.CVE_PEDIDO = encarga.CVE_PEDIDO
-        WHERE MONTH(pedidos.FECHAENTREGA) = MONTH(CURDATE())
-        AND YEAR(pedidos.FECHAENTREGA)  = YEAR(CURDATE()) 
+        WHERE MONTH(pedidos.FECHAPEDIDO) = MONTH(CURDATE())
+        AND YEAR(pedidos.FECHAPEDIDO)  = YEAR(CURDATE()) 
         AND pedidos.INGRESO=0";
 $r = $conexion->query($sql);
 while ($row = $r->fetch_assoc()) $movimientos[] = $row;
 
 $sql = "SELECT 'Venta' AS categoria, items.NOMBRE AS nombre,
-        pedidos.FECHAENTREGA AS FECHA, (encarga.CANTIDAD * items.PRECIOU) AS monto, 1 AS tipo
+        pedidos.FECHAPEDIDO AS FECHA, (encarga.CANTIDAD * items.PRECIOU) AS monto, 1 AS tipo
         FROM items
         LEFT JOIN encarga ON encarga.CVE_ITEM = items.CVE_ITEM
         LEFT JOIN pedidos ON pedidos.CVE_PEDIDO = encarga.CVE_PEDIDO
-        WHERE MONTH(pedidos.FECHAENTREGA) = MONTH(CURDATE())
-        AND YEAR(pedidos.FECHAENTREGA)  = YEAR(CURDATE()) 
+        WHERE MONTH(pedidos.FECHAPEDIDO) = MONTH(CURDATE())
+        AND YEAR(pedidos.FECHAPEDIDO)  = YEAR(CURDATE()) 
         AND pedidos.INGRESO=1";
 $r = $conexion->query($sql);
 while ($row = $r->fetch_assoc()) $movimientos[] = $row;
