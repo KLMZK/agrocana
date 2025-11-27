@@ -65,35 +65,44 @@
             <h1 class="inder-regular">Nuevo Vehículo</h1><br>
             <h2 >Registra o edita un vehículo</h2><br>
 
+            <div align="center">
             <div class="contenedor">
                 <div class="form">
                     <label for="tipo">Tipo de Vehículo</label>
-                    <input type="text" id="tipo" name="tipo" placeholder="Camion, Camioneta..">
+                    <select id="tipo" name="tipo">
+                        <option disabled selected>Seleccion un tipo</option>
+                        <option value="Camioneta">Camioneta</option>
+                        <option value="Carga">Carga</option>
+                        <option value="Tractor">Tractor</option>
+                        <option value="Transporte">Transporte</option>
+                    </select>
                 </div>
                 <div class="form">
-                    <label for="modelo">Modelo del Vehículo</label>
-                    <input type="text" id="modelo" name="modelo" placeholder="Camion, Camioneta..">
+                    <label for="marca">Marca</label>
+                    <select id="marca" name="marca" onchange="modelos()">
+                        <option disabled selected>Selecciona una Marca</option>
+                    </select>
                 </div>
             </div>
             <div class="contenedor">
                 <div class="form">
-                    <label for="marca">Marca</label>
+                    <label for="modelo">Modelo del Vehículo</label>
                     <div class="boton">
-                        <select id="marca" name="marca">
-                            <option value="">Selecciona una Marca</option>
+                        <select id="modelo" name="modelo">
+                            <option value="">Selecciona un modelo</option>
                         </select>
-                        <button onclick="location.href='FinanzasyRecursos-FormularioNuevaMarca.html'" class="Boton-icono"><img src="iconos/agregar.png" alt="agregar"></button>
+                        <button type="button" onclick="location.href='FinanzasyRecursos-FormularioNuevoModelo.html'" class="Boton-icono"><img src="iconos/agregar.png" alt="agregar"></button>
                     </div>
                 </div>
                 <div class="form">
                     <label for="placa">Placa/ID</label>
-                    <input type="text" id="placa" name="placa" placeholder="Placas" required>
+                    <input type="text" id="placa" name="placa" maxlength="8" minlength="8" placeholder="Placas" required>
                 </div>
             </div>
             <label for="fecha">Fecha del Registro</label><br>
             <input type="date" id="fecha" name="fecha" required><br>
             <br><label for="observaciones" style="margin-top: -25px">Observaciones</label><br>
-            <textarea type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales"></textarea><br><br>
+            <textarea type="text" id="observaciones" name="observaciones" maxlength="100" placeholder="Notas Adicionales"></textarea><br><br>
             <input type="submit" value="Guardar Vehículo">
             </div>   
         </form>
@@ -111,6 +120,40 @@
                         });
                     })
             });
+            const form = document.querySelector('form');
+
+            form.addEventListener('submit', (e) => {
+                const selects = Array.from(form.querySelectorAll('select'));
+                const invalid = selects.filter(s => !s.value || s.selectedIndex === 0);
+
+                if (invalid.length) {
+                    e.preventDefault();
+                    invalid.forEach(s => s.classList.add('invalid'));
+                    invalid[0].focus();
+                    alert('Por favor selecciona una opción en todos los desplegables antes de enviar.');
+                    return false;
+                }
+            });
+            
+            document.querySelectorAll('select').forEach(s => {
+                s.addEventListener('change', () => s.classList.remove('invalid'));
+            });
+
+            function modelos() {
+                fetch("php/finanzasyrecursos/FinanzasyRecursos-SelectModelo.php?marca="+encodeURIComponent(document.getElementById("marca").value.trim()))
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    const select = document.getElementById("modelo");
+                    Array.from(select.options).forEach((opt, idx) => { if (idx !== 0) opt.remove(); });
+                    data.forEach(model => {
+                        const option = document.createElement('option');
+                            option.value = model.CVE_MODELO;
+                            option.textContent = model.NOMBRE;
+                            select.appendChild(option);
+                    });
+                });
+            }
         </script>
     </body>         
 </html>

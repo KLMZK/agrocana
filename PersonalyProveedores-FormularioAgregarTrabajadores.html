@@ -66,19 +66,18 @@
         </style>
     </head>
     <body>
-        <form action="php/personalyproveedores/PersonalyProveedores_FormAgregarTrabajador.php" method="post" style="width:500px;height:575px;">
+        <form action="php/personalyproveedores/PersonalyProveedores_FormAgregarTrabajador.php" enctype="multipart/form-data" method="post" style="width:500px;height:575px;">
             <p></p>
             <h1 class="inder-regular">Nuevo Trabajador</h1><br>
             <h2 >Registro o edita un nuevo trabajador</h2><br>
             <div align="center">
                 <label class="cont-img">
                     <div class="circulo">
-                        <img src="iconos/imagen.png" alt="Icono subir foto">
+                        <img src="iconos/imagen.png" id="foto" alt="Icono subir foto">
                     </div>
                     <text class="subida">Subir foto</text>
-                    <input type="file" accept="imagen/*" name="perfil"><br>
+                    <input type="file" accept="imagen/*" id="perfil" name="perfil"><br>
                 </label><br>
-                <input type="file" id="imagen" accept="imagen">
                 <div class="contenedor">
                     <div class="form">
                         <label for="nombre">Nombre</label>
@@ -96,7 +95,13 @@
                 <div class="contenedor">
                     <div class="form">
                         <label for="tipo">Tipo de Trabajador</label>
-                        <input type="text" id="tipo" name="tipo" placeholder="Supervisor, administrador...">
+                        <select id="tipo" name="tipo">
+                            <option disabled selected>Seleccione un tipo</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Supervisor">Supervisor</option>
+                            <option value="Conductor">Conductor</option>
+                            <option value="Mecanico">Mecanico</option>
+                        </select>
                     </div>
                     <div class="form">
                         <label for="rol">Rol del Trabajador</label>
@@ -109,7 +114,7 @@
                 </div>
                 </div>
                 <label for="telefono">Contacto</label><br>
-                <input type="text" id="telefono" name="telefono" placeholder="000-0000" required>
+                <input type="text" maxlength="10" minlength="10" id="telefono" name="telefono" placeholder="0000000000" required>
                 <div class="contenedor">
                     <div class="form">
                         <label for="usuario">Usuario</label>
@@ -123,5 +128,42 @@
             <input type="submit" value="Guardar Trabajador">
             </div>   
         </form>
-    </body>         
+    </body>
+    <script>
+        const form = document.querySelector('form');
+
+            form.addEventListener('submit', (e) => {
+                const selects = Array.from(form.querySelectorAll('select'));
+                const invalid = selects.filter(s => !s.value || s.selectedIndex === 0);
+
+                if (invalid.length) {
+                    e.preventDefault();
+                    invalid.forEach(s => s.classList.add('invalid'));
+                    invalid[0].focus();
+                    alert('Por favor selecciona una opción en todos los desplegables antes de enviar.');
+                    return false;
+                }
+            });
+            
+            document.querySelectorAll('select').forEach(s => {
+                s.addEventListener('change', () => s.classList.remove('invalid'));
+            });
+
+            const inputImagen = document.getElementById('perfil');
+            const vistaPreviaImagen = document.getElementById('foto');
+
+            inputImagen.addEventListener('change', function(e) {
+            const archivo = e.target.files[0];
+            if (archivo) {
+                const reader = new FileReader();
+                reader.readAsDataURL(archivo);
+                reader.onload = function(e) {
+                vistaPreviaImagen.src = e.target.result;
+                vistaPreviaImagen.style.width = "100px";
+                vistaPreviaImagen.style.height = "100px";
+                vistaPreviaImagen.style.borderRadius = "50%";
+                }
+            }
+            });
+    </script>         
 </html>

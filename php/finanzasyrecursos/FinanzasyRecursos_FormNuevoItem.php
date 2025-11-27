@@ -16,6 +16,17 @@ if(isset($_POST['Nomitem'])){
     $proveedor= $_POST ['proveedor'];
     $ubicacion= $_POST ['ubicacion'];
 
+    $selectitem="SELECT NOMBRE FROM items WHERE NOMBRE = '$Nomitem'";
+    $resultado = mysqli_query($conexion,$selectitem);
+
+    if(mysqli_num_rows($resultado) != 0){
+        echo "<script>
+                alert('El item ya existe, intente con otro');
+                window.location.href = '../../FinanzasyRecursos-Inventario.html';
+              </script>";
+        exit();
+    }
+
     $insertarDatos="INSERT INTO items VALUES('','$proveedor','$Nomitem','$categoria','$cantidad','$unidad','Disponible','$costo')";
     $ejecutarInsertar=mysqli_query ($conexion, $insertarDatos);
 

@@ -6,10 +6,10 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
    
 include "../../conexion/conexion.php";
 
-$ciudad = $_GET['ciudad'];
+$municipio = $_GET['Municipio'];
 
 $stmt = $conexion->prepare("SELECT CVE_COLONIA, NOMBRE FROM colonias WHERE CVE_MUNICIPIO = ?");
-$stmt->bind_param("i", $ciudad);
+$stmt->bind_param("i", $municipio);
 $stmt->execute();
 $result = $stmt->get_result();
 

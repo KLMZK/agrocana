@@ -6,7 +6,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
    
 include "../../conexion/conexion.php";
 
-$sql = "SELECT PLACA FROM vehiculos";
+$sql = "SELECT PLACA FROM vehiculos WHERE ESTADO = 'Desocupado'";
 $result = $conexion->query($sql);
 
 $placas = [];

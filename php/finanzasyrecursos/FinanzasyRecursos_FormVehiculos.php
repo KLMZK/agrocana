@@ -15,16 +15,18 @@ if(isset($_POST['tipo'])){
     $observaciones= $_POST ['observaciones'];
     $marca=$_POST['marca'];
 
-    $insertarModelo="INSERT INTO modelos VALUES ('','$marca','$modelo')";
-    mysqli_query($conexion, $insertarModelo);
+    $selectplaca="SELECT PLACA FROM vehiculos WHERE PLACA = '$placa'";
+    $resultado = mysqli_query($conexion,$selectplaca);
 
-    $busquedaModelo="SELECT CVE_MODELO FROM modelos WHERE CVE_MARCA='$marca' AND NOMBRE='$modelo'";
-    $result = mysqli_query($conexion, $busquedaModelo);
-    $fila = mysqli_fetch_assoc($result);
-    $cve_modelo = $fila['CVE_MODELO'];
+    if(mysqli_num_rows($resultado) != 0){
+        echo "<script>
+                alert('El vehiculo ya existe, intente con otro');
+                window.location.href = '../../FinanzasyRecursos-Transporte.html';
+              </script>";
+        exit();
+    }
 
-
-    $insertarDatos="INSERT INTO vehiculos VALUES('$placa','$cve_modelo','$tipo','$observaciones','$fecha','Desocupado')";
+    $insertarDatos="INSERT INTO vehiculos VALUES('$placa','$modelo','$tipo','$observaciones','$fecha','Desocupado')";
 
     $ejecutarInsertar=mysqli_query ($conexion, $insertarDatos);
 

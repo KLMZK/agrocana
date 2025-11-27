@@ -12,6 +12,17 @@ if(isset($_POST['NomUbi'])){
     $direccion= $_POST ['direccion'];
     $colonia= $_POST ['colonia'];
 
+    $selectubi="SELECT NOMBRE FROM bodegas WHERE NOMBRE = '$NomUbi'";
+    $resultado = mysqli_query($conexion,$selectubi);
+
+    if(mysqli_num_rows($resultado) != 0){
+        echo "<script>
+                alert('La bodega ya existe, intente con otra');
+                window.location.href = '../../FinanzasyRecursos-Inventario.html';
+              </script>";
+        exit();
+    }
+
     $insertarDatos="INSERT INTO bodegas VALUES('','$colonia','$NomUbi','$direccion')";
     $res = mysqli_query($conexion, $insertarDatos);
 

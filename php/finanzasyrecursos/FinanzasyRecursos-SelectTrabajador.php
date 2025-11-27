@@ -6,7 +6,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
    
 include "../../conexion/conexion.php";
 
-$sql = "SELECT CVE_USUARIO, NOMBRE FROM usuarios";
+$sql = "SELECT CVE_USUARIO, NOMBRE FROM usuarios WHERE TIPO = 'Mecanico'";
 $result = $conexion->query($sql);
 
 $usuarios = [];

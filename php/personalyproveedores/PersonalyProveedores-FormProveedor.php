@@ -14,6 +14,17 @@ if(isset($_POST['nombre'])){
     $correo= $_POST ['correo'];
     $notas= $_POST ['notas'];
 
+    $selectemail="SELECT CORREO FROM compradores WHERE CORREO = '$correo' AND TIPO != 'CLIENTE'";
+    $resultado = mysqli_query($conexion,$selectemail);
+
+    if(mysqli_num_rows($resultado) != 0){
+        echo "<script>
+                alert('El correo ya existe, intente con otro');
+                window.location.href = '../../PersonalyProveedores-Proveedores.html';
+              </script>";
+        exit();
+    }
+
     $insertarDatos="INSERT INTO compradores VALUES('','$nombre','$telefono','$correo','$insumo','$notas')";
 
     $ejecutarInsertar=mysqli_query ($conexion, $insertarDatos);

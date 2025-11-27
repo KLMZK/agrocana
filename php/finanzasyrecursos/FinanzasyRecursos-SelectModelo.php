@@ -1,24 +1,24 @@
 <?php
-
 session_start();
 
 if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
-    
+   
 include "../../conexion/conexion.php";
 
-$sql = "SELECT CVE_USUARIO, NOMBRE FROM usuarios WHERE TIPO = 'Supervisor'";
+$marca = $_GET['marca'];
+
+$sql = "SELECT CVE_MODELO, NOMBRE FROM modelos WHERE CVE_MARCA = '$marca'";
 $result = $conexion->query($sql);
 
-$trabajadores = [];
+$modelos = [];
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-        $trabajadores[] = $row;
+        $modelos[] = $row;
     }
 }
-echo json_encode($trabajadores);
+echo json_encode($modelos);
 
 } else {
     header("location: ../../index.html");
 }
 ?>
-

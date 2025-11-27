@@ -40,7 +40,15 @@
             <div class="contenedor">
                 <div class="form">
                     <label for="actividad">Actividad</label>
-                    <input type="text" id="actividad" name="actividad" placeholder="Actividad Realizada" required>
+                    <select id="actividad" name="actividad">
+                        <option disabled selected>Actividad Realizada</option>
+                        <option value="Riego">Riego</option>
+                        <option value="Preparacion del suelo">Preparacion del suelo</option>
+                        <option value="Siembra">Siembra</option>
+                        <option value="Abonado">Abonado</option>
+                        <option value="Poda">Poda</option>
+                        <option value="Fumigacion">Fumigación</option>
+                    </select>
                 </div>
                 <div class="form">
                     <label for="fecha/actividad">Fecha de realización</label>
@@ -49,13 +57,13 @@
             </div>
             <label for="responsable">Responsable</label><br>
                    <select id="responsable" name="responsable">
-                        <option value="">Seleccionar Trabajador</option>
+                        <option disabled selected>Seleccionar Trabajador</option>
                     </select>
             <div class="contenedor">
                 <div class="form">
                     <label for="insumos">Insumos utilizados</label>
                     <select id="insumos" name="insumos">
-                        <option value="">Seleccionar Insumo</option>
+                        <option disabled selected>Seleccionar Insumo</option>
                         <option value="0">S/I</option>
                     </select>
                 </div>
@@ -77,7 +85,7 @@
                 </div>
             </div><br>
             <label for="observaciones" style="margin-top: -25px";>Observaciones</label><br>
-            <textarea type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales"></textarea><br><br>
+            <textarea type="text" maxlength="100" id="observaciones" name="observaciones" placeholder="Notas Adicionales"></textarea><br><br>
             <input type="submit" value="Guardar Actividad">
             </div>   
         </form>
@@ -120,6 +128,24 @@
                             select.appendChild(option);
                         });
                     })
+            });
+            const form = document.querySelector('form');
+
+            form.addEventListener('submit', (e) => {
+                const selects = Array.from(form.querySelectorAll('select'));
+                const invalid = selects.filter(s => !s.value || s.selectedIndex === 0);
+
+                if (invalid.length) {
+                    e.preventDefault();
+                    invalid.forEach(s => s.classList.add('invalid'));
+                    invalid[0].focus();
+                    alert('Por favor selecciona una opción en todos los desplegables antes de enviar.');
+                    return false;
+                }
+            });
+            
+            document.querySelectorAll('select').forEach(s => {
+                s.addEventListener('change', () => s.classList.remove('invalid'));
             });
         </script>
     </body>         

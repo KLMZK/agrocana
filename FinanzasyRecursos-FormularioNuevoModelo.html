@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap" rel="stylesheet">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <link rel="stylesheet" href="estilos/formulariosedit.css">
+        <script type="text/javascript" src="scripts/sesion.js"></script>
+    </head>
+    <body>
+        <form action="php/finanzasyrecursos/FinanzasyRecursos_FormNuevoModelo.php" method="post">
+            <p></p>
+            <h1 class="inder-regular">Agregar Modelo</h1><br>
+                    <label for="modelo">Nombre</label><br>
+                    <input type="text" id="modelo" name="modelo" maxlength="30" placeholder="2006, 2002, ..." required><br>
+                    <label for="marca">Marca</label><br>
+                    <select id="marca" name="marca">
+                        <option disabled selected>Selecciona una Marca</option>
+                    </select><br>
+                    <br><input type="submit" value="Guardar Modelo">
+        </form>
+    </body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('php/finanzasyrecursos/FinanzasyRecursos-SelectMarca.php')
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById('marca');
+                    data.forEach(marca => {
+                        const option = document.createElement('option');
+                        option.value = marca.CVE_MARCA;
+                        option.textContent = marca.NOMBRE;
+                        select.appendChild(option);
+                    });
+                })
+        });
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', (e) => {
+            const selects = Array.from(form.querySelectorAll('select'));
+            const invalid = selects.filter(s => !s.value || s.selectedIndex === 0);
+
+            if (invalid.length) {
+                e.preventDefault();
+                invalid.forEach(s => s.classList.add('invalid'));
+                invalid[0].focus();
+                alert('Por favor selecciona una opción en todos los desplegables antes de enviar.');
+                return false;
+            }
+        });
+        
+        document.querySelectorAll('select').forEach(s => {
+            s.addEventListener('change', () => s.classList.remove('invalid'));
+        });
+    </script>         
+</html>

@@ -16,17 +16,45 @@
             <h2 >Registra o edita un nuevo proveedor</h2><br>
             <div align="center">
             <label for="nombre">Nombre de la Empresa/Persona</label><br>
-            <input type="text" id="nombre" name="nombre" placeholder="Nombre del proveedor" required><br>
+            <input type="text" id="nombre" maxlength="50" name="nombre" placeholder="Nombre del proveedor" required><br>
             <label for="insumo">Tipo de insumo que provee</label><br>
-            <input type="text" id="insumo" name="insumo" placeholder="Tipos de insumos" required><br>
+            <select id="insumo" name="insumo">
+                <option disabled selected>Seleccione un tipo</option>
+                <option value="Vendibles">Vendibles</option>
+                <option value="Fertilizantes">Fertilizantes</option>
+                <option value="Herramientas">Herramientas</option>
+                <option value="Pesticidas">Pesticidas</option>
+                <option value="Tallos">Tallos</option>
+                <option value="Equipos">Equipos</option>
+            </select><br>
             <label for="telefono">Teléfono</label><br>
-            <input type="text" id="telefono" name="telefono" placeholder="000-0000" required><br>
+            <input type="text" id="telefono" name="telefono" minlength="10" maxlength="10" placeholder="0000000000" required><br>
             <label for="correo">Coreo electrónico</label><br>
-            <input type="email" id="correo" name="correo" placeholder="correo@ejemplo.com" required><br>
+            <input type="email" id="correo" name="correo" maxlength="50" placeholder="correo@ejemplo.com" required><br>
             <label for="notas">Notas</label><br>
-            <input type="text" id="notas" name="notas" placeholder="Notas Adicionales"><br>
+            <textarea id="notas" name="notas" maxlength="100" placeholder="Notas Adicionales"></textarea><br>
             <br><input type="submit" value="Guardar Proveedor">
             </div>   
         </form>
-    </body>         
+    </body>
+    <script>
+            const form = document.querySelector('form');
+
+            form.addEventListener('submit', (e) => {
+                const selects = Array.from(form.querySelectorAll('select'));
+                const invalid = selects.filter(s => !s.value || s.selectedIndex === 0);
+
+                if (invalid.length) {
+                    e.preventDefault();
+                    invalid.forEach(s => s.classList.add('invalid'));
+                    invalid[0].focus();
+                    alert('Por favor selecciona una opción en todos los desplegables antes de enviar.');
+                    return false;
+                }
+            });
+            
+            document.querySelectorAll('select').forEach(s => {
+                s.addEventListener('change', () => s.classList.remove('invalid'));
+            });
+    </script>         
 </html

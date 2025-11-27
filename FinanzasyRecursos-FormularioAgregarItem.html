@@ -13,6 +13,7 @@
         <form action="php/finanzasyrecursos/FinanzasyRecursos_FormAgregarItem.php" method="post">
             <p></p>
             <h1 class="inder-regular">Agregar Ítem</h1><br>
+            <div align="center">
                     <label for="item">Nombre</label><br>
                     <select id="item" name="item">
                         <option value="">Seleccionar el ítem a agregar</option>
@@ -20,6 +21,7 @@
                     <label for="cantidad">Cantidad</label><br>
                     <input type="number" id="cantidad" name="cantidad" placeholder="0" required><br>
                     <br><input type="submit" value="Guardar Ítem">
+                    </div>
         </form>
         <script>
             document.addEventListener('DOMContentLoaded', () => {
@@ -35,6 +37,24 @@
                             });
                         })
                 });
+            const form = document.querySelector('form');
+
+            form.addEventListener('submit', (e) => {
+                const selects = Array.from(form.querySelectorAll('select'));
+                const invalid = selects.filter(s => !s.value || s.selectedIndex === 0);
+
+                if (invalid.length) {
+                    e.preventDefault();
+                    invalid.forEach(s => s.classList.add('invalid'));
+                    invalid[0].focus();
+                    alert('Por favor selecciona una opción en todos los desplegables antes de enviar.');
+                    return false;
+                }
+            });
+            
+            document.querySelectorAll('select').forEach(s => {
+                s.addEventListener('change', () => s.classList.remove('invalid'));
+            });
         </script>
     </body>         
 </html>

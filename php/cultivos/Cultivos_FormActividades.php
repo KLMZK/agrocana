@@ -16,6 +16,19 @@ if(isset($_POST['actividad'])){
     $costo= $_POST ['costo'];
     $ccultivo= $_POST ['ccultivo'];
     $observaciones= $_POST ['observaciones'];
+    $result = mysqli_query($conexion, "SELECT CANTIDAD FROM items WHERE CVE_ITEM = $insumos");
+    if(!$result){
+        mysqli_rollback($conexion);
+        die("Error en consulta de inventario.");
+    }
+    $row = mysqli_fetch_assoc($result);
+
+    if($row['CANTIDAD'] < $cinsumo){
+        mysqli_rollback($conexion);
+        echo "<script>alert('No hay suficiente inventario');
+        window.location.href = '../../Cultivos-ActividadesAgricolas.html';</script>";
+        exit;
+    }
 
     mysqli_begin_transaction($conexion);
 
@@ -46,20 +59,6 @@ if(isset($_POST['actividad'])){
                 alert('Actividad guardada');
                 window.location.href = '../../Cultivos-ActividadesAgricolas.html';
               </script>";
-        exit;
-    }
-
-    $result = mysqli_query($conexion, "SELECT CANTIDAD FROM items WHERE CVE_ITEM = $insumos");
-    if(!$result){
-        mysqli_rollback($conexion);
-        die("Error en consulta de inventario.");
-    }
-    $row = mysqli_fetch_assoc($result);
-
-    if($row['CANTIDAD'] < $cinsumo){
-        mysqli_rollback($conexion);
-        echo "<script>alert('No hay suficiente inventario');
-        window.location.href = '../../Cultivos-ActividadesAgricolas.html';</script>";
         exit;
     }
 

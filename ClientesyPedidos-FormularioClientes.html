@@ -17,13 +17,13 @@
             <div align="center">
 
                     <label for="nombre">Nombre/Empresa</label><br>
-                    <input type="text" id="nombre" name="nombre" placeholder="Nombre del cliente" required><br>
+                    <input type="text" id="nombre" name="nombre" maxlength="50" placeholder="Nombre del cliente" required><br>
                     <label for="telefono">Teléfono</label><br>
                     <input type="tel" id="telefono" name="telefono" inputmode="numeric" placeholder="0000000000" maxlength="10" minlength="10" required><br>
                     <label for="corre">Correo Elctrónico</label><br>
-                    <input type="email" id="correo" name="correo" placeholder="correo@ejemplo.com" required><br>
+                    <input type="email" id="correo" name="correo" maxlength="50" placeholder="correo@ejemplo.com" required><br>
                     <label for="observaciones">Observaciones</label><br>
-                    <textarea placeholder="Ingrese alguna observacion de ser necesaria" id="observaciones" name="observaciones"></textarea><br>
+                    <textarea placeholder="Ingrese alguna observacion de ser necesaria" id="observaciones" name="observaciones" maxlength="100"></textarea><br>
                     <br><input type="submit" value="Guardar Cliente">
         </form>
     </body>         

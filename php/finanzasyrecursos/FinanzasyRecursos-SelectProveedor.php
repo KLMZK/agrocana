@@ -6,7 +6,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
    
 include "../../conexion/conexion.php";
 
-$sql = "SELECT CVE_COMPRADOR, NOMBRE FROM compradores WHERE TIPO IS NOT NULL";
+$sql = "SELECT CVE_COMPRADOR, NOMBRE FROM compradores WHERE TIPO != 'Cliente'";
 $result = $conexion->query($sql);
 
 $usuarios = [];

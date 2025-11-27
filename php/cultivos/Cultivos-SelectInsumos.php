@@ -6,7 +6,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
     
 include "../../conexion/conexion.php";
 
-$sql = "SELECT CVE_ITEM, NOMBRE FROM items";
+$sql = "SELECT CVE_ITEM, NOMBRE FROM items WHERE CATEGORIA != 'Vendibles'";
 $result = $conexion->query($sql);
 
 $items = [];

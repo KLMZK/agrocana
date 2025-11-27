@@ -14,6 +14,17 @@ if(isset($_POST['lote'])){
     $hectareas= $_POST ['hectareas'];
     $observaciones= $_POST ['observaciones'];
 
+    $repetir = "SELECT NOMBRE FROM terrenos WHERE NOMBRE = '$lote'";
+    $resultado = mysqli_query($conexion, $repetir);
+
+    if(mysqli_num_rows($resultado)!=0){
+        echo "<script>
+                alert('El nombre ya esta ocupado, intente con otro');
+                window.location.href = '../../Cultivos-CultivosRegistrados.html';
+              </script>";
+        exit();
+    }
+
     $insertarDatos="INSERT INTO terrenos VALUES('','$lote','$hectareas')";
 
     $ejecutarInsertar=mysqli_query ($conexion, $insertarDatos);

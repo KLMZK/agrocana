@@ -49,7 +49,7 @@
             <label for="costo">Costo</label><br>
             <input type="number" id="costo" name="costo" placeholder="0.0" required><br>
             <br><label for="observaciones" style="margin-top: -20px";>Observaciones</label><br>
-            <textarea type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales"></textarea><br><br>
+            <textarea type="text" id="observaciones" name="observaciones" maxlength="100" placeholder="Notas Adicionales"></textarea><br><br>
             <input type="submit" value="Guardar Registro">
             </div>
             <script>
@@ -78,6 +78,24 @@
                                 select.appendChild(option);
                             });
                         })
+                });
+                const form = document.querySelector('form');
+
+                form.addEventListener('submit', (e) => {
+                    const selects = Array.from(form.querySelectorAll('select'));
+                    const invalid = selects.filter(s => !s.value || s.selectedIndex === 0);
+
+                    if (invalid.length) {
+                        e.preventDefault();
+                        invalid.forEach(s => s.classList.add('invalid'));
+                        invalid[0].focus();
+                        alert('Por favor selecciona una opción en todos los desplegables antes de enviar.');
+                        return false;
+                    }
+                });
+                
+                document.querySelectorAll('select').forEach(s => {
+                    s.addEventListener('change', () => s.classList.remove('invalid'));
                 });
         </script>
         </form>

@@ -74,7 +74,7 @@
             <div class="centrado">
                 <div>
                     <label for="origen-cp">Codigo Postal</label><br>
-                    <input type="text" id="origen-cp" name="origen-cp" placeholder="Ingrese el codigo postal" required onchange="coloniasO()"/>
+                    <input type="text" maxlength="5" id="origen-cp" name="origen-cp" placeholder="Ingrese el codigo postal" required onchange="coloniasO()"/>
                 </div>
                 <div>
                     <label for="origen-colonia">Colonia</label><br>
@@ -84,14 +84,14 @@
                 </div>
                 <div>
                     <label for="origen-calle">Calle</label><br>
-                    <input type="text" value="AgroCaña Lara" id="origen-calle" name="origen-calle" required/>
+                    <input type="text" value="AgroCaña Lara" id="origen-calle" maxlength="100" name="origen-calle" required/>
                 </div>
             </div>
             <label style="font-size: 18px;">Destino</label><br>
             <div class="centrado">
                 <div>
                     <label for="destino-cp">Codigo Postal</label><br>
-                    <input type="text" id="destino-cp" name="destino-cp" placeholder="Ingrese el codigo postal" required onchange="coloniasD()"/>
+                    <input type="text" id="destino-cp" name="destino-cp" maxlength="5" placeholder="Ingrese el codigo postal" required onchange="coloniasD()"/>
                 </div>
                 <div>
                     <label for="destino-colonia">Colonia</label><br>
@@ -101,7 +101,7 @@
                 </div>
                 <div>
                     <label for="destino-calle">Calle</label><br>
-                    <input type="text" placeholder="Ingrese el nombre de la calle" id="destino-calle" name="destino-calle" required/>
+                    <input type="text" maxlength="100" placeholder="Ingrese el nombre de la calle" id="destino-calle" name="destino-calle" required/>
                 </div>
             </div>
             <div class="centrado">
@@ -115,7 +115,7 @@
                 </div>
             </div>
             <label for="observaciones">Observaciones</label><br>
-            <textarea id="observaciones" name="observaciones" placeholder="Notas del Envío" style="size: 100px;" required></textarea><br>
+            <textarea id="observaciones" name="observaciones" placeholder="Notas del Envío" style="size: 100px;" maxlength="100"></textarea><br>
             <div align="center">
                 <input type="submit" value="Guardar Envío"/>
             </div>
