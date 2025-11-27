@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+   
 include "../../conexion/conexion.php";
 
 if(isset($_POST['nombre'])){
@@ -23,5 +28,9 @@ if(isset($_POST['nombre'])){
 
     } else {
         echo "Error: " . mysqli_error($conexion);
+}
+
+} else {
+    header("location: ../../index.html");
 }
 ?>

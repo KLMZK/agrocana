@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+    
 include "../../conexion/conexion.php";
 
 $pendientes = 0;
@@ -24,4 +29,8 @@ if ($res = $conexion->query($sqlComp)) {
 }
 
 echo json_encode(['pendientes' => $pendientes, 'camino' => $camino, 'completos' => $completos]);
+
+} else {
+    header("location: ../../index.html");
+}
 ?>

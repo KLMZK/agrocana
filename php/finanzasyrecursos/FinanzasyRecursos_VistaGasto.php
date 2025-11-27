@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+    
 include "../../conexion/conexion.php";
 header('Content-Type: application/json');
 
@@ -23,4 +28,8 @@ echo json_encode([
     "gInsumos" => $gInsumos,
     "totalGastos" => $totalGasto
 ]);
+
+} else {
+    header("location: ../../index.html");
+}
 ?>

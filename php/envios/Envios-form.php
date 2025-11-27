@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+    
 include "../../conexion/conexion.php";
 
 if(isset($_POST['pedido'])){
@@ -26,11 +31,15 @@ if(isset($_POST['pedido'])){
     mysqli_query($conexion, $actualizarconductor);
 
     echo "<script>
-            alert('Actividad guardada exitosamente');
+            alert('Envio guardado exitosamente');
             window.location.href = '../../EnviosyLogistica.html';
         </script>";
 
     } else {
         echo "Error: " . mysqli_error($conexion);
+}
+
+} else {
+    header("location: ../../index.html");
 }
 ?>

@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+    
 include "../../conexion/conexion.php";
 
 $consulta = $conexion->query("
@@ -24,4 +29,8 @@ while($fila=$consulta->fetch_assoc()){
     $actividades[]=$fila;
 }
 echo json_encode($actividades);
+
+} else {
+    header("location: ../../index.html");
+}
 ?>

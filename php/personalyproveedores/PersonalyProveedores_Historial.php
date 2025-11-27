@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+   
 include "../../conexion/conexion.php";
 header('Content-Type: application/json');
 
@@ -16,4 +21,8 @@ $r = $conexion->query($sql);
 while ($row = $r->fetch_assoc()) $historial[] = $row;
 
 echo json_encode($historial);
+
+} else {
+    header("location: ../../index.html");
+}
 ?>

@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+    
 include "../../conexion/conexion.php";
 
 if(isset($_POST['actividad'])){
@@ -80,5 +85,9 @@ if(isset($_POST['actividad'])){
             window.location.href = '../../Cultivos-ActividadesAgricolas.html';
           </script>";
 
+}
+
+} else {
+    header("location: ../../index.html");
 }
 ?>

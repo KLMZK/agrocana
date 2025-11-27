@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+    
 include "../../conexion/conexion.php";
 
 $sql = "SELECT CVE_USUARIO, NOMBRE, APELLIDO_P, APELLIDO_M FROM usuarios WHERE TIPO = 'Conductor' AND ACTIVO = '1'";
@@ -11,5 +16,9 @@ if ($result->num_rows > 0) {
     }
 }
 echo json_encode($conductores);
+
+} else {
+    header("location: ../../index.html");
+}
 ?>
 

@@ -34,12 +34,6 @@ function envios() {
     document.getElementById("envios").style.backgroundColor = "#EAEAEA";
     document.getElementById("nombre").innerText = "Envíos y Logistica";
 }
-function reportes() {
-    document.querySelector("iframe").src = "Reportes.html";
-    quitarColores();
-    document.getElementById("reportes").style.backgroundColor = "#EAEAEA";
-    document.getElementById("nombre").innerText = "Reportes";
-}
 function quitarColores() {
     const botones = document.querySelectorAll('button');
     botones.forEach(b => {

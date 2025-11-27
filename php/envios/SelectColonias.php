@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+    
 include "../../conexion/conexion.php";
 
 $id = $_GET['id'];
@@ -13,5 +18,9 @@ if ($result->num_rows > 0) {
     }
 }
 echo json_encode($colonias);
+
+} else {
+    header("location: ../../index.html");
+}
 ?>
 

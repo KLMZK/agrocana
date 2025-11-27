@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+    
 include "../../conexion/conexion.php";
 
 $select= $_GET['seleccion']??'0';
@@ -28,4 +33,8 @@ foreach ($envios as &$fila) {
 }
 
 echo json_encode($envios);
+
+} else {
+    header("location: ../../index.html");
+}
 ?>

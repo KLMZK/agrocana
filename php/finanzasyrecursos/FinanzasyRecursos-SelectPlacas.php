@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+   
 include "../../conexion/conexion.php";
 
 $sql = "SELECT PLACA FROM vehiculos";
@@ -11,5 +16,9 @@ if ($result->num_rows > 0) {
     }
 }
 echo json_encode($placas);
+
+} else {
+    header("location: ../../index.html");
+}
 ?>
 

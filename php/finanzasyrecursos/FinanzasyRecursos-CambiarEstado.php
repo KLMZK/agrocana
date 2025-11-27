@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+    
 include "../../conexion/conexion.php";
 
 $placa = $_POST['placa'];
@@ -22,5 +27,9 @@ if($result && $result->num_rows > 0){
 
 } else {
     echo "Registro no encontrado";
+}
+
+} else {
+    header("location: ../../index.html");
 }
 ?>

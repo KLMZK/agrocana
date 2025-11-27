@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+   
 include "../../conexion/conexion.php";
 
 $ciudad = $_GET['ciudad'];
@@ -15,3 +20,8 @@ while ($row = $result->fetch_assoc()) {
 }
 
 echo json_encode($colonias, JSON_UNESCAPED_UNICODE);
+
+} else {
+    header("location: ../../index.html");
+}
+?>

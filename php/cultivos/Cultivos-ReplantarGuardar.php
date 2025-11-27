@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+    
 include "../../conexion/conexion.php";
 
 
@@ -20,5 +25,9 @@ if (mysqli_query($conexion, $sqlIns)) {
     echo "<script>alert('Replantado registrado correctamente.'); window.location.href='../../Cultivos-CultivosRegistrados.html';</script>";
 } else {
     echo "Error: " . mysqli_error($conexion);
+}
+
+} else {
+    header("location: ../../index.html");
 }
 ?>

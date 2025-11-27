@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+   
 include "../../conexion/conexion.php";
 
 $placa = $conexion->real_escape_string($_GET["placa"]);
@@ -25,5 +30,9 @@ if ($resultado->num_rows > 0) {
     echo json_encode($resultado->fetch_assoc());
 } else {
     echo json_encode(["error" => "Vehiculo no encontrado"]);
+}
+
+} else {
+    header("location: ../../index.html");
 }
 ?>

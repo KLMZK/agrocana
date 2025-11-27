@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+    
 include "../../conexion/conexion.php";
 
 $data = json_decode(file_get_contents("php://input"), true);
@@ -34,5 +39,9 @@ if ($conexion->query($updateCultivo) && $conexion->query($updateTerreno)) {
     echo "OK";
 } else {
     echo "Error: " . $conexion->error;
+}
+
+} else {
+    header("location: ../../index.html");
 }
 ?>

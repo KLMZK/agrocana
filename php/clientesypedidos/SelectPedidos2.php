@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+    
 include "../../conexion/conexion.php";
 
 $sql = "SELECT C.NOMBRE AS CLIENTE, I.NOMBRE AS ITEM, EN.CANTIDAD AS CANTIDAD, I.UNIDAD AS UNIDAD, P.FECHAPEDIDO AS FECHAPEDIDO, E.ENTREGADO AS ENTREGADO, (I.PRECIOU*EN.CANTIDAD) AS TOTAL FROM pedidos AS P JOIN encarga AS En on P.CVE_PEDIDO = EN.CVE_PEDIDO JOIN items AS I ON I.CVE_ITEM = EN.CVE_ITEM JOIN compradores AS C ON P.CVE_COMPRADOR = C.CVE_COMPRADOR LEFT JOIN envios as E ON P.CVE_PEDIDO = E.CVE_PEDIDO";
@@ -20,4 +25,8 @@ foreach ($pedido as &$fila) {
 unset($fila);
 
 echo json_encode($pedido);
+
+} else {
+    header("location: ../../index.html");
+}
 ?>

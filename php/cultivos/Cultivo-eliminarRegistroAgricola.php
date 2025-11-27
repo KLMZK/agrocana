@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+    
 include "../../conexion/conexion.php";
 
 
@@ -11,5 +16,9 @@ $conexion->query($borrar)){
     echo "Cultivo eliminado correctamente.";
 } else {
     echo "Error: " . $conexion->error;
+}
+
+} else {
+    header("location: ../../index.html");
 }
 ?>

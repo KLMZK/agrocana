@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+    
 include "../../conexion/conexion.php";
 
 $id = $conexion->real_escape_string($_GET["id"]);
@@ -29,5 +34,9 @@ if ($resultado->num_rows > 0) {
     echo json_encode($resultado->fetch_assoc());
 } else {
     echo json_encode(["error" => "Actividad no encontrada"]);
+}
+
+} else {
+    header("location: ../../index.html");
 }
 ?>

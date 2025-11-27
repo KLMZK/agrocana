@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+   
 include "../../conexion/conexion.php";
 
 $sql = "SELECT CVE_MUNICIPIO, NOMBRE FROM municipios";
@@ -11,5 +16,9 @@ if ($result->num_rows > 0) {
     }
 }
 echo json_encode($ciudades, JSON_UNESCAPED_UNICODE);
+
+} else {
+    header("location: ../../index.html");
+}
 ?>
 

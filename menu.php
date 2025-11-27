@@ -25,7 +25,6 @@
                     <li><button id="personal" onclick="personal()"><img src="iconos/usuarios.png" width="15" height="15"/><p>Personal y Proveedores</p></button><li>
                     <li><button id="clientes" onclick="clientes()"><img src="iconos/cliente.png" width="15" height="15"/><p>Clientes y Pedidos</p></button><li>
                     <li><button id="envios" onclick="envios()"><img src="iconos/envio.png" width="15" height="15"/><p>Envíos y Logistica</p></button><li>
-                    <li><button id="reportes" onclick="reportes()"><img src="iconos/archivo.png" width="15" height="15"/><p>Reportes</p></button><li>
                 </ul>
             </div>
             <div class="usuario">
@@ -53,10 +52,8 @@
     <?php 
     session_start();
 
-    if ($_SESSION['id'] == null){
-        header("location: index.html");
-    } else {
-        
+    if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+
         include "conexion/conexion.php";
 
         $id = $_SESSION['id'];
@@ -67,6 +64,8 @@
         echo '<script>
         window.usuariodata = ' . json_encode($usuario) .';
         </script>';
+    } else {
+        header("location: index.html");
     }
     ?>
 </html>

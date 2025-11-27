@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+   
 include "../../conexion/conexion.php";
 
 $sql = "SELECT CVE_COMPRADOR, NOMBRE FROM compradores WHERE TIPO IS NOT NULL";
@@ -11,5 +16,9 @@ if ($result->num_rows > 0) {
     }
 }
 echo json_encode($usuarios);
+
+} else {
+    header("location: ../../index.html");
+}
 ?>
 

@@ -1,4 +1,9 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
+    
 include "../../conexion/conexion.php";
 
 $data = json_decode(file_get_contents("php://input"), true);
@@ -43,5 +48,9 @@ if ($conexion->query($updateActividad)
     echo json_encode(["status"=>"OK"]);
 } else {
     echo json_encode(["status"=>"ERROR", "error"=>$conexion->error]);
+}
+
+} else {
+    header("location: ../../index.html");
 }
 ?>
