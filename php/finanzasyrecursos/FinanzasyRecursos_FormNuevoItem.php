@@ -34,6 +34,7 @@ if(isset($_POST['Nomitem'])){
     $insertarDatos2="INSERT INTO tiene VALUES('$ubicacion','$iditem')";
     $ejecutarInsertar2=mysqli_query ($conexion, $insertarDatos2);
 
+    if($categoria!="Vendibles"){
     $insertarDatos="INSERT INTO pedidos VALUES('','$proveedor','0', NOW())";
 
             $ejecutarInsertar=mysqli_query ($conexion, $insertarDatos);
@@ -42,6 +43,7 @@ if(isset($_POST['Nomitem'])){
             $insertEncarga = "INSERT INTO encarga VALUES ('$idPedido','$iditem', '$cantidad')";
 
             mysqli_query($conexion, $insertEncarga);
+    }
 
             echo "<script>
                 alert('Ítem guardado exitosamente');

@@ -7,16 +7,17 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
 include "../../conexion/conexion.php";
 
 $consulta = $conexion->query("
-SELECT 
+SELECT
+	compradores.CVE_COMPRADOR,
     compradores.NOMBRE,
     compradores.TIPO,
     compradores.TELEFONO,
-    IFNULL(pedidos.FECHAPEDIDO,'S/F') AS FECHA
+    IFNULL(MAX(pedidos.FECHAPEDIDO),'S/F') AS FECHA
 FROM compradores
 LEFT JOIN pedidos 
     ON pedidos.CVE_COMPRADOR = compradores.CVE_COMPRADOR
-    AND pedidos.INGRESO = 0
-WHERE compradores.TIPO IS NOT NULL;
+    WHERE compradores.TIPO != 'Cliente'
+    GROUP BY compradores.CVE_COMPRADOR;
 ");
 
 $proveedores=[];

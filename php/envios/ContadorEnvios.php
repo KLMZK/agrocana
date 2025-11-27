@@ -22,7 +22,7 @@ if ($res = $conexion->query($sqlCam)) {
     $camino = (int)($row['total'] ?? 0);
 }
 
-$sqlComp = "SELECT COUNT(CVE_ENVIO) AS total FROM envios WHERE ENTREGADO = 1 AND FECHASALIDA <= NOW()";
+$sqlComp = "SELECT COUNT(CVE_ENVIO) AS total FROM envios WHERE ENTREGADO = 1";
 if ($res = $conexion->query($sqlComp)) {
     $row = $res->fetch_assoc();
     $completos = (int)($row['total'] ?? 0);

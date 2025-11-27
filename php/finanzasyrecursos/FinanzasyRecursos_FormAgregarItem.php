@@ -15,6 +15,28 @@ if(isset($_POST['item'])){
 
     $ejecutarInsertar=mysqli_query ($conexion, $actualizarDatos);
 
+    $consultaritem= "SELECT CVE_COMPRADOR, CATEGORIA FROM items WHERE CVE_ITEM = '$item'";
+    $resultado = mysqli_query($conexion, $consultaritem);
+
+    $proveedorId = null;
+    $categoria = null;
+    if ($resultado && $resultado->num_rows > 0) {
+        $fila = $resultado->fetch_assoc();
+        $proveedorId = $fila['CVE_COMPRADOR'];
+        $categoria = $fila['CATEGORIA'];
+    }
+
+    if($categoria!="Vendibles"){
+    $insertarDatos="INSERT INTO pedidos VALUES('','$proveedorId','0', NOW())";
+
+    $ejecutarInsertar=mysqli_query ($conexion, $insertarDatos);
+
+    $idPedido = mysqli_insert_id($conexion);
+    $insertEncarga = "INSERT INTO encarga VALUES ('$idPedido','$item', '$cantidad')";
+
+            mysqli_query($conexion, $insertEncarga);
+    }
+
             echo "<script>
                 alert('Ítem guardado exitosamente');
                 window.location.href = '../../FinanzasyRecursos-Inventario.html';
