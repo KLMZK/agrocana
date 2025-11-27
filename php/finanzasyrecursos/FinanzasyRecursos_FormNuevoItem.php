@@ -34,6 +34,15 @@ if(isset($_POST['Nomitem'])){
     $insertarDatos2="INSERT INTO tiene VALUES('$ubicacion','$iditem')";
     $ejecutarInsertar2=mysqli_query ($conexion, $insertarDatos2);
 
+    $insertarDatos="INSERT INTO pedidos VALUES('','$proveedor','0', NOW())";
+
+            $ejecutarInsertar=mysqli_query ($conexion, $insertarDatos);
+
+            $idPedido = mysqli_insert_id($conexion);
+            $insertEncarga = "INSERT INTO encarga VALUES ('$idPedido','$iditem', '$cantidad')";
+
+            mysqli_query($conexion, $insertEncarga);
+
             echo "<script>
                 alert('Ítem guardado exitosamente');
                 window.location.href = '../../FinanzasyRecursos-Inventario.html';
