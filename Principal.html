@@ -17,30 +17,30 @@
                     <div class="subtitulo">
                         <h3>Cultivos Activos</h3> <img src="iconos/planta2.png" alt="Cultivos Icon" width="15" height="15"/>
                     </div>
-                    <p id="cultivos" class="numero">0</p>
-                    <p class="des2">0 hectáreas totales</p>
+                    <p id="ACTIVOS" class="numero">0</p>
+                    <p class="des2" id="HECTAREAS">0 hectáreas totales</p>
                 </div>
                 <div class="cosecha">
                     <div class="subtitulo">
                         <h3>Estado de la Cosecha</h3><img src="iconos/palomita1.png" alt="Cosecha Icon" width="13" height="13"/>
                     </div>
-                    <p id="listo" class="numero">0</p>
+                    <p class="numero" id="COSECHA">0</p>
                     <p class="des2">Lotes listos para cosechar</p>
-                    <p class="cont">0 En crecimiento</p>
+                    <p class="cont" id="CRECIMIENTO">0 En crecimiento</p>
                 </div>
                 <div class="finanzas">
                     <div class="subtitulo">
                         <h3>Finanzas</h3><img src="iconos/monedas.png" alt="Finanzas Icon" width="13" height="13"/>
                     </div>
-                    <p id="balance" class="numero">$0</p>
+                    <p id="balanceMes" class="numero" >$0</p>
                     <p class="des2">Balance neto del mes</p>
                     <div class="detalles">
                         <p class="des" style="color: #346E19;">Ingresos:</p>
-                        <p class="des" id="ingresos">$0</p>
+                        <p class="des" id="ingresosMes">$0</p>
                     </div>
                     <div class="detalles">
                         <p class="des" style="color: #FD0000;">Gastos:</p>
-                        <p class="des" id="gastos">$0</p>
+                        <p class="des" id="gastosMes">$0</p>
                     </div> 
                 </div>
             </div>
@@ -52,41 +52,123 @@
                     <div class="detalles">
                             <p class="des">Ultimo riego programado: </p>
                         <div class="estado">
-                            <p class="des" id="ultimo">Hace 0 días</p>
+                            <p class="des" id="URIEGO">dd/mm/yyyy</p>
                         </div>
                     </div>
                     <div class="detalles">
                         <p class="des">Próximo riego programado: </p>
                         <div class="estado" style="background-color: transparent;">
-                            <p class="des" id="proximo">En 0 días</p>
+                            <p class="des" id="PRIEGO">En 0 días</p>
                         </div>
                     </div>
                 </div>
                 <div class="actividades">
                     <h3>Actividades Recientes</h3>
-                    <div class="actividad">
-                        <div>
-                            <p class="des" id="nombre">Riego</p>
-                            <p class="des2" id="elaboracion">Nombre dd/mm/aaaa</p>
-                        </div>
-                        <div class="estado" style="background-color: transparent;">
-                            <p class="des" id="riego">incompleto</p>
-                        </div>
+                    <div id="mostraractividades">
+
                     </div>
                 </div>
             </div>
             <div class="envios">
                 <h3>Enviós</h3>
-                <div class="envio">
-                    <p id="cliente">Arantxa</p>
-                    <div align="center">
-                        <p class="des" id="envio-fecha">dd/mm/aaaa</p>
-                        <div class="estado" style="background-color: transparent;">
-                            <p class="des" id="envio-estado">incompleto</p>
-                        </div>
-                    </div>
-                </div>
+                <div id="mostrarenvios" style="display: flex; align-items: center; justify-content: space-between;"></div>
             </div>
         </div>
     </body>
+    <script>
+        fetch("/php/principal.php?desc="+encodeURIComponent(0))
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("ACTIVOS").textContent = data[0].TOTAL;
+            document.getElementById("HECTAREAS").textContent = data[0].HECTAREAS + ' hectáreas totales';
+        });
+        fetch("/php/principal.php?desc="+encodeURIComponent(1))
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("COSECHA").textContent = data[0].TOTAL; 
+        });
+        fetch("/php/principal.php?desc="+encodeURIComponent(2))
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("CRECIMIENTO").textContent = data[0].TOTAL +' En crecimiento'; 
+        });
+        let ingresos = 0;
+        let gastos = 0;
+
+        const Ingr = fetch("php/finanzasyrecursos/FinanzasyRecursos_VistaIngreso.php")
+            .then(res => res.json())
+            .then(data => {
+                ingresos = Number(data.totalIngresos);
+                document.getElementById("ingresosMes").textContent =
+                    "$" + ingresos.toLocaleString();
+            });
+        const Gast = fetch("php/finanzasyrecursos/FinanzasyRecursos_VistaGasto.php")
+            .then(res => res.json())
+            .then(data => {
+                gastos = Number(data.totalGastos);
+                document.getElementById("gastosMes").textContent =
+                    "$" + gastos.toLocaleString();
+            });
+
+        Promise.all([Ingr, Gast]).then(() => {
+            const balance = ingresos - gastos;
+
+            document.getElementById("balanceMes").textContent =
+                "$" + balance.toLocaleString();
+            if (balance < 0) {
+                document.getElementById("balanceMes").style.color = "#C51B1B";
+            } else {
+                document.getElementById("balanceMes").style.color = "#346E19"; 
+            }
+        });
+        fetch("/php/principal.php?desc="+encodeURIComponent(3))
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("URIEGO").textContent = data[0].FECHA; 
+        });
+        fetch("/php/principal.php?desc="+encodeURIComponent(4))
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("PRIEGO").textContent = data[0].FECHA; 
+        });
+        fetch("/php/principal.php?desc="+encodeURIComponent(5))
+        .then(res => res.json())
+        .then(data => {
+            const div = document.getElementById("mostraractividades");
+            div.innerHTML = '';
+            for(var i = 0; i < 3; i++){
+                div.innerHTML += `
+                    <div class="actividad">
+                        <div>
+                            <p class="des">${data[i].TIPO}</p>
+                            <p class="des2">${data[i].NOMBRE} ${data[i].APELLIDOP} ${data[i].APELLIDOM} ${data[i].FECHA}</p>
+                        </div>
+                        <div class="estado" ${data[i].ESTADO == 'Pendiente' ?'style="background-color:transparent;"':''}>
+                            <p class="des" id="riego"> ${data[i].ESTADO}</p>
+                        </div>
+                    </div>
+                `
+            }
+        });
+        fetch("/php/principal.php?desc="+encodeURIComponent(6))
+        .then(res => res.json())
+        .then(data => {
+            const div = document.getElementById("mostrarenvios");
+            div.innerHTML = '';
+            for(var i = 0; i < 3; i++){
+                div.innerHTML += `
+                    <div class="envio">
+                        <p id="cliente">${data[i].CLIENTE}</p>
+                        <div align="center">
+                            <p class="des" id="envio-fecha" style="margin-bottom:15px;">${data[i].FECHASALIDA}</p>
+                            <div class="estado" ${data[i].ENTREGADO == '0' ?'style="background-color:transparent;"':''}>
+                                <p class="des" id="envio-estado">${data[i].ENTREGADO == '0' ?'En transito':'Entregado'}</p>
+                            </div>
+                            <p class="des2" style="margin-top:13px;">${data[i].ITEM} ${data[i].CANTIDAD} ${data[i].UNIDAD}</p>
+                        </div>
+                    </div>
+                `
+            }
+        });
+    </script>
 </html>
