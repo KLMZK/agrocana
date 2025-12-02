@@ -8,6 +8,7 @@ include "../../conexion/conexion.php";
 
 $consulta = $conexion->query("
     SELECT 
+        CVE_USUARIO,
         NOMBRE,
         TIPO,
         ROL,

@@ -158,6 +158,32 @@
                         `;
                     });
                 });
+                function cambiarEstado(id) {
+                    fetch("php/personalyproveedores/PersonalyProveedores-CambiarEstadoTrabajadores.php", {
+                        method: "POST",
+                        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                        body: "id=" + encodeURIComponent(id)
+                    })
+                    .then(res => res.text())
+                    .then(resp => {
+                        alert(resp);
+                        location.reload();
+                    });
+                }
+                function eliminar(id) {
+                    if(confirm("¿Estás seguro de que deseas eliminar este Trabajador?")) {
+                        fetch("php/personalyproveedores/PersonalyProveedores-EliminarRegistroTrabajador.php", {
+                            method: "POST",
+                            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                            body: "id=" + id
+                        })
+                        .then(res => res.text())
+                        .then(resp => {
+                            alert(resp);
+                            location.reload();
+                        });
+                    }
+                }
             </script>
     </body>
 </html>

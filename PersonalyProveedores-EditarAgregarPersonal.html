@@ -1,0 +1,225 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap" rel="stylesheet">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <link rel="stylesheet" href="estilos/formulariosedit.css">
+        <script type="text/javascript" src="scripts/sesion.js"></script>
+        <style>
+            .contenedor{
+                display: flex;
+                gap: 10px;
+                width: 100%;
+            }
+            .form{
+                display: flex;
+                flex-direction: column;
+                flex: 1px;
+            }
+            .contenedor input{
+                flex: 1px;
+                display: flex;
+                flex-direction: column;
+            }
+            .form label{
+                display: block;
+                margin-bottom: 5px;
+            }
+            .cont-img {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                font-family: Inter, sans-serif;
+                cursor: pointer;
+            }
+
+            .circulo {
+                width: 90px;
+                height: 90px;
+                background-color: #E5E5E5;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: 0.3s;
+            }
+
+            .circulo:hover {
+                background-color: #dcdcdc;
+            }
+
+            .circulo img {
+                width: 35px;
+            }
+
+            input[type="file"] {
+                display: none;
+            }
+            .subida {
+                margin-top: 8px;
+                font-size: 14px;
+                color: #333;
+            }
+            input[type=button]{
+                background-color: #395018;
+                color: white;
+                padding: 10px 20px;
+                margin-top: 1px;
+                border: none;
+                cursor: pointer;
+                width: 90%;
+                border-radius: 10px;
+                font-size: 17px;
+                font-weight:540;
+            }
+            input[type=button]:hover{
+                background-color: #2a3c11;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="php/personalyproveedores/PersonalyProveedores_FormAgregarTrabajador.php" enctype="multipart/form-data" method="post" style="width:500px;height:575px;">
+            <p></p>
+            <h1 class="inder-regular">Nuevo Trabajador</h1><br>
+            <h2 >Registro o edita un nuevo trabajador</h2><br>
+            <div align="center">
+                <input type="hidden" id="id" value="">
+                <label class="cont-img">
+                    <div class="circulo">
+                        <img src="iconos/imagen.png" id="foto" alt="Icono subir foto">
+                    </div>
+                    <text class="subida">Subir foto</text>
+                    <input type="file" accept="imagen/*" id="perfil" name="perfil"><br>
+                </label><br>
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Nombre">
+                    </div>
+                    <div class="form">
+                        <label for="apellidop">Apellido Paterno</label>
+                        <input type="text" id="apellidop" name="apellidop" placeholder="Ap.Paterno">
+                    </div>
+                    <div class="form">
+                        <label for="apellidom">Apellido Materno</label>
+                        <input type="text" id="apellidom" name="apellidom" placeholder="Ap.Materno">
+                    </div>
+                </div>
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="tipo">Tipo de Trabajador</label>
+                        <select id="tipo" name="tipo">
+                            <option disabled selected>Seleccione un tipo</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Supervisor">Supervisor</option>
+                            <option value="Conductor">Conductor</option>
+                            <option value="Mecanico">Mecanico</option>
+                        </select>
+                    </div>
+                    <div class="form">
+                        <label for="rol">Rol del Trabajador</label>
+                        <select id="rol" name="rol">
+                            <option disabled selected>Seleccionar Rol</option>
+                            <option value="Permanente">Permanente</option>
+                            <option value="Temporal">Temporal</option>
+                        </select>
+                    </div>
+                </div>
+                </div>
+                <label for="telefono">Contacto</label><br>
+                <input type="text" maxlength="10" minlength="10" id="telefono" name="telefono" placeholder="0000000000" required>
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="usuario">Usuario</label>
+                        <input type="text" id="usuario" name="usuario" placeholder="Usuario para ingresar" required>
+                    </div>
+                    <div class="form" >
+                        <label for="password" >Contraseña</label>
+                        <input type="password" id="password" name="password" placeholder="Contraseña para ingresar" required >
+                    </div>
+            </div><br>
+            <input type="button" onclick="guardarCambios()" value="Guardar Trabajador">
+            </div>   
+        </form>
+    </body>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            fetch("php/personalyproveedores/PersonalyProveedores-ObtenerTrabajador.php?id=" + id)
+            .then(res => res.json())
+            .then(usuarios => {
+            
+                document.getElementById("id").value = id;
+                document.getElementById("nombre").value = usuarios.NOMBRE;
+                document.getElementById("apellidop").value = usuarios.APELLIDO_P;
+                document.getElementById("apellidom").value = usuarios.APELLIDO_M;
+                document.getElementById("tipo").value = usuarios.TIPO;
+                document.getElementById("rol").value = usuarios.ROL;
+                document.getElementById("telefono").value = usuarios.NUMEROTELEFONICO;
+                document.getElementById("usuario").value = usuarios.USER;
+                document.getElementById("password").value = usuarios.PASSWORD;
+            });
+            function guardarCambios() {
+                const datos = {
+                    id: document.getElementById("id").value,
+                    nombre: document.getElementById("nombre").value,
+                    apellidop: document.getElementById("apellidop").value,
+                    apellidom: document.getElementById("apellidom").value,
+                    tipo: document.getElementById("tipo").value,
+                    rol: document.getElementById("rol").value,
+                    telefono: document.getElementById("telefono").value,
+                    usuario: document.getElementById("usuario").value,
+                    password: document.getElementById("password").value
+                };
+                fetch("php/personalyproveedores/PersonalyProveedores-ActualizarTrabajadores.php", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(datos)
+                })
+                .then(res => res.text())
+                .then(resp => {
+                    alert("Personal actualizado correctamente");
+                    window.location.href = "PersonalyProveedores-Trabajadores.html";
+                });
+            }
+
+        const form = document.querySelector('form');
+
+            form.addEventListener('button', (e) => {
+                const selects = Array.from(form.querySelectorAll('select'));
+                const invalid = selects.filter(s => !s.value || s.selectedIndex === 0);
+
+                if (invalid.length) {
+                    e.preventDefault();
+                    invalid.forEach(s => s.classList.add('invalid'));
+                    invalid[0].focus();
+                    alert('Por favor selecciona una opción en todos los desplegables antes de enviar.');
+                    return false;
+                }
+            });
+            
+            document.querySelectorAll('select').forEach(s => {
+                s.addEventListener('change', () => s.classList.remove('invalid'));
+            });
+
+            const inputImagen = document.getElementById('perfil');
+            const vistaPreviaImagen = document.getElementById('foto');
+
+            inputImagen.addEventListener('change', function(e) {
+            const archivo = e.target.files[0];
+            if (archivo) {
+                const reader = new FileReader();
+                reader.readAsDataURL(archivo);
+                reader.onload = function(e) {
+                vistaPreviaImagen.src = e.target.result;
+                vistaPreviaImagen.style.width = "100px";
+                vistaPreviaImagen.style.height = "100px";
+                vistaPreviaImagen.style.borderRadius = "50%";
+                }
+            }
+            });
+    </script>         
+</html>
