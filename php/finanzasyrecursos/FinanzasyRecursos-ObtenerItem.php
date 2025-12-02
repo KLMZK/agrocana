@@ -10,6 +10,7 @@ $id = $conexion->real_escape_string($_GET["id"]);
 
 $sql = "
 SELECT 
+    items.CVE_ITEM as id,
     items.NOMBRE,
     items.CATEGORIA,
     items.CANTIDAD,

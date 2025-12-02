@@ -65,7 +65,7 @@
                 <div class="form">
                     <label for="responsable">Responsable</label>
                    <select id="responsable" name="responsable">
-                        <option value="">Seleccionar Trabajador</option>
+                        <option disabled selected>Seleccionar Trabajador</option>
                     </select>
                 </div>
                 <div class="form">
@@ -77,7 +77,7 @@
                 <div class="form">
                     <label for="insumos">Insumos utilizados</label>
                     <select id="insumos" name="insumos">
-                        <option value="">Seleccionar Insumo</option>
+                        <option disabled selectedvalue="">Seleccionar Insumo</option>
                     </select>
                 </div>
                 <div class="form">
@@ -93,7 +93,7 @@
                 <div class="form" >
                     <label for="ccultivo">Cultivos</label>
                     <select id="ccultivo" name="ccultivo">
-                        <option value="">Seleccionar Cultivo</option>
+                        <option disabled selected>Seleccionar Cultivo</option>
                     </select>
                 </div>
             </div><br>
@@ -114,10 +114,10 @@
                     const res = await fetch(url);
                     const data = await res.json();
                     select.innerHTML = '';
-                    data.forEach(item => {
+                    data.forEach(actividad => {
                         const option = document.createElement('option');
-                        option.value = item[valorKey];
-                        option.textContent = item[textoKey];
+                        option.value = actividad[valorKey];
+                        option.textContent = actividad[textoKey];
                         select.appendChild(option);
                     });
                 }

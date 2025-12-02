@@ -7,7 +7,8 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
 include "../../conexion/conexion.php";
 
 $consulta = $conexion->query("
-    SELECT 
+    SELECT
+        items.CVE_ITEM,
         items.NOMBRE,
         items.CATEGORIA,
         items.CANTIDAD,

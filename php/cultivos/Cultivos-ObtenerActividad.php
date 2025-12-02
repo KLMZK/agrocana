@@ -20,11 +20,11 @@ SELECT
     utiliza.CANTIDAD,
     actividades.COSTO
 FROM actividades 
-INNER JOIN cultivos  ON cultivos.CVE_CULTIVO = actividades.CVE_CULTIVO
-INNER JOIN terrenos  ON cultivos.CVE_TERRENO = terrenos.CVE_TERRENO
-INNER JOIN utiliza  ON utiliza.CVE_ACTIVIDAD = actividades.CVE_ACTIVIDAD
-INNER JOIN items  ON items.CVE_ITEM = utiliza.CVE_ITEM
-INNER JOIN usuarios  ON usuarios.CVE_USUARIO = actividades.CVE_RESPONSABLE
+LEFT JOIN cultivos  ON cultivos.CVE_CULTIVO = actividades.CVE_CULTIVO
+LEFT JOIN terrenos  ON cultivos.CVE_TERRENO = terrenos.CVE_TERRENO
+LEFT JOIN utiliza  ON utiliza.CVE_ACTIVIDAD = actividades.CVE_ACTIVIDAD
+LEFT JOIN items  ON items.CVE_ITEM = utiliza.CVE_ITEM
+LEFT JOIN usuarios  ON usuarios.CVE_USUARIO = actividades.CVE_RESPONSABLE
 WHERE actividades.CVE_ACTIVIDAD = '$id'
 ";
 
