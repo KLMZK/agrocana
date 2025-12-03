@@ -34,7 +34,7 @@
         </style>
     </head>
     <body onload="inicio()">
-        <form action="php/clientesypedidos/ClientesyPedidos_FormPedido.php" method="post">
+        <form action="php/clientesypedidos/ClientesyPedidos_FormPedido.php" id="formulario" method="post">
             <p></p>
             <h1 class="inder-regular">Nuevo Pedido</h1><br>
             <h2 >Registra o edita un nuevo pedido</h2><br>
@@ -51,13 +51,15 @@
                     <input type="float" id="cantidad" name="cantidad" placeholder="0.0" required>
                     <label for="pedido">Fecha Pedido</label><br>
                     <input type="date" id="pedido" name="pedido" required><br>
-                    <br><input type="submit" value="Guardar Pedido">
+                    <br><input type="submit" value="Guardar Pedido" id="boton">
             </div>   
         </form>
     </body>     
     <script>
+        const params = new URLSearchParams(window.location.search);
+        const cve = params.get('cve');
         function inicio() {
-            fetch("php/clientesypedidos/SelectClientes.php")
+            fetch("php/clientesypedidos/SelectClientes.php?todos="+encodeURIComponent(cve))
             .then(res => res.json())
             .then(datos => {
                 var select = document.getElementById("cliente");
@@ -68,7 +70,7 @@
                     select.appendChild(option);
                 });
             });
-            fetch("php/clientesypedidos/SelectProductos.php")
+            fetch("php/clientesypedidos/SelectProductos.php?cve="+encodeURIComponent(cve))
             .then(res => res.json())
             .then(datos => {
                 var select = document.getElementById("producto");
@@ -97,6 +99,22 @@
             document.querySelectorAll('select').forEach(s => {
                 s.addEventListener('change', () => s.classList.remove('invalid'));
             });
-        }
+        }   
+        if (cve) {
+            document.getElementById('boton').value = "Actualizar";
+            fetch('php/clientesypedidos/SelectPedidos.php?cve=' + encodeURIComponent(cve))
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    if (data && data[0]) {
+                        document.getElementById('cliente').value = data[0].CVE_COMPRADOR || '';
+                        document.getElementById('producto').value = data[0].CVE_ITEM || '';
+                        document.getElementById('cantidad').value = data[0].CANTIDAD || '';
+                        document.getElementById('pedido').value = data[0].FECHAPEDIDO || '';
+                        document.getElementById('formulario').action += '?cve=' + encodeURIComponent(cve);
+                    }
+                })
+                .catch(err => console.error('Error cargando cliente:', err));
+        }  
     </script>    
 </html>

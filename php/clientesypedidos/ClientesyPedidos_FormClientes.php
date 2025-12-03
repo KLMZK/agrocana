@@ -6,24 +6,50 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
 
     include "../../conexion/conexion.php";
 
-    if(isset($_POST['nombre'])){
+    $cve = $_GET['cve'] ?? '';
 
-        $nombre= $_POST ['nombre'];
-        $telefono= $_POST ['telefono'];
-        $correo= $_POST ['correo'];
-        $observacion = $_POST ['observaciones']??'';
+    if($cve == ''){
 
-        $insertarDatos="INSERT INTO compradores VALUES('','$nombre','$telefono','$correo','Cliente','$observacion')";
+        if(isset($_POST['nombre'])){
 
-        $ejecutarInsertar=mysqli_query ($conexion, $insertarDatos);
+            $nombre= $_POST ['nombre'];
+            $telefono= $_POST ['telefono'];
+            $correo= $_POST ['correo'];
+            $observacion = $_POST ['observaciones']??'';
 
-                echo "<script>
-                    alert('Cliente guardado exitosamente');
-                    window.location.href = '../../ClientesyPedidos-GestionClientes.html';
-                </script>";
+            $insertarDatos="INSERT INTO compradores VALUES('','$nombre','$telefono','$correo','Cliente','$observacion')";
 
+            $ejecutarInsertar=mysqli_query ($conexion, $insertarDatos);
+
+                    echo "<script>
+                        alert('Cliente guardado exitosamente');
+                        window.location.href = '../../ClientesyPedidos-GestionClientes.html';
+                    </script>";
+
+        } else {
+            echo "Error: " . mysqli_error($conexion);
+        }
     } else {
-        echo "Error: " . mysqli_error($conexion);
+
+        if(isset($_POST['nombre'])){
+
+            $nombre= $_POST ['nombre'];
+            $telefono= $_POST ['telefono'];
+            $correo= $_POST ['correo'];
+            $observacion = $_POST ['observaciones']??'';
+
+            $actualizarDatos="UPDATE compradores SET NOMBRE='$nombre', TELEFONO='$telefono', CORREO='$correo', NOTAS='$observacion' WHERE CVE_COMPRADOR='$cve'";
+
+            $ejecutarActualizar=mysqli_query ($conexion, $actualizarDatos);
+
+                    echo "<script>
+                        alert('Cliente actualizado exitosamente');
+                        window.location.href = '../../ClientesyPedidos-GestionClientes.html';
+                    </script>";
+
+        } else {
+            echo "Error: " . mysqli_error($conexion);
+        }
     }
 } else {
     header("location: ../../index.html");

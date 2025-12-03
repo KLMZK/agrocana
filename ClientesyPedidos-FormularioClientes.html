@@ -10,7 +10,7 @@
         <script type="text/javascript" src="scripts/sesion.js"></script>
     </head>
     <body>
-        <form action="php/clientesypedidos/ClientesyPedidos_FormClientes.php" method="post">
+        <form action="php/clientesypedidos/ClientesyPedidos_FormClientes.php" method="post" id="formulario">
             <p></p>
             <h1 class="inder-regular">Nuevo Cliente</h1><br>
             <h2>Registra o edita un nuevo cliente</h2>
@@ -20,11 +20,32 @@
                     <input type="text" id="nombre" name="nombre" maxlength="50" placeholder="Nombre del cliente" required><br>
                     <label for="telefono">Teléfono</label><br>
                     <input type="tel" id="telefono" name="telefono" inputmode="numeric" placeholder="0000000000" maxlength="10" minlength="10" required><br>
-                    <label for="corre">Correo Elctrónico</label><br>
+                    <label for="correo">Correo Elctrónico</label><br>
                     <input type="email" id="correo" name="correo" maxlength="50" placeholder="correo@ejemplo.com" required><br>
                     <label for="observaciones">Observaciones</label><br>
                     <textarea placeholder="Ingrese alguna observacion de ser necesaria" id="observaciones" name="observaciones" maxlength="100"></textarea><br>
-                    <br><input type="submit" value="Guardar Cliente">
+                    <br><input type="submit" value="Guardar Cliente" id="boton">
         </form>
-    </body>         
+    </body>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const cve = params.get('cve');
+
+        if (cve) {
+            document.getElementById('boton').value = "Actualizar";
+            fetch('php/clientesypedidos/SelectClientes.php?cve=' + encodeURIComponent(cve))
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    if (data && data[0]) {
+                        document.getElementById('nombre').value = data[0].NOMBRE || '';
+                        document.getElementById('telefono').value = data[0].TELEFONO || '';
+                        document.getElementById('correo').value = data[0].CORREO || '';
+                        document.getElementById('observaciones').value = data[0].NOTAS || '';
+                        document.getElementById('formulario').action += '?cve=' + encodeURIComponent(cve);
+                    }
+                })
+                .catch(err => console.error('Error cargando cliente:', err));
+        }
+    </script>      
 </html>

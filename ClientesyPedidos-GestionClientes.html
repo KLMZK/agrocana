@@ -182,15 +182,13 @@
 
                     fetch("php/clientesypedidos/SelectPedidoCliente.php?id=" + encodeURIComponent(cliente.CVE_COMPRADOR))
                     .then(res2 => res2.json())
-                    .then(datos2 => {
-                        if (datos2.length) {
-                            datos2.forEach(pedido => {
-                                const d = document.createElement('div');
-                                d.className = 'cliente-datos';
-                                d.innerHTML = `<span>Última compra: ${pedido.FECHAPEDIDO}</span>
-                                            <span class="total-compra">Total: $${pedido.TOTAL}</span>`;
-                                item.appendChild(d);
-                            });
+                    .then(pedido => {
+                        if (pedido.length) {
+                            const d = document.createElement('div');
+                            d.className = 'cliente-datos';
+                            d.innerHTML = `<span>Última compra: ${pedido[0].FECHAPEDIDO}</span>
+                                        <span class="total-compra">Total: $${pedido[0].TOTAL}</span>`;
+                            item.appendChild(d);
                         } else {
                             const d = document.createElement('div');
                             d.className = 'cliente-datos';
@@ -200,6 +198,9 @@
                         const btn = document.createElement('button');
                         btn.className = 'Boton-icono edit-icon';
                         btn.innerHTML = `<img src="iconos/editar.png" style="width:14px;height:14px;">`;
+                        btn.onclick = function() {
+                            window.location.href='ClientesyPedidos-FormularioClientes.html?cve='+encodeURIComponent(cliente.CVE_COMPRADOR);
+                        };
                         item.appendChild(btn);
                     })
                 });
@@ -219,7 +220,7 @@
                                 </div>
                                 <span class="estado">${pedido.ENTREGADO}</span>
                                 <span class="pedido-total">Total: $${pedido.TOTAL}</span>
-                                <button class="Boton-icono edit-icon">
+                                <button class="Boton-icono edit-icon" onclick="window.location.href='ClientesyPedidos-FormularioPedido.html?cve=${pedido.CVE_PEDIDO}'">
                                     <img src="iconos/editar.png" alt="clientes" style="width: 14px; height: 14;">
                                 </button>
                             </div>

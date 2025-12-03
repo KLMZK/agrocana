@@ -6,7 +6,35 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
 
     include "../../conexion/conexion.php";
 
-    $sql = "SELECT * FROM compradores WHERE TIPO = 'Cliente'";
+    $cve = $_GET['cve']??'';
+    $todos = $_GET['todos']??'';
+
+    if($cve == ''){
+
+        if($todos == '') {
+            $sql = "SELECT * FROM compradores WHERE TIPO = 'Cliente'";
+        } else {
+            
+            $comprador = "SELECT INGRESO FROM pedidos WHERE CVE_PEDIDO = '$todos'";
+            
+            $ingreso="SELECT INGRESO FROM pedidos WHERE CVE_PEDIDO = '$todos'";
+            $result = $conexion -> query($ingreso);
+
+            $row = $result->fetch_assoc();
+            $ingreso = $row['INGRESO'];
+            
+            if($ingreso === '0' || $ingreso === 0){
+                $sql = "SELECT * FROM compradores WHERE TIPO != 'Cliente'";
+            } else {
+                $sql = "SELECT * FROM compradores WHERE TIPO = 'Cliente'";
+            }
+        } 
+    } else {
+
+        $sql = "SELECT * FROM compradores WHERE TIPO = 'Cliente' AND CVE_COMPRADOR = $cve";
+
+    }
+
     $result = $conexion->query($sql);
 
     $clientes = [];
@@ -16,6 +44,7 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
         }
     }
     echo json_encode($clientes);
+
 } else {
     header("location: ../../index.html");
 }
