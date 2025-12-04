@@ -8,19 +8,24 @@ include "../../conexion/conexion.php";
 
 $id = $_POST['id'];
 
-$sql = "SELECT ESTADO FROM items WHERE CVE_ITEM = '$id'";
+$sql = "SELECT ACTIVO FROM usuarios WHERE CVE_USUARIO = '$id'";
 $result = $conexion->query($sql);
 
 if($result && $result->num_rows > 0){
     $row = $result->fetch_assoc();
-    $estadoActual = $row['ESTADO'];
+    $estadoActual = $row['ACTIVO'];
 
 
-    $nuevoEstado = ($estadoActual == 'No Disponible') ? 'Disponible' : 'No Disponible';
+    $nuevoEstado = ($estadoActual == 1) ? 0 : 1;
+    if($nuevoEstado==1){
+        $textEstado='Activo';
+    }else{
+        $textEstado='Inactivo';
+    }
 
-    $update = "UPDATE items SET ESTADO = '$nuevoEstado' WHERE CVE_ITEM = '$id'";
+    $update = "UPDATE usuarios SET ACTIVO = '$nuevoEstado' WHERE CVE_USUARIO = '$id'";
     if($conexion->query($update)){
-        echo "Estado actualizado a '$nuevoEstado'";
+        echo "Estado actualizado a '$textEstado'";
     } else {
         echo "Error al actualizar el estado: " . $conexion->error;
     }

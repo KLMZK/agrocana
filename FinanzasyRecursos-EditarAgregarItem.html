@@ -79,15 +79,23 @@
             <h1 class="inder-regular">Nuevo Ítem</h1><br>
             <h2 >Registra o edita un ítem</h2><br>
             <div align="center">
+                <input type="hidden" id="id" name="id">
                 <div class="contenedor">
-                    <input type="hidden" id="id" name="id" value="">
                     <div class="form">
                         <label for="Nomitem">Nombre</label>
-                        <input type="text" id="Nomitem" name="Nomitem" placeholder="Nombre del Insumo/Herramienta..." required>
+                        <input type="text" maxlength="30" id="Nomitem" name="Nomitem" placeholder="Nombre del Insumo/Herramienta..." required>
                     </div>
                     <div class="form">
                         <label for="categoria">Categoría</label>
-                        <input type="text" id="categoria" name="categoria" placeholder="Fertilizante, Agroquimicos..." required>
+                        <select id="categoria" name="categoria">
+                            <option disabled selected>Seleccione una categoria</option>
+                            <option value="Vendibles">Vendible</option>
+                            <option value="Fertilizantes">Fertilizante</option>
+                            <option value="Herramientas">Herramienta</option>
+                            <option value="Pesticidas">Pesticida</option>
+                            <option value="Tallos">Tallo</option>
+                            <option value="Equipos">Equipo</option>
+                        </select>
                     </div>
                 </div>
                 <div class="contenedor">
@@ -98,10 +106,10 @@
                     <div class="form">
                         <label for="unidad">Unidad</label>
                         <select id="unidad" name="unidad">
-                            <option value="">Selecciona una Unidad</option>
-                            <option value="Litros">L</option>
-                            <option value="Kilogramos">Kg</option>
-                            <option value="unidades">unidades</option>
+                            <option disabled selected>Selecciona una Unidad</option>
+                            <option value="L">L</option>
+                            <option value="Kg">Kg</option>
+                            <option value="u">Unidades</option>
                         </select>
                     </div>
                     <div class="form">
@@ -109,23 +117,34 @@
                         <input type="number" id="costo" name="costo" placeholder="$$$" required>
                     </div>
                 </div>
-                <label for="proveedor">Proveedor</label><br>
-                <select id="proveedor" name="proveedor">
-                    <option value="">Selecciona un proveedor</option>
-                </select>
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="proveedor">Proveedor</label>
+                        <select id="proveedor" name="proveedor">
+                            <option disabled selected>Selecciona un proveedor</option>
+                        </select>
+                    </div>
+                    <div class="form">
+                        <label for="estado">Estado</label>
+                        <select id="estado" name="estado">
+                            <option disabled selected>Selecciona un estado</option>
+                            <option value="Disponible">Disponible</option>
+                            <option value="No Disponible">No Disponible</option>
+                        </select>
+                    </div>               
+                </div>
                 <label for="ubicacion">Ubicación</label><br>
                 <div class="boton">
                     <select id="ubicacion" name="ubicacion">
-                        <option>Selecciona una Ubicación</option>
+                        <option disabled selected>Selecciona una Ubicación</option>
                     </select>
-                        <button onclick="location.href='FinanzasyRecursos-FormularioNuevaUbicacion.html'" class="Boton-icono"><img src="iconos/agregar.png" alt="agregar"></button>
+                        <button type="button" onclick="location.href='FinanzasyRecursos-FormularioNuevaUbicacion.html'" class="Boton-icono"><img src="iconos/agregar.png" alt="agregar"></button>
                 </div>
                <br> <input type="button" onclick="guardarCambios()" value="Guardar Ítem">
             </div>   
         </form>
         <script>
             document.addEventListener('DOMContentLoaded', async () => {
-                const unidadSelect = document.getElementById('unidad');
                 const proveedorSelect = document.getElementById('proveedor');
                 const ubicacionSelect = document.getElementById('ubicacion');
                 const urlParams = new URLSearchParams(window.location.search);
@@ -154,8 +173,9 @@
                 document.getElementById("Nomitem").value = Items.NOMBRE;
                 document.getElementById("categoria").value = Items.CATEGORIA;
                 document.getElementById("cantidad").value = Items.CANTIDAD;
-                unidadSelect.value = Items.UNIDAD;
+                document.getElementById("unidad").value = Items.UNIDAD;
                 document.getElementById("costo").value = Items.COSTO;
+                document.getElementById("estado").value = Items.ESTADO;
                 proveedorSelect.value = Items.PROVEEDOR;
                 ubicacionSelect.value = Items.BODEGA;
             });
@@ -182,6 +202,24 @@
                     window.location.href = "FinanzasyRecursos-Inventario.html";
                 });
             }
+            const form = document.querySelector('form');
+
+            form.addEventListener('submit', (e) => {
+                const selects = Array.from(form.querySelectorAll('select'));
+                const invalid = selects.filter(s => !s.value || s.selectedIndex === 0);
+
+                if (invalid.length) {
+                    e.preventDefault();
+                    invalid.forEach(s => s.classList.add('invalid'));
+                    invalid[0].focus();
+                    alert('Por favor selecciona una opción en todos los desplegables antes de enviar.');
+                    return false;
+                }
+            });
+            
+            document.querySelectorAll('select').forEach(s => {
+                s.addEventListener('change', () => s.classList.remove('invalid'));
+            });
         </script>
     </body>         
 </html>

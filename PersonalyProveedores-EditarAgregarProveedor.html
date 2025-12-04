@@ -1,0 +1,111 @@
+<html>
+    <head>
+        <title>AgroCaña</title>
+        <meta charset="UTF-8">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap" rel="stylesheet">
+        <link rel="icon" type="png" href="iconos/logo.png"/>
+        <link rel="stylesheet" href="estilos/formulariosedit.css">
+        <script type="text/javascript" src="scripts/sesion.js"></script>
+        <style>
+            input[type=button]{
+                background-color: #395018;
+                color: white;
+                padding: 10px 20px;
+                margin-top: 1px;
+                border: none;
+                cursor: pointer;
+                width: 90%;
+                border-radius: 10px;
+                font-size: 17px;
+                font-weight:540;
+            }
+            input[type=button]:hover{
+                background-color: #2a3c11;
+            }
+        </style>
+    </head>
+    <body>
+        <form>
+            <p></p>
+            <h1 class="inder-regular">Nuevo Proveedor</h1><br>
+            <h2 >Registra o edita un nuevo proveedor</h2><br>
+            <div align="center">
+            <input type="hidden" id="id" value="">
+            <label for="nombre">Nombre de la Empresa/Persona</label><br>
+            <input type="text" id="nombre" maxlength="50" name="nombre" placeholder="Nombre del proveedor" required><br>
+            <label for="insumo">Tipo de insumo que provee</label><br>
+            <select id="insumo" name="insumo">
+                <option disabled selected>Seleccione un tipo</option>
+                <option value="Vendibles">Vendibles</option>
+                <option value="Fertilizantes">Fertilizantes</option>
+                <option value="Herramientas">Herramientas</option>
+                <option value="Pesticidas">Pesticidas</option>
+                <option value="Tallos">Tallos</option>
+                <option value="Equipos">Equipos</option>
+            </select><br>
+            <label for="telefono">Teléfono</label><br>
+            <input type="text" id="telefono" name="telefono" minlength="10" maxlength="10" placeholder="0000000000" required><br>
+            <label for="correo">Coreo electrónico</label><br>
+            <input type="email" id="correo" name="correo" maxlength="50" placeholder="correo@ejemplo.com" required><br>
+            <label for="notas">Notas</label><br>
+            <textarea id="notas" name="notas" maxlength="100" placeholder="Notas Adicionales"></textarea><br>
+            <br><input type="button" onclick="guardarCambios()" value="Guardar Proveedor">
+            </div>   
+        </form>
+    </body>
+    <script>
+            const form = document.querySelector('form');
+
+            form.addEventListener('submit', (e) => {
+                const selects = Array.from(form.querySelectorAll('select'));
+                const invalid = selects.filter(s => !s.value || s.selectedIndex === 0);
+
+                if (invalid.length) {
+                    e.preventDefault();
+                    invalid.forEach(s => s.classList.add('invalid'));
+                    invalid[0].focus();
+                    alert('Por favor selecciona una opción en todos los desplegables antes de enviar.');
+                    return false;
+                }
+            });
+            
+            document.querySelectorAll('select').forEach(s => {
+                s.addEventListener('change', () => s.classList.remove('invalid'));
+            });
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            fetch("php/personalyproveedores/PersonalyProveedores-ObtenerProveedor.php?id=" + id)
+            .then(res => res.json())
+            .then(compradores => {
+                document.getElementById("id").value = id;
+                document.getElementById("nombre").value = compradores.NOMBRE;
+                document.getElementById("insumo").value = compradores.INSUMO;
+                document.getElementById("telefono").value = compradores.TELEFONO;
+                document.getElementById("correo").value = compradores.CORREO;
+                document.getElementById("notas").value = compradores.NOTAS;
+            });
+            function guardarCambios() {
+                const datos = {
+                    id: document.getElementById("id").value,
+                    nombre: document.getElementById("nombre").value,
+                    insumo: document.getElementById("insumo").value,
+                    telefono: document.getElementById("telefono").value,
+                    correo: document.getElementById("correo").value,
+                    notas: document.getElementById("notas").value
+                };
+                fetch("php/personalyproveedores/PersonalyProveedores-ActualizarProveedor.php", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(datos)
+                })
+                .then(res => res.text())
+                .then(resp => {
+                    alert("Proveedor actualizado correctamente");
+                    window.location.href = "PersonalyProveedores-Proveedores.html";
+                });
+            }
+
+    </script>         
+</html

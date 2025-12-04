@@ -11,8 +11,7 @@ $placa = $conexion->real_escape_string($_GET["placa"]);
 $sql = "
 SELECT 
     vehiculos.PLACA,
-    vehiculos.CVE_MODELO,
-    modelos.NOMBRE AS MODELO,
+    modelos.CVE_MODELO AS MODELO,
     vehiculos.TIPO,
     vehiculos.OBSERVACIONES,
     vehiculos.FECHA,

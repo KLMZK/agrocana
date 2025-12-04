@@ -6,11 +6,10 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
    
 include "../../conexion/conexion.php";
 
-
 $id = $conexion->real_escape_string($_POST['id']);
 
-if($conexion->query("DELETE FROM items WHERE CVE_ITEM='$id'")){
-    echo "Item eliminado correctamente.";
+if($conexion->query("DELETE FROM compradores WHERE CVE_COMPRADOR='$id'")){
+    echo "Proveedor eliminado correctamente.";
 } else {
     echo "Error: " . $conexion->error;
 }

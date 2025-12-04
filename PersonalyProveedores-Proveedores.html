@@ -132,7 +132,7 @@
                                 <td>${proveedores.TELEFONO}</td>
                                 <td>${proveedores.FECHA}</td>
                                 <td class="acciones">
-                                    <button type="button" class="Boton-icono" onclick="window.location.href='PersonalyProveedores-EditarAgregarPersonal.html?id=${proveedores.CVE_COMPRADOR}'"><img src="iconos/editar.png"></button>
+                                    <button type="button" class="Boton-icono" onclick="window.location.href='PersonalyProveedores-EditarAgregarProveedor.html?id=${proveedores.CVE_COMPRADOR}'"><img src="iconos/editar.png"></button>
                                     <button class="Boton-icono" onclick="eliminar(${proveedores.CVE_COMPRADOR})"><img src="iconos/eliminar.png"></button>
                                 </td>
                             </tr>
@@ -156,6 +156,20 @@
                         `;
                     });
                 });
+                function eliminar(id) {
+                    if(confirm("¿Estás seguro de que deseas eliminar este Proveedor?")) {
+                        fetch("php/personalyproveedores/PersonalyProveedores-EliminarRegistroProveedor.php", {
+                            method: "POST",
+                            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                            body: "id=" + id
+                        })
+                        .then(res => res.text())
+                        .then(resp => {
+                            alert(resp);
+                            location.reload();
+                        });
+                    }
+                }
             </script>
     </body>
 </html>

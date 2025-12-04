@@ -57,6 +57,22 @@
             .Boton-icono:hover {
                 background-color: #E6E6E6;
             }
+            input[type=button]{
+                align-self: center;
+                background-color: #395018;
+                color: white;
+                padding: 10px 20px;
+                margin-top: 1px;
+                border: none;
+                cursor: pointer;
+                width: 90%;
+                border-radius: 10px;
+                font-size: 17px;
+                font-weight:540;
+            }
+            input[type=button]:hover{
+                background-color: #2a3c11;
+            }
         </style>
     </head>
     <body>
@@ -64,42 +80,65 @@
             <p></p>
             <h1 class="inder-regular">Nuevo Vehículo</h1><br>
             <h2 >Registra o edita un vehículo</h2><br>
-
-            <div class="contenedor">
-                <div class="form">
-                    <label for="tipo">Tipo de Vehículo</label>
-                    <input type="text" id="tipo" name="tipo" placeholder="Camion, Camioneta..">
+            <div align="center">
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="tipo">Tipo de Vehículo</label>
+                        <select id="tipo" name="tipo">
+                            <option disabled selected>Seleccion un tipo</option>
+                            <option value="Camioneta">Camioneta</option>
+                            <option value="Carga">Carga</option>
+                            <option value="Tractor">Tractor</option>
+                            <option value="Transporte">Transporte</option>
+                        </select>
+                    </div>
+                    <div class="form">
+                        <label for="marca">Marca</label>
+                        <select id="marca" name="marca" onchange="modelos()">
+                            <option disabled selected>Selecciona una Marca</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="form">
-                    <label for="modelo">Modelo del Vehículo</label>
-                    <input type="text" id="modelo" name="modelo" placeholder="Camion, Camioneta..">
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="modelo">Modelo del Vehículo</label>
+                        <div class="boton">
+                            <select id="modelo" name="modelo">
+                                <option disabled selected>Selecciona un modelo</option>
+                            </select>
+                            <button type="button" onclick="location.href='FinanzasyRecursos-FormularioNuevoModelo.html'" class="Boton-icono"><img src="iconos/agregar.png" alt="agregar"></button>
+                        </div>
+                    </div>
+                    <div class="form">
+                        <label for="placa">Placa/ID</label>
+                        <input type="text" id="placa" name="placa" maxlength="8" minlength="8" placeholder="Placas" required>
+                    </div>
                 </div>
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="fecha">Fecha del Registro</label>
+                        <input type="date" id="fecha" name="fecha" required>
+                    </div>
+                    <div class="form">
+                        <label for="estado">Estado del vehículo</label>
+                        <select id="estado" name="estado" required>
+                            <option disabled selected>Selecciona el estado</option>
+                            <option value="Ocupado">Ocupado</option>
+                            <option value="Desocupado">Desocupado</option>
+                            <option value="Mantenimiento">Mantenimiento</option>
+                        </select>
+                    </div>
+                </div>
+                <br><label for="observaciones" style="margin-top: -25px">Observaciones</label><br>
+                <textarea type="text" id="observaciones" name="observaciones" maxlength="100" placeholder="Notas Adicionales"></textarea><br><br>
+                    <input type="button" onclick="guardarCambios()" value="Guardar Vehículo">   
             </div>
-            <label for="marca">Marca</label><br>
-            <div class="boton">
-                <select id="marca" name="marca">
-                    <option value="">Selecciona una Marca</option>
-                </select>
-                <button onclick="location.href='FinanzasyRecursos-FormularioNuevaMarca.html'" class="Boton-icono"><img src="iconos/agregar.png" alt="agregar"></button>
-            </div>
-            <input type=hidden id="placa" name="placa" placeholder="Placas" required>
-            <div class="contenedor">
-                <div class="form">
-                    <label for="fecha">Fecha del Registro</label>
-                    <input type="date" id="fecha" name="fecha" required>
-                </div>
-                <div class="form">
-                    <label for="estado">Estado</label>
-                    <input type="text" id="estado" name="estado" placeholder="Ocupado..">
-                </div>
-            </div>
-            <br><label for="observaciones" style="margin-top: -25px">Observaciones</label><br>
-            <textarea  id="observaciones" name="observaciones" placeholder="Notas Adicionales"></textarea><br><br>
-            <input type="submit" onclick="guardarCambios()" value="Guardar Cambios">  
         </form>
         <script>
+            let placaO
             document.addEventListener('DOMContentLoaded', async () => {
                 const marcaSelect = document.getElementById('marca');
+                const modeloSelect = document.getElementById('modelo');
                 const urlParams = new URLSearchParams(window.location.search);
                 const placa = urlParams.get('placa');
 
@@ -107,35 +146,39 @@
                     const res = await fetch(url);
                     const data = await res.json();
                     select.innerHTML = '';
-                    data.forEach(marca => {
+                    data.forEach(transporte => {
                         const option = document.createElement('option');
-                        option.value = marca[valorKey];
-                        option.textContent = marca[textoKey];
+                        option.value = transporte[valorKey];
+                        option.textContent = transporte[textoKey];
                         select.appendChild(option);
                     });
                 }
                 await cargarSelect('php/finanzasyrecursos/FinanzasyRecursos-SelectMarca.php', marcaSelect, 'CVE_MARCA', 'NOMBRE');
 
-                const resMarca = await fetch(`php/finanzasyrecursos/FinanzasyRecursos-ObtenerTransporte.php?placa=${placa}`);
-                const vehiculos = await resMarca.json();
-                console.log(vehiculos); 
+                const resTransporte = await fetch(`php/finanzasyrecursos/FinanzasyRecursos-ObtenerTransporte.php?placa=${placa}`);
+                const vehiculos = await resTransporte.json();
+            
+                marcaSelect.value = vehiculos.MARCA;
 
+                await cargarSelect(`php/finanzasyrecursos/FinanzasyRecursos-SelectModelo.php?marca=${vehiculos.MARCA}`, modeloSelect, 'CVE_MODELO', 'NOMBRE');
+
+                modeloSelect.value = vehiculos.MODELO;
                 document.getElementById("tipo").value = vehiculos.TIPO;
                 document.getElementById("placa").value = vehiculos.PLACA;
                 document.getElementById("fecha").value = vehiculos.FECHA;
-                document.getElementById("modelo").value = vehiculos.MODELO;
-                marcaSelect.value = vehiculos.MARCA;
                 document.getElementById("observaciones").value = vehiculos.OBSERVACIONES;
                 document.getElementById("estado").value = vehiculos.ESTADO;
+                placaO=vehiculos.PLACA;
             });
 
             function guardarCambios() {
                 const datos = {
+                    placaO: placaO,
+                    modelo: document.getElementById("modelo").value,
                     placa: document.getElementById("placa").value,
                     tipo: document.getElementById("tipo").value,
                     fecha: document.getElementById("fecha").value,
                     marca: document.getElementById("marca").value,
-                    modelo: document.getElementById("modelo").value,
                     observaciones: document.getElementById("observaciones").value,
                     estado: document.getElementById("estado").value
                 };
@@ -150,6 +193,39 @@
                     window.location.href = "FinanzasyRecursos-Transporte.html";
                 });
             }
+            function modelos() {
+                fetch("php/finanzasyrecursos/FinanzasyRecursos-SelectModelo.php?marca="+encodeURIComponent(document.getElementById("marca").value.trim()))
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                    const select = document.getElementById("modelo");
+                    Array.from(select.options).forEach((opt, idx) => { if (idx !== 0) opt.remove(); });
+                    data.forEach(model => {
+                        const option = document.createElement('option');
+                            option.value = model.CVE_MODELO;
+                            option.textContent = model.NOMBRE;
+                            select.appendChild(option);
+                    });
+                });
+            }
+            const form = document.querySelector('form');
+
+            form.addEventListener('submit', (e) => {
+                const selects = Array.from(form.querySelectorAll('select'));
+                const invalid = selects.filter(s => !s.value || s.selectedIndex === 0);
+
+                if (invalid.length) {
+                    e.preventDefault();
+                    invalid.forEach(s => s.classList.add('invalid'));
+                    invalid[0].focus();
+                    alert('Por favor selecciona una opción en todos los desplegables antes de enviar.');
+                    return false;
+                }
+            });
+            
+            document.querySelectorAll('select').forEach(s => {
+                s.addEventListener('change', () => s.classList.remove('invalid'));
+            });
         </script>
     </body>         
 </html>
