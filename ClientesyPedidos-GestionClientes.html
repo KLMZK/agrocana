@@ -9,6 +9,12 @@
             .edit-icon {
                 position: absolute; 
                 top: 10px; 
+                right: 40px;
+                margin-bottom: 0;
+            }
+            .edit-icon1 {
+                position: absolute; 
+                top: 10px; 
                 right: 10px;
                 margin-bottom: 0;
             }
@@ -202,6 +208,13 @@
                             window.location.href='ClientesyPedidos-FormularioClientes.html?cve='+encodeURIComponent(cliente.CVE_COMPRADOR);
                         };
                         item.appendChild(btn);
+                        const btn2 = document.createElement('button');
+                        btn2.className = 'Boton-icono edit-icon1';
+                        btn2.innerHTML = `<img src="iconos/eliminar.png" style="width:14px;height:14px;">`;
+                        btn2.onclick = function() {
+                            eliminar(cliente.CVE_COMPRADOR, 0);
+                        };
+                        item.appendChild(btn2);
                     })
                 });
             });
@@ -223,6 +236,7 @@
                                 <button class="Boton-icono edit-icon" onclick="window.location.href='ClientesyPedidos-FormularioPedido.html?cve=${pedido.CVE_PEDIDO}'">
                                     <img src="iconos/editar.png" alt="clientes" style="width: 14px; height: 14;">
                                 </button>
+                                <button class="Boton-icono edit-icon1" onclick="eliminar(${pedido.CVE_PEDIDO}, 1)"><img src="iconos/eliminar.png" alt="icono eliminar" style="width:20px;height:20px;"/></button>
                             </div>
                         `;
                     });
@@ -284,6 +298,35 @@
                         }
                     });
                 });
-        }
+            }
+            function eliminar(cve, des) {
+                if(des == 0){
+                    if(confirm("¿Estás seguro de que deseas eliminar este cliente?")) {
+                        fetch("php/clientesypedidos/eliminar.php?des=0", {
+                            method: "POST",
+                            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                            body: "cve=" + cve
+                        })
+                        .then(res => res.text())
+                        .then(resp => {
+                            alert(resp);
+                            location.reload();
+                        });
+                    }
+                } else {
+                    if(confirm("¿Estás seguro de que deseas eliminar este pedido?")) {
+                        fetch("php/clientesypedidos/eliminar.php?des=1", {
+                            method: "POST",
+                            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                            body: "cve=" + cve
+                        })
+                        .then(res => res.text())
+                        .then(resp => {
+                            alert(resp);
+                            location.reload();
+                        });
+                    }
+                }
+            }
     </script>
 </html>

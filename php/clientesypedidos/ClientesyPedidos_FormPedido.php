@@ -8,14 +8,14 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
 
     if(isset($_POST['cliente'])){
 
-        $cve = $_GET['cve'] ?? '';
+        $cve = $_GET['cve'] ?? 'null';
 
         $cliente= $_POST ['cliente'];
         $producto= $_POST ['producto'];
         $cantidad= $_POST ['cantidad'];
         $pedido= $_POST ['pedido'];
 
-        if($cve == ''){
+        if($cve == 'null'){
 
             $sql="SELECT CANTIDAD FROM items WHERE CVE_ITEM = '$producto'";
             $result = $conexion -> query($sql);

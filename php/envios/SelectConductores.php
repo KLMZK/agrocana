@@ -6,7 +6,13 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
     
 include "../../conexion/conexion.php";
 
-$sql = "SELECT CVE_USUARIO, NOMBRE, APELLIDO_P, APELLIDO_M FROM usuarios WHERE TIPO = 'Conductor' AND ACTIVO = '1'";
+$cve = $_GET['cve']??'null';
+
+if($cve === 'null'){
+    $sql = "SELECT CVE_USUARIO, NOMBRE, APELLIDO_P, APELLIDO_M FROM usuarios WHERE TIPO = 'Conductor' AND ACTIVO = '1'";
+} else {
+    $sql = "SELECT CVE_USUARIO, NOMBRE, APELLIDO_P, APELLIDO_M FROM usuarios WHERE TIPO = 'Conductor'";
+}
 $result = $conexion->query($sql);
 
 $conductores = [];

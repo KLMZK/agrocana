@@ -6,9 +6,9 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
 
     include "../../conexion/conexion.php";
 
-    $cve = $_GET['cve'] ?? '';
+    $cve = $_GET['cve'] ?? 'null';
 
-    if($cve == ''){
+    if($cve == 'null'){
 
         if(isset($_POST['nombre'])){
 

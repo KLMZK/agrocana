@@ -6,9 +6,9 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
 
 include "../../conexion/conexion.php";
 
-$cve  = $_GET['cve'] ?? '';
+$cve  = $_GET['cve'] ?? 'null';
 
-if($cve == ''){
+if($cve == 'null'){
 
     $sql = "SELECT P.CVE_PEDIDO AS CVE_PEDIDO, I.NOMBRE AS NOMBRE, EN.CANTIDAD AS CANTIDAD, I.UNIDAD AS UNIDAD, P.FECHAPEDIDO AS FECHAPEDIDO, E.ENTREGADO AS ENTREGADO, (I.PRECIOU*EN.CANTIDAD) AS TOTAL FROM pedidos AS P JOIN encarga AS EN ON EN.CVE_PEDIDO = P.CVE_PEDIDO JOIN items AS I ON I.CVE_ITEM = EN.CVE_ITEM LEFT JOIN envios AS E ON E.CVE_PEDIDO = P.CVE_PEDIDO";
 

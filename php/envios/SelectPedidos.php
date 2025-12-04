@@ -6,7 +6,13 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
     
 include "../../conexion/conexion.php";
 
+$cve = $_GET['cve']??'null';
+
+if($cve == 'null'){
 $sql = "SELECT P.CVE_PEDIDO FROM pedidos P LEFT JOIN envios E ON E.CVE_PEDIDO = P.CVE_PEDIDO WHERE E.CVE_PEDIDO IS NULL";
+} else {
+    $sql = "SELECT CVE_PEDIDO FROM pedidos";
+}
 $result = $conexion->query($sql);
 
 $pedidos = [];

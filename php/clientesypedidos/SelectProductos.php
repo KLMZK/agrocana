@@ -6,9 +6,9 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
     
 include "../../conexion/conexion.php";
 
-$cve  = $_GET['cve'] ?? '';
+$cve  = $_GET['cve'] ?? 'null';
 
-if($cve == ""){
+if($cve == "null"){
     $sql = "SELECT CVE_ITEM, NOMBRE FROM items WHERE CATEGORIA = 'Vendibles' AND CANTIDAD > '0'";
 } else {
     $ingreso="SELECT INGRESO FROM pedidos WHERE CVE_PEDIDO = '$cve'";

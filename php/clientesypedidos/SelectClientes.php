@@ -6,12 +6,12 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
 
     include "../../conexion/conexion.php";
 
-    $cve = $_GET['cve']??'';
-    $todos = $_GET['todos']??'';
+    $cve = $_GET['cve']??'null';
+    $todos = $_GET['todos']??'null';
 
-    if($cve == ''){
+    if($cve == 'null'){
 
-        if($todos == '') {
+        if($todos == 'null') {
             $sql = "SELECT * FROM compradores WHERE TIPO = 'Cliente'";
         } else {
             

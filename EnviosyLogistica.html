@@ -144,18 +144,22 @@
             tr {
                 height: 30px;
             }
-            .edicion {
+
+            .Boton-icono img {
+                width: 18px;
+                height: 18px;
+            }
+
+            .Boton-icono {
                 border: none;
                 background-color: transparent;
                 padding: 4px 6px 6px 6px;
                 cursor: pointer;
                 border-radius: 6px;
                 margin-bottom: 30px;
-                width: 25;
-                height: 25;
             }
 
-            .edicion:hover {
+            .Boton-icono:hover {
                 background-color: #E6E6E6;
             }
         </style>
@@ -219,9 +223,9 @@
                         ${envio.ENTREGADO}
                     </div>
                 </div>
-                <div>
-                    <img src="iconos/editar.png" alt="icono editar" class="edicion" onclick="editar()"/>
-                    <img src="iconos/eliminar.png" alt="icono eliminar" class="edicion" onclick="eliminar()"/>
+                <div style="display: flex; align-items: center; margin-top: 12px;">
+                    <button class="Boton-icono edit-icon" onclick="window.location.href = 'EnviosyLogistica-Formulario.html?cve=${envio.NENVIO}'"><img src="iconos/editar.png" alt="icono editar" style="width:20px;height:20px;"/></button>
+                    <button class="Boton-icono edit-icon" onclick="eliminar(${envio.NENVIO})"><img src="iconos/eliminar.png" alt="icono eliminar" style="width:20px;height:20px;"/></button>
                 </div>
             </div>
             <p style="margin-left:20px;" class="text2">Cliente: ${envio.CLIENTE}</p>
@@ -242,7 +246,6 @@
                         </div>
                     </div>
                     <div class="sublevel">
-                        <button style="opacity: 0;">Marcar Completado</button>
                     </div>
                 </div>
                 <div class="nivel">
@@ -256,12 +259,12 @@
                     <div class="sublevel">
                         <img src="iconos/avion.png" alt="icono avion" class="imagen" />
                         <div class="descripcion">
-                            <p class="text2" id="objeto">${envio.MDESTINO} ${envio.CORIGEN}</p>
+                            <p class="text2" id="objeto">${envio.MDESTINO} ${envio.CDESTINO}</p>
                             <p class="text1" id="objeto-cantidad">${envio.CALLEDESTINO}</p>
                         </div>
                     </div>
-                    <div class="sublevel">
-                        <button onclick="EnvioCompletado()" id="completado">Marcar Completado</button>
+                    <div class="sublevel" style="align-items:center; justify-content: center;">
+                        ${(envio.ENTREGADO == 'Entregado')?'':`<button onclick="Completado(${envio.NENVIO})" id="completado">Marcar Completado</button>`}
                     </div>
                 </div>
             </div>
@@ -307,9 +310,9 @@
                             ${envio.ENTREGADO}
                         </div>
                     </div>
-                    <div>
-                        <img src="iconos/editar.png" alt="icono editar" class="edicion" onclick="editar()"/>
-                        <img src="iconos/eliminar.png" alt="icono eliminar" class="edicion" onclick="eliminar()"/>
+                    <div style="display: flex; align-items: center; margin-top: 12px;">
+                        <button class="Boton-icono edit-icon" onclick="window.location.href = 'EnviosyLogistica-Formulario.html?cve=${envio.NENVIO}'"><img src="iconos/editar.png" alt="icono editar" style="width:20px;height:20px;"/></button>
+                        <button class="Boton-icono edit-icon" onclick="eliminar(${envio.NENVIO})"><img src="iconos/eliminar.png" alt="icono eliminar" style="width:20px;height:20px;"/></button>
                     </div>
                 </div>
                 <p style="margin-left:20px;" class="text2">Cliente: ${envio.CLIENTE}</p>
@@ -330,7 +333,6 @@
                             </div>
                         </div>
                         <div class="sublevel">
-                            <button style="opacity: 0;">Marcar Completado</button>
                         </div>
                     </div>
                     <div class="nivel">
@@ -344,12 +346,12 @@
                         <div class="sublevel">
                             <img src="iconos/avion.png" alt="icono avion" class="imagen" />
                             <div class="descripcion">
-                                <p class="text2" id="objeto">${envio.MDESTINO} ${envio.CORIGEN}</p>
+                                <p class="text2" id="objeto">${envio.MDESTINO} ${envio.CDESTINO}</p>
                                 <p class="text1" id="objeto-cantidad">${envio.CALLEDESTINO}</p>
                             </div>
                         </div>
-                        <div class="sublevel">
-                            <button onclick="EnvioCompletado()" id="completado">Marcar Completado</button>
+                        <div class="sublevel"  style="align-items:center; justify-content: center;">
+                            ${(envio.ENTREGADO == 'Entregado')?'':`<button onclick="Completado(${envio.NENVIO})" id="completado">Marcar Completado</button>`}
                         </div>
                     </div>
                 </div>
@@ -371,6 +373,34 @@
                     `;
                 });
             });
+        }
+        function eliminar(cve) {
+            if(confirm("¿Estás seguro de que deseas eliminar este envio?")) {
+                fetch("php/envios/eliminar.php", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                    body: "cve=" + cve
+                })
+                .then(res => res.text())
+                .then(resp => {
+                    alert(resp);
+                    location.reload();
+                });
+            }
+        }
+        function Completado(cve){
+            if(confirm("¿Completo el envio?")) {
+                fetch("php/envios/completar.php", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                    body: "cve=" + cve
+                })
+                .then(res => res.text())
+                .then(resp => {
+                    alert(resp);
+                    location.reload();
+                });
+            }
         }
     </script>
 </html>

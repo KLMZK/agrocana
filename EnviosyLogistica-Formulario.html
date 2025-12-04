@@ -41,7 +41,7 @@
         </style>
     </head>
     <body onload="inicio()">
-        <form action="php/envios/Envios-form.php" method="post" onsubmit="invalido(e)">
+        <form action="php/envios/Envios-form.php" method="post" id="formulario">
             <h1>Programar Nuevo Envío</h1><br>
             <h2 style="color: #8B8383;">Programa la entrega</h2>
             <div class="centrado">
@@ -117,13 +117,41 @@
             <label for="observaciones">Observaciones</label><br>
             <textarea id="observaciones" name="observaciones" placeholder="Notas del Envío" style="size: 100px;" maxlength="100"></textarea><br>
             <div align="center">
-                <input type="submit" value="Guardar Envío"/>
+                <input type="submit" value="Guardar Envío" id="boton"/>
             </div>
         </form>
     </body>
     <script>
         function inicio() {
-            fetch("php/envios/SelectConductores.php")
+            const params = new URLSearchParams(window.location.search);
+            const cve = params.get('cve');
+
+            if (cve) {
+                document.getElementById('boton').value = "Actualizar";
+                fetch('php/envios/SelectEnvios.php?cve=' + encodeURIComponent(cve))
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data && data[0]) {
+                            document.getElementById('pedido').value = data[0].NPEDIDO || '';
+                            document.getElementById('vehiculo').value = data[0].PLACA || '';
+                            document.getElementById('conductor').value = data[0].CVE_CONDUCTOR || '';
+                            document.getElementById('costo').value = data[0].COSTO || '';
+                            document.getElementById('origen-cp').value = data[0].CPO || '';
+                            coloniasO(data[0].CO);
+                            document.getElementById('origen-calle').value = data[0].ORIGEN || '';
+                            document.getElementById('destino-cp').value = data[0].CPD || '';
+                            coloniasD(data[0].CD);
+                            document.getElementById('destino-calle').value = data[0].DESTINO || '';
+                            document.getElementById('salida').value = data[0].FECHASALIDA || '';
+                            document.getElementById('llegada').value = data[0].FECHALLEGADA || '';
+                            document.getElementById('observaciones').value = data[0].OBSERVACIONES || '';
+                            document.getElementById('formulario').action += '?cve=' + encodeURIComponent(cve);
+                        }
+                    })
+                    .catch(err => console.error('Error cargando cliente:', err));
+            }
+            fetch("php/envios/SelectConductores.php?cve="+encodeURIComponent(cve))
             .then(res => res.json())
             .then(datos => {
                 var select = document.getElementById("conductor");
@@ -134,7 +162,7 @@
                     select.appendChild(option);
                 });
             });
-            fetch("php/envios/SelectPedidos.php")
+            fetch("php/envios/SelectPedidos.php?cve="+encodeURIComponent(cve))
             .then(res => res.json())
             .then(datos => {
                 var select = document.getElementById("pedido");
@@ -158,29 +186,29 @@
             });
             const form = document.querySelector('form');
 
-        form.addEventListener('submit', (e) => {
-            const selects = Array.from(form.querySelectorAll('select'));
-            const invalid = selects.filter(s => !s.value || s.selectedIndex === 0);
+            form.addEventListener('submit', (e) => {
+                const selects = Array.from(form.querySelectorAll('select'));
+                const invalid = selects.filter(s => !s.value || s.selectedIndex === 0);
 
-            if (invalid.length) {
-                e.preventDefault();
-                invalid.forEach(s => s.classList.add('invalid'));
-                invalid[0].focus();
-                alert('Por favor selecciona una opción en todos los desplegables antes de enviar.');
-                return false;
-            }
-        });
-        
-        document.querySelectorAll('select').forEach(s => {
-            s.addEventListener('change', () => s.classList.remove('invalid'));
-        });
+                if (invalid.length) {
+                    e.preventDefault();
+                    invalid.forEach(s => s.classList.add('invalid'));
+                    invalid[0].focus();
+                    alert('Por favor selecciona una opción en todos los desplegables antes de enviar.');
+                    return false;
+                }
+            });
+            
+            document.querySelectorAll('select').forEach(s => {
+                s.addEventListener('change', () => s.classList.remove('invalid'));
+            });
         }
-        function coloniasO() {
+        function coloniasO(selectedColonia = null) {
             const cp = document.getElementById("origen-cp").value.trim();
             const select = document.getElementById("origen-colonia");
             Array.from(select.options).forEach((opt, idx) => { if (idx !== 0) opt.remove(); });
             if (!cp) return;
-            fetch("php/envios/SelectColonias.php?id=" + encodeURIComponent(cp))
+            return fetch("php/envios/SelectColonias.php?id=" + encodeURIComponent(cp))
                 .then(res => res.json())
                 .then(datos => {
                     var select = document.getElementById("origen-colonia");
@@ -190,14 +218,17 @@
                         option.textContent = colonia.NOMBRE;
                         select.appendChild(option);
                     });
+                    if (selectedColonia) {
+                        select.value = selectedColonia;
+                    }
                 });
         }
-        function coloniasD() {
+        function coloniasD(selectedColonia = null) {
             const cp = document.getElementById("destino-cp").value.trim();
             const select = document.getElementById("destino-colonia");
             Array.from(select.options).forEach((opt, idx) => { if (idx !== 0) opt.remove(); });
             if (!cp) return;
-            fetch("php/envios/SelectColonias.php?id=" + encodeURIComponent(cp))
+            return fetch("php/envios/SelectColonias.php?id=" + encodeURIComponent(cp))
                 .then(res => res.json())
                 .then(datos => {
                     var select = document.getElementById("destino-colonia");
@@ -207,6 +238,9 @@
                         option.textContent = colonia.NOMBRE;
                         select.appendChild(option);
                     });
+                    if (selectedColonia) {
+                        select.value = selectedColonia;
+                    }
                 });
         }
     </script>
