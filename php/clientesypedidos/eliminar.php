@@ -10,12 +10,14 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
     $des = $_GET['des'];
 
     if($des == '0'){
-        
+        $sql = "DELETE FROM compradores WHERE CVE_COMPRADOR = $cve";
+    } else {
+        $sql = "DELETE FROM pedidos WHERE CVE_PEDIDO = $cve";
     }
 
     mysqli_query($conexion, $sql);
 
-    echo "Cultivo eliminado correctamente.";
+    echo "Registro eliminado correctamente.";
 
 } else {
     header("location: ../../index.html");

@@ -10,8 +10,8 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
 
     $sqlGan = "SELECT COALESCE(SUM(E.CANTIDAD * I.PRECIOU),0) AS TOTAL
         FROM pedidos P
-        JOIN encarga E ON E.CVE_PEDIDO = P.CVE_PEDIDO
-        JOIN items I ON I.CVE_ITEM = E.CVE_ITEM
+        LEFT JOIN encarga E ON E.CVE_PEDIDO = P.CVE_PEDIDO
+        LEFT JOIN items I ON I.CVE_ITEM = E.CVE_ITEM
         WHERE YEAR(P.FECHAPEDIDO) = YEAR(NOW()) AND MONTH(P.FECHAPEDIDO) = MONTH(NOW()) AND P.INGRESO = '1'";
     $res1 = $conexion->query($sqlGan);
     $gananciaTotal = 0;
@@ -22,8 +22,8 @@ if (isset($_SESSION['id']) && $_SESSION['id'] !== ''){
 
     $sqlGas = "SELECT COALESCE(SUM(E.CANTIDAD * I.PRECIOU),0) AS TOTAL
         FROM pedidos P
-        JOIN encarga E ON E.CVE_PEDIDO = P.CVE_PEDIDO
-        JOIN items I ON I.CVE_ITEM = E.CVE_ITEM
+        LEFT JOIN encarga E ON E.CVE_PEDIDO = P.CVE_PEDIDO
+        LEFT JOIN items I ON I.CVE_ITEM = E.CVE_ITEM
         WHERE YEAR(P.FECHAPEDIDO) = YEAR(NOW()) AND MONTH(P.FECHAPEDIDO) = MONTH(NOW()) AND P.INGRESO = '0'";
     $res2 = $conexion->query($sqlGas);
     $gastoTotal = 0;
