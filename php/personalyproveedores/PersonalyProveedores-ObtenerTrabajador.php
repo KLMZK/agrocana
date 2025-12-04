@@ -25,7 +25,15 @@ FROM usuarios WHERE CVE_USUARIO ='$id'
 $resultado = $conexion->query($sql);
 
 if ($resultado->num_rows > 0) {
-    echo json_encode($resultado->fetch_assoc());
+    $Env=$resultado->fetch_assoc();
+    $nombreArchivo = $Env['NOMBRE'] . $Env['APELLIDO_P'] . $Env['APELLIDO_M'] . ".jpg";
+        $ruta = __DIR__ . "/../../perfil/" . $nombreArchivo;
+        if (file_exists($ruta)) {
+            $Env['FOTO'] = $nombreArchivo;
+        } else {
+            $Env['FOTO'] = "";
+        }
+    echo json_encode($Env);
 } else {
     echo json_encode(["error" => "Trabajador no encontrado"]);
 }

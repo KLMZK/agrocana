@@ -81,7 +81,7 @@
         </style>
     </head>
     <body>
-        <form action="php/personalyproveedores/PersonalyProveedores_FormAgregarTrabajador.php" enctype="multipart/form-data" method="post" style="width:500px;height:575px;">
+        <form enctype="multipart/form-data" style="width:500px;height:575px;">
             <p></p>
             <h1 class="inder-regular">Nuevo Trabajador</h1><br>
             <h2 >Registro o edita un nuevo trabajador</h2><br>
@@ -146,6 +146,9 @@
         </form>
     </body>
     <script>
+        let nombreO
+        let apellidomO
+        let apellidopO
         const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id');
             fetch("php/personalyproveedores/PersonalyProveedores-ObtenerTrabajador.php?id=" + id)
@@ -161,23 +164,40 @@
                 document.getElementById("telefono").value = usuarios.NUMEROTELEFONICO;
                 document.getElementById("usuario").value = usuarios.USER;
                 document.getElementById("password").value = usuarios.PASSWORD;
+                nombreO= usuarios.NOMBRE,
+                apellidomO= usuarios.APELLIDO_M,
+                apellidopO= usuarios.APELLIDO_P
+                if (usuarios.FOTO) {
+                    document.getElementById("foto").src = "perfil/" + usuarios.FOTO;
+                    document.getElementById("foto").style.width = "100px";
+                    document.getElementById("foto").style.height = "100px";
+                    document.getElementById("foto").style.borderRadius = "50%";
+                }
             });
             function guardarCambios() {
-                const datos = {
-                    id: document.getElementById("id").value,
-                    nombre: document.getElementById("nombre").value,
-                    apellidop: document.getElementById("apellidop").value,
-                    apellidom: document.getElementById("apellidom").value,
-                    tipo: document.getElementById("tipo").value,
-                    rol: document.getElementById("rol").value,
-                    telefono: document.getElementById("telefono").value,
-                    usuario: document.getElementById("usuario").value,
-                    password: document.getElementById("password").value
-                };
+
+                const formData = new FormData();
+
+                formData.append("nombreO", nombreO);
+                formData.append("apellidomO", apellidomO);
+                formData.append("apellidopO", apellidopO);
+                formData.append("id", document.getElementById("id").value);
+                formData.append("nombre", document.getElementById("nombre").value);
+                formData.append("apellidop", document.getElementById("apellidop").value);
+                formData.append("apellidom", document.getElementById("apellidom").value);
+                formData.append("tipo", document.getElementById("tipo").value);
+                formData.append("rol", document.getElementById("rol").value);
+                formData.append("telefono", document.getElementById("telefono").value);
+                formData.append("usuario", document.getElementById("usuario").value);
+                formData.append("password", document.getElementById("password").value);
+
+                const archivo = document.getElementById("perfil").files[0];
+                if (archivo) {
+                    formData.append("perfil", archivo);
+                }
                 fetch("php/personalyproveedores/PersonalyProveedores-ActualizarTrabajadores.php", {
                     method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify(datos)
+                    body: formData
                 })
                 .then(res => res.text())
                 .then(resp => {
