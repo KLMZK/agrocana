@@ -50,56 +50,57 @@
             <p></p>
             <h1 class="inder-regular">Nueva Actividad</h1><br>
             <h2 >Registro de una nueva actividad</h2><br>
-            <input type="hidden" id="id" name="id" value="">
-            <div class="contenedor">
-                <div class="form">
-                    <label for="actividad">Actividad</label>
-                    <input type="text" id="actividad" name="actividad" placeholder="Actividad Realizada" required>
+            <div align="center">
+                <input type="hidden" id="id" name="id" value="">
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="actividad">Actividad</label>
+                        <input type="text" id="actividad" name="actividad" placeholder="Actividad Realizada" required>
+                    </div>
+                    <div class="form">
+                        <label for="fecha">Fecha de realización</label>
+                        <input type="date" id="fecha" name="fecha" placeholder="dd/mm/aaaa" required>
+                    </div>
                 </div>
-                <div class="form">
-                    <label for="fecha">Fecha de realización</label>
-                    <input type="date" id="fecha" name="fecha" placeholder="dd/mm/aaaa" required>
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="responsable">Responsable</label>
+                    <select id="responsable" name="responsable">
+                            <option disabled selected>Seleccionar Trabajador</option>
+                        </select>
+                    </div>
+                    <div class="form">
+                        <label for="estado">Estado de la actividad</label>
+                        <input type="text" id="estado" name="estado" placeholder="Pendiente..." required>
+                    </div>
                 </div>
-            </div>
-            <div class="contenedor">
-                <div class="form">
-                    <label for="responsable">Responsable</label>
-                   <select id="responsable" name="responsable">
-                        <option disabled selected>Seleccionar Trabajador</option>
-                    </select>
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="insumos">Insumos utilizados</label>
+                        <select id="insumos" name="insumos">
+                            <option disabled selectedvalue="">Seleccionar Insumo</option>
+                        </select>
+                    </div>
+                    <div class="form">
+                        <label for="cinsumo">Cantidad del Insumo utilizado</label>
+                        <input type="number" id="cinsumo" name="cinsumo" placeholder="0" required>
+                    </div>
                 </div>
-                <div class="form">
-                    <label for="estado">Estado de la actividad</label>
-                    <input type="text" id="estado" name="estado" placeholder="Pendiente..." required>
-                </div>
-            </div>
-            <div class="contenedor">
-                <div class="form">
-                    <label for="insumos">Insumos utilizados</label>
-                    <select id="insumos" name="insumos">
-                        <option disabled selectedvalue="">Seleccionar Insumo</option>
-                    </select>
-                </div>
-                <div class="form">
-                    <label for="cinsumo">Cantidad del Insumo utilizado</label>
-                    <input type="number" id="cinsumo" name="cinsumo" placeholder="0" required>
-                </div>
-            </div>
-             <div class="contenedor">
-                <div class="form">
-                    <label for="costo">Costo de la Actividad</label>
-                    <input type="float" id="costo" name="costo" placeholder="0.0" required>
-                </div>
-                <div class="form" >
-                    <label for="ccultivo">Cultivos</label>
-                    <select id="ccultivo" name="ccultivo">
-                        <option disabled selected>Seleccionar Cultivo</option>
-                    </select>
-                </div>
-            </div><br>
-            <label for="observaciones" style="margin-top: -25px";>Observaciones</label><br>
-            <textarea type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales"></textarea><br><br>
-            <input type="button" onclick="guardarCambios()" value="Guardar Cambios">
+                <div class="contenedor">
+                    <div class="form">
+                        <label for="costo">Costo de la Actividad</label>
+                        <input type="float" id="costo" name="costo" placeholder="0.0" required>
+                    </div>
+                    <div class="form" >
+                        <label for="ccultivo">Cultivos</label>
+                        <select id="ccultivo" name="ccultivo">
+                            <option disabled selected>Seleccionar Cultivo</option>
+                        </select>
+                    </div>
+                </div><br>
+                <label for="observaciones" style="margin-top: -25px";>Observaciones</label><br>
+                <textarea type="text" id="observaciones" name="observaciones" placeholder="Notas Adicionales"></textarea><br><br>
+                <input type="button" onclick="guardarCambios()" value="Guardar Cambios">
             </div>   
         </form>
         <script>

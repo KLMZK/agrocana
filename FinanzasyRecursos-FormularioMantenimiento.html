@@ -35,22 +35,22 @@
             <p></p>
             <h1 class="inder-regular">Nuevo registro de Mantenimiento</h1><br>
             <h2 >Registra un Mantenimiento</h2><br>
-
-            <label for="trabajador">Trabajador</label><br>
-            <select id="trabajador" name="trabajador">
-                <option value="">Seleccionar el trabajador</option>
-            </select>
-            <label for="placas">Placa/ID</label><br>
-            <select id="placas" name="placas">
-                <option value="">Seleccionar placas</option><br>
-            </select>
-            <label for="fechaMan">Fecha del Mantenimiento</label><br>
-            <input type="date" id="fechaMan" name="fechaMan" required>
-            <label for="costo">Costo</label><br>
-            <input type="number" id="costo" name="costo" placeholder="0.0" required><br>
-            <br><label for="observaciones" style="margin-top: -20px";>Observaciones</label><br>
-            <textarea type="text" id="observaciones" name="observaciones" maxlength="100" placeholder="Notas Adicionales"></textarea><br><br>
-            <input type="submit" value="Guardar Registro">
+            <div align="center">
+                <label for="trabajador">Trabajador</label><br>
+                <select id="trabajador" name="trabajador">
+                    <option value="">Seleccionar el trabajador</option>
+                </select>
+                <label for="placas">Placa/ID</label><br>
+                <select id="placas" name="placas">
+                    <option value="">Seleccionar placas</option><br>
+                </select>
+                <label for="fechaMan">Fecha del Mantenimiento</label><br>
+                <input type="date" id="fechaMan" name="fechaMan" required>
+                <label for="costo">Costo</label><br>
+                <input type="number" id="costo" name="costo" placeholder="0.0" required><br>
+                <br><label for="observaciones" style="margin-top: -20px";>Observaciones</label><br>
+                <textarea type="text" id="observaciones" name="observaciones" maxlength="100" placeholder="Notas Adicionales"></textarea><br><br>
+                <input type="submit" value="Guardar Registro">
             </div>
             <script>
                 document.addEventListener('DOMContentLoaded', () => {
@@ -96,6 +96,19 @@
                 
                 document.querySelectorAll('select').forEach(s => {
                     s.addEventListener('change', () => s.classList.remove('invalid'));
+                });
+                document.addEventListener('DOMContentLoaded', () => {
+                    const pad = n => n.toString().padStart(2, '0');
+                    const now = new Date();
+                    const hoy = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+                    const ahoraLocal = `${hoy}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+
+                    document.querySelectorAll('input[type="date"]').forEach(el => {
+                        el.setAttribute('min', hoy);
+                    });
+                    document.querySelectorAll('input[type="datetime-local"]').forEach(el => {
+                        el.setAttribute('min', ahoraLocal);
+                    });
                 });
         </script>
         </form>
