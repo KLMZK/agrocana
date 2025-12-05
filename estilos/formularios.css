@@ -70,6 +70,9 @@ input[type=submit]{
     font-size: 17px;
     font-weight:540;
 }
+input[type=submit]:hover{
+    background-color: #2a3c11;
+}
 body::before {
     content: "";
     position: fixed;

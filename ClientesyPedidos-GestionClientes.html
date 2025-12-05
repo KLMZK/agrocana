@@ -88,6 +88,9 @@
                 background-color: #fcebeb;
                 color: #d32f2f;
             }
+            .agregar-boton:hover{
+                background-color: #2C6213 !important;
+            }
         </style>
     </head>
     <body onload="inicio()">
@@ -114,7 +117,7 @@
             <div style="flex: 1;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                     <h3 style="font-family: 'Inter', sans-serif; font-size: 18px; display: flex; align-items: center; gap: 5px; font-weight: 600;"><span class="material-icons" style="font-size: 20px;"><img src="iconos/revisar.png" alt="clientes" style="width: 14px; height: 14;"></span> Lista de Clientes</h3>
-                    <button onclick="window.location.href = 'ClientesyPedidos-FormularioClientes.html'" style="background-color: #346E19; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px;"><span class="material-icons" style="font-size: 18px;"><img src="iconos/anadir.png" alt="clientes" style="width: 14px; height: 14;"></span> Agregar</button>
+                    <button class="agregar-boton" onclick="window.location.href = 'ClientesyPedidos-FormularioClientes.html'" style="background-color: #346E19; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px;"><span class="material-icons" style="font-size: 18px;"><img src="iconos/anadir.png" alt="clientes" style="width: 14px; height: 14;"></span> Agregar</button>
                 </div>
                 <div id="clientes">
 
@@ -126,7 +129,7 @@
             <div style="flex: 1;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                     <h3 style="font-family: 'Inter', sans-serif; font-size: 18px; display: flex; align-items: center; gap: 5px; font-weight: 600;"><span class="material-icons" style="font-size: 20px;"><img src="iconos/envio.png" alt="clientes" style="width: 14px; height: 14;"></span> Pedidos</h3>
-                    <button onclick="window.location.href = 'ClientesyPedidos-FormularioPedido.html'" style="background-color: #346E19; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px;"><span class="material-icons" style="font-size: 18px;"><img src="iconos/anadir.png" alt="clientes" style="width: 14px; height: 14;"></span> Nuevo Pedido</button>
+                    <button class="agregar-boton" onclick="window.location.href = 'ClientesyPedidos-FormularioPedido.html'" style="background-color: #346E19; color: white; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px;"><span class="material-icons" style="font-size: 18px;"><img src="iconos/anadir.png" alt="clientes" style="width: 14px; height: 14;"></span> Nuevo Pedido</button>
                 </div>
 
                 <div id="pedidos">
