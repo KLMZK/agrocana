@@ -1,38 +1,93 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <title></title>
-        <style></style>
-    </head>
-    <body>
-        <script>
-        const API_KEY = "d25c5faafdfce26b40b38ff1256b924a";
-        const API_KEY2 = "c297fee44ee800426e64c677085d1be3";
-        const FieldID="69817a3fd1895dcb80bade3e"
-        const start = 1530336000;
-        const end   = 1534976000;
+  <head>
+    <title>NDVI últimos días</title>
+    <meta charset="utf-8" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      #ndviChart { max-width: 50%; }
+      #imgSat { max-width: 50%; }
+    </style>
+  </head>
+  <body>
 
-        const url = `https://api.agromonitoring.com/agro/1.0/ndvi/history?start=${start}&end=${end}&polyid=${FieldID}&appid=${API_KEY}`;
-        fetch(url)
+    <h3>NDVI histórico (del último mes hasta hace 4 días)</h3>
+    <canvas id="ndviChart" height="120"></canvas>
+
+    <h3>NDVI imagen más reciente en el rango</h3>
+    <img id="imgSat" />
+
+    <script>
+      const API_KEY = "d25c5faafdfce26b40b38ff1256b924a";
+      const FieldID = "699a7909c2d63e950b38df78";
+
+    
+      const now = Math.floor(Date.now() / 1000);              
+      const fourDaysAgo = now - (4 * 24 * 60 * 60);           
+      const oneMonthAgo = now - (30 * 24 * 60 * 60);          
+
+      const start = oneMonthAgo;   
+      const end   = fourDaysAgo;   
+
+      // 1) NDVI histórico para la gráfica
+      fetch(`https://api.agromonitoring.com/agro/1.0/ndvi/history?start=${start}&end=${end}&polyid=${FieldID}&appid=${API_KEY}`)
         .then(res => res.json())
         .then(data => {
-            console.log("NDVI histórico:", data);
+          console.log("NDVI histórico:", data);
+
+
+          if (!data || !data.length) {
+            console.warn("No hay datos NDVI en ese rango");
+            return;
+          }
+
+          // Limpiar y ordenar
+          const limpio = data
+            .filter(d => d.data && d.data.mean != null)
+            .sort((a, b) => a.dt - b.dt);
+
+          const labels = limpio.map(item => {
+            const fecha = new Date(item.dt * 1000);
+            return fecha.toLocaleDateString();
+          });
+
+          const valores = limpio.map(item => item.data.mean);
+
+          const ctx = document.getElementById('ndviChart').getContext('2d');
+          new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels,
+              datasets: [{
+                label: 'NDVI promedio',
+                data: valores,
+                tension: 0.3
+              }]
+            },
+            options: {
+              scales: {
+                y: { min: -1, max: 1, title: { display: true, text: 'NDVI' } }
+              }
+            }
+          });
         })
         .catch(err => console.error("Error NDVI:", err));
 
-        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=42.074826&lon=-93.263991&appid=c297fee44ee800426e64c677085d1be3`)
+        fetch(`http://api.agromonitoring.com/agro/1.0/soil?polyid=${FieldID}&appid=${API_KEY}`)
         .then(res => res.json())
-        .then(data => console.log("Clima: ",data));
+        .then(data => {
+          console.log("Respuesta:", data);
+        })
+    
 
-        fetch("https://nominatim.openstreetmap.org/reverse?format=json&lat=42.074826&lon=-93.263991")
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
+      // 2) Imagen NDVI más reciente dentro del rango
+      fetch(`http://api.agromonitoring.com/agro/1.0/image/search?start=${start}&end=${end}&polyid=${FieldID}&appid=${API_KEY}`) 
+        .then(res => res.json()) 
+        .then(data => { 
+            const urlImagen = data[0].image.ndvi; document.getElementById("imgSat").src = urlImagen; 
+            
         });
-        fetch("https://api.openrouteservice.org/v2/directions/driving-car?api_key=eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6ImY4NWE5YTY3MzQ1NzRjNTJiNTk0ZmRkZjgzMjlmYzU0IiwiaCI6Im11cm11cjY0In0=&start=-93.263991, 42.074826&end= -92.990812,17.967113")
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-        });
-        </script>
-    </body>
+        
+    </script>
+  </body>
 </html>
