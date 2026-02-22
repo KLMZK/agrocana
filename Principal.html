@@ -177,11 +177,11 @@ fetch(`https://api.agromonitoring.com/agro/1.0/ndvi/history?start=${start}&end=$
     document.getElementById('std').textContent = std.toFixed(2);
 
 
-    if (seleccionado.data.mean < 0.2) desc = "Bastante mal";
-    else if (seleccionado.data.mean < 0.4) desc = "Mal";
-    else if (seleccionado.data.mean < 0.6) desc = "Regular";
-    else if (seleccionado.data.mean < 0.8) desc = "Bien";
-    else desc = "Excelente";
+    if (seleccionado.data.mean < 0.2) desc = "Muy poca o nula vegetación";
+    else if (seleccionado.data.mean < 0.4) desc = "Vegetación escasa o estresada";
+    else if (seleccionado.data.mean < 0.6) desc = "Vegetación moderada y saludable";
+    else if (seleccionado.data.mean < 0.8) desc = "Vegetación densa y vigorosa";
+    else desc = "Vegetación extremadamente densa";
 
     document.getElementById('condicion').textContent = desc;
     document.getElementById('fechaNDVI').textContent =
