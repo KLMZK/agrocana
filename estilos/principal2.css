@@ -1,0 +1,215 @@
+body {
+    margin: 0;
+    padding: 20px;
+    padding-top: 25px;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+.titulo {
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+h2 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 5px;
+    color: #8B8383;
+}
+* {
+    box-sizing: border-box;
+}
+.contenido {
+    flex-direction: column;
+    display: flex;
+    background-color: transparent;
+    width: 100%; 
+    height: auto;
+}
+.nivel1 {
+    margin: 20px;
+    flex-direction: row;
+    display: flex;
+    background-color: transparent;
+    width: 96%; 
+    height: auto;
+}
+.grafica,.datos {
+    border-radius: 20px;
+    border: 2px solid #D9D9D9;
+    margin: 10px;
+    flex-direction: column;
+    display: flex;
+    background-color: transparent;
+    padding: 20px;
+    width: 50%; 
+}
+.datos{
+    gap: 10px;
+}
+.filtros{
+    gap: 10px;
+    flex-direction: row;
+    display: flex;
+    background-color: transparent;
+    width: 96%; 
+    height: auto;
+}
+.tabla{
+    flex-direction: row;
+    display: flex;
+    background-color: transparent;
+    width: 100%; 
+}
+.ndvi{
+    border-radius: 20px;
+    margin: 10px;
+    flex-direction: column;
+    border: 2px solid #D9D9D9;
+    display: flex;
+    background-color: transparent;
+    padding: 20px;
+    width: 60%; 
+}
+.tituFrase{
+    justify-content: space-between;
+    flex-direction: row;
+    display: flex;
+    background-color: transparent;
+    width: 100%; 
+}
+.respuesta{
+    border-radius: 20px;
+    justify-content: center;
+    flex-direction: row;
+    border: 2px solid #D9D9D9;
+    display: flex;
+    background-color: transparent;
+    width: 100%; 
+}
+.columna{
+    margin-right: 20px;
+    flex-direction: row;
+    display: flex;
+    background-color: transparent;
+    width: 94%; 
+    margin: 10px;
+    justify-content: space-between;
+}
+.clima{
+    border-radius: 20px;
+    margin: 10px;
+    flex-direction: column;
+    border: 2px solid #D9D9D9;
+    display: flex;
+    background-color: transparent;
+    padding: 20px;
+    width: 50%; 
+}
+.etiqueta{
+    border-radius: 20px;
+    margin: 10px;
+    flex-direction: column;
+    border: 2px solid #D9D9D9;
+    display: flex;
+    background-color: transparent;
+    padding: 20px;
+    width: 50%; 
+}
+.ndviChart{
+    height: 100%;
+    width: 100%;
+}
+.fecha{
+    margin-left: 10px;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    border: 10px;
+    background-color: #EBEAEA;
+    border-radius: 10px;
+    width: 150px;
+    height: 43px;
+    color:#4C4C4C;
+    gap: 10px;
+}
+.cultivos {
+    padding: 15px;
+    padding-top: 10px;
+    padding-left: 20px;
+    display: block;
+    border: 2px solid #D9D9D9;
+    border-radius: 4px;
+    height: 80%;
+    width: 28%;
+    border-radius: 10px;
+}
+.subtitulo {
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.numero {
+    font-size: 30px;
+    font-weight: normal;
+    margin: 0;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.des {
+    font-size: 14px;
+    color: black;
+    margin: 0;
+}
+.des2 {
+    font-size: 14px;
+    color: #8B8383;
+    margin: 0;
+}
+.cosecha {
+    padding: 15px;
+    padding-top: 10px;
+    display: block;
+    border: 2px solid #D9D9D9;
+    border-radius: 4px;
+    height: 80%;
+    width: 28%;
+    border-radius: 10px;
+}
+.finanzas {
+    padding: 15px;
+    padding-top: 10px;
+    display: block;
+    border: 2px solid #D9D9D9;
+    border-radius: 4px;
+    height: 80%;
+    width: 28%;
+    border-radius: 10px;
+}
+.detalles{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    unicode-bidi: isolate;
+}
+.nivel2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 25%;
+    margin-bottom: 12px;
+}

@@ -1,13 +1,14 @@
 <html>
-
 <head>
     <title>AgroCaña</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta charset="UTF-8">
     <link rel="icon" type="png" href="iconos/logo.png" />
-    <link rel="stylesheet" type="text/css" href="estilos/principal.css" />
+    <link rel="stylesheet" type="text/css" href="estilos/principal2.css" />
     <script type="text/javascript" src="scripts/sesion.js"></script>
+    <style>
+    </style>
 </head>
-
 <body>
     <div class="titulo">
         <h1>Panel Principal</h1>
@@ -15,18 +16,54 @@
     </div>
     <div class="contenido">
         <div class="nivel1">
-            <div class="cultivos">
+            <div class="grafica">
+                <canvas id="ndviChart" ></canvas>
+            </div>
+            <div class="datos">
+                <div class="filtros">
+                    <input type="date" id="fechaInicio" class="fecha">
+                    <input type="date" id="fechaFin" class="fecha">
+                </div>
+                <div class="tabla">
+                    <div class="ndvi">
+                        <div class="tituFrase"><text style="font-size: 20px;">NDVI</text><text id="condicion">Cargando..</text></div>
+                        <text style="font-size: 12px; color: gray;" id="fechaNDVI">Fecha</text>
+                        <div class="columna"> <text style="color: green;">Max</text><text id="max" >Cargando..</text></div>
+                        <div class="columna"><text style="color: red;">Min</text><text id="min">Cargando..</text></div>
+                        <div class="columna"><text >Promedio</text><text id="mean">Cargando..</text></div>
+                        <div class="columna"><text >Central</text><text id="median">Cargando..</text></div>
+                        <div class="columna"><text >Desviación Estándar</text><text id="std">Cargando..</text></div>
+                    </div>
+                    <div class="etiqueta" style="gap: 20px;">
+                        <div class="tituFrase"><text style="font-size: 20px;">Estado del Clima</text></div>
+                        <div class="columna" style="gap: 10px;">
+                            Ubicacion:
+                            <div class="respuesta"></div>
+                        </div>
+                        <div class="columna" style="gap: 10px;">
+                            Temperatura:
+                            <div class="respuesta"></div>
+                        </div>
+                        <div class="columna" style="gap: 10px;">
+                            Condición:
+                            <div class="respuesta"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nivel2">
+            <div class="cultivos" style="height: 100%;">
                 <div class="subtitulo">
-                    <h3>Cultivos Activos</h3> <img src="iconos/planta2.png" alt="Cultivos Icon" width="15"
-                        height="15" />
+                    <h3>Cultivos Activos</h3> <img src="iconos/planta2.png" alt="Cultivos Icon" width="15" height="15" />
                 </div>
                 <p id="ACTIVOS" class="numero">0</p>
                 <p class="des2" id="HECTAREAS">0 hectáreas totales</p>
+                <p class="cont" style="color: white;">0 En crecimiento</p>
             </div>
-            <div class="cosecha">
+            <div class="cosecha" >
                 <div class="subtitulo">
-                    <h3>Estado de la Cosecha</h3><img src="iconos/palomita1.png" alt="Cosecha Icon" width="13"
-                        height="13" />
+                    <h3>Estado de la Cosecha</h3><img src="iconos/palomita1.png" alt="Cosecha Icon" width="13" height="13" />
                 </div>
                 <p class="numero" id="COSECHA">0</p>
                 <p class="des2">Lotes listos para cosechar</p>
@@ -48,59 +85,21 @@
                 </div>
             </div>
         </div>
-        <div class="nivel2">
-            <div class="clima">
-                <div class="subtitulo">
-                    <h3>Estado del Clima</h3><img src="" alt="Clima Icon" width="30" height="30" id="clima-icon" />
-                </div>
-                <div class="detalles">
-                    <p class="des">Ubicación: </p>
-                    <div class="estado" style="background-color: transparent; width: 300px">
-                        <p class="des" id="ubicacion">Cargando...</p>
-                    </div>
-                </div>
-                <div class="detalles">
-                    <p class="des">Temperatura: </p>
-                    <div class="estado" style="width: 300px">
-                        <p class="des" id="temperatura">-- °C</p>
-                    </div>
-                </div>
-                <div class="detalles">
-                    <p class="des">Condición: </p>
-                    <div class="estado" style="background-color: transparent; width: 300px">
-                        <p class="des" id="condicion">--</p>
-                    </div>
-                </div>
-            </div>
-            <div class="actividades">
-                <h3>Actividades Recientes</h3>
-                <div id="mostraractividades">
-
-                </div>
-            </div>
-        </div>
-        <div class="nivel3">
-            <div class="envios">
-                <h3>Enviós</h3>
-                <div id="mostrarenvios"
-                    style="display: flex; align-items: center; justify-content: space-between; height: 70%;"></div>
-            </div>
-        </div>
     </div>
 </body>
 <script>
-    fetch("/php/principal.php?desc=" + encodeURIComponent(0))
+        fetch("/proyecto/agrocana/php/principal.php?desc=" + encodeURIComponent(0))
         .then(res => res.json())
         .then(data => {
             document.getElementById("ACTIVOS").textContent = data[0].TOTAL;
             document.getElementById("HECTAREAS").textContent = data[0].HECTAREAS + ' hectáreas totales';
         });
-    fetch("/php/principal.php?desc=" + encodeURIComponent(1))
+    fetch("/proyecto/agrocana/php/principal.php?desc=" + encodeURIComponent(1))
         .then(res => res.json())
         .then(data => {
             document.getElementById("COSECHA").textContent = data[0].TOTAL;
         });
-    fetch("/php/principal.php?desc=" + encodeURIComponent(2))
+    fetch("/proyecto/agrocana/php/principal.php?desc=" + encodeURIComponent(2))
         .then(res => res.json())
         .then(data => {
             document.getElementById("CRECIMIENTO").textContent = data[0].TOTAL + ' En crecimiento';
@@ -134,69 +133,102 @@
             document.getElementById("balanceMes").style.color = "#346E19";
         }
     });
-    const apiKey = '25c1005ad5f6470adc5c5f0876d798c6';
-    const lat = 18.0029214582026;
-    const lon = -93.4959150193584;
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=es`;
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            if (data.cod === 200) {
-                const temp = Math.round(data.main.temp);
-                const desc = data.weather[0].description;
-                const iconCode = data.weather[0].icon;
-                const city = data.name;
+    const API_KEY = "d25c5faafdfce26b40b38ff1256b924a";
+    const FieldID = "699a7909c2d63e950b38df78";
 
-                document.getElementById('temperatura').textContent = `${temp}°C`;
-                document.getElementById('condicion').textContent = desc.charAt(0).toUpperCase() + desc.slice(1);
-                document.getElementById('ubicacion').textContent = city;
-                document.getElementById('clima-icon').src = `https://openweathermap.org/img/wn/${iconCode}.png`;
-            } else {
-                console.error('Error fetching weather:', data.message);
-            }
-        })
-        .catch(error => console.error('Error:', error));
+    const fechaInicio = document.getElementById("fechaInicio");
+    const fechaFin = document.getElementById("fechaFin");
 
-    fetch("/php/principal.php?desc=" + encodeURIComponent(5))
-        .then(res => res.json())
-        .then(data => {
-            const div = document.getElementById("mostraractividades");
-            div.innerHTML = '';
-            for (var i = 0; i < 2; i++) {
-                div.innerHTML += `
-                    <div class="actividad">
-                        <div>
-                            <p class="des">${data[i].TIPO}</p>
-                            <p class="des2">${data[i].NOMBRE} ${data[i].APELLIDOP} ${data[i].APELLIDOM} ${data[i].FECHA}</p>
-                        </div>
-                        <div class="estado" ${data[i].ESTADO == 'Pendiente' ? 'style="background-color:transparent;"' : ''}>
-                            <p class="des" id="riego"> ${data[i].ESTADO}</p>
-                        </div>
-                    </div>
-                `
-            }
-        });
-    fetch("/php/principal.php?desc=" + encodeURIComponent(6))
-        .then(res => res.json())
-        .then(data => {
-            const div = document.getElementById("mostrarenvios");
-            div.innerHTML = '';
-            for (var i = 0; i < 3; i++) {
-                div.innerHTML += `
-                    <div class="envio">
-                        <p id="cliente">${data[i].CLIENTE}</p>
-                        <div align="center">
-                            <p class="des" id="envio-fecha" style="margin-bottom:15px;">${data[i].FECHASALIDA}</p>
-                            <div class="estado" ${data[i].ENTREGADO == '0' ? 'style="background-color:transparent;"' : ''}>
-                                <p class="des" id="envio-estado">${data[i].ENTREGADO == '0' ? 'En transito' : 'Entregado'}</p>
-                            </div>
-                            <p class="des2" style="margin-top:13px;">${data[i].ITEM} ${data[i].CANTIDAD} ${data[i].UNIDAD}</p>
-                        </div>
-                    </div>
-                `
-            }
-        });
+    let ndviChart;
+
+    function fechaATimestamp(fecha) {
+    return Math.floor(new Date(fecha + "T00:00:00").getTime() / 1000);
+    }
+
+    function cargarNDVI() {
+    if (!fechaInicio.value || !fechaFin.value) return;
+
+    const start = fechaATimestamp(fechaInicio.value);
+    const end = fechaATimestamp(fechaFin.value);
+
+fetch(`https://api.agromonitoring.com/agro/1.0/ndvi/history?start=${start}&end=${end}&polyid=${FieldID}&appid=${API_KEY}`)
+  .then(res => res.json())
+  .then(res => {
+    console.log("NDVI histórico:", res);
+
+    if (!Array.isArray(res) || res.length === 0) {
+      console.warn("No hay datos NDVI");
+      return;
+    }
+
+    const ordenado = res.sort((a, b) => a.dt - b.dt);
+
+    const seleccionado = ordenado.reduce((prev, curr) => {
+    return Math.abs(curr.dt - end) < Math.abs(prev.dt - end) ? curr : prev;
+    });
+
+    const { max, min, mean, median, std } = seleccionado.data;
+
+    document.getElementById('max').textContent = max.toFixed(2);
+    document.getElementById('min').textContent = min.toFixed(2);
+    document.getElementById('mean').textContent = mean.toFixed(2);
+    document.getElementById('median').textContent = median.toFixed(2);
+    document.getElementById('std').textContent = std.toFixed(2);
+
+
+    if (seleccionado.data.mean < 0.2) desc = "Bastante mal";
+    else if (seleccionado.data.mean < 0.4) desc = "Mal";
+    else if (seleccionado.data.mean < 0.6) desc = "Regular";
+    else if (seleccionado.data.mean < 0.8) desc = "Bien";
+    else desc = "Excelente";
+
+    document.getElementById('condicion').textContent = desc;
+    document.getElementById('fechaNDVI').textContent =
+        `Desde ${fechaInicio.value} hasta ${fechaFin.value}`;
+
+    const labels = ordenado.map(i => new Date(i.dt * 1000).toLocaleDateString());
+    const valores = ordenado.map(i => i.data.mean);
+
+    const ctx = document.getElementById('ndviChart').getContext('2d');
+    if (ndviChart) ndviChart.destroy();
+      ndviChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            label: 'NDVI promedio',
+            data: valores,
+            tension: 0.3
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: { y: { min: -1, max: 1 } }
+        }
+      });
+    })
+    .catch(err => console.error("Error NDVI:", err));
+}
+        const hoy = new Date();
+        const limite = new Date();
+        limite.setDate(hoy.getDate() - 5);
+
+        const formatear = f => f.toISOString().split("T")[0];
+
+        fechaInicio.max = formatear(limite);
+        fechaFin.max = formatear(limite);
+
+        const now = Math.floor(Date.now() / 1000);
+        const fiveDaysAgo = new Date((now - 5 * 86400) * 1000);
+        const oneMonthAgo = new Date((now - 30 * 86400) * 1000);
+
+        fechaInicio.value = formatear(oneMonthAgo);
+        fechaFin.value = formatear(fiveDaysAgo);
+
+        fechaInicio.addEventListener("change", cargarNDVI);
+        fechaFin.addEventListener("change", cargarNDVI);
+
+        cargarNDVI();
 </script>
-
 </html>
