@@ -1,224 +1,307 @@
 <html>
-    <head>
-        <title>AgroCaña</title>
-        <meta charset="UTF-8">
-        <link rel="icon" type="png" href="iconos/logo.png"/>
-        <style>
-            body {
-                margin: 0;
-                padding: 20px;
-                padding-top: 25px;
-                font-family: "Inter", sans-serif;
-                font-optical-sizing: auto;
-                font-style: normal;
-            }
-            .titulo {
-                margin-left: 20px;
-                margin-bottom: 5px;
-            }
-            .envios {
-                border: 2px solid #D9D9D9;
-                border-radius: 10px;
-                padding: 20px 30px;
-                margin-top: 20px;
-            }
-            .envio {
-                border: 2px solid #D9D9D9;
-                border-radius: 10px;
-                padding: 15px 30px;
-                margin-top: 10px;    
-            }
-            .nivel {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                height: 13%;
-                margin-left: 20px;
-                margin-bottom: 5px;
-            }
-            .sublevel {
-                display: flex;
-                align-items: center;
-                width: 30%;
-            }
-            .imagen {
-                width: 40px;
-                height: 40px;
-                margin-right: 10px;
-            }
-            h1 {
-                font-size: 30px;
-                font-weight: bold;
-                margin-bottom: 0px;
-            }
-            h2 {
-                font-size: 18px;
-                font-weight: 500;
-                margin-top: 5px;
-                color: #8B8383;
-            }
-            h3 {
-                font-size: 20px;
-                font-weight: 600;
-                margin-bottom: 10px;
-            }
-            .contenido {
-                padding: 20px;
-                padding-top: 10px;
-                background-color: #FFFFFF;
-            }
-            button {
-                background-color: #346E19;
-                color: white; 
-                border: none; 
-                padding: 8px 15px; 
-                border-radius: 8px; 
-                font-weight: bold; 
-                cursor: pointer; 
-                display: flex; 
-                align-items: center; gap: 5px;
-            }
-            .centrado {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-            }
-            select {
-                font-size: 16px;
-                border: 10px;
-                background-color: #EBEAEA;
-                border-radius: 10px;
-                width: 173px;
-                height: 43px;
-                color:#4C4C4C;
-                padding: 10px;
-            }
-            .text1 {
-                margin-block: 0px;
-                color: #000;
-                font-size: 18px;
-                font-weight: 500;
-            }
-            .text2 {
-                margin-block: 0px;
-                color: #8B8383;
-                font-size: 18px;
-                font-weight: 500px;
-            }
-            .text3 {
-                font-size: 17px;
-                font-weight: 500;
-                margin-right: 20px;
-                margin-bottom: 3px;
-            }
-            .seleccion {
-                background-color: #524A4A;
-                border-radius: 20px;
-                padding: 0px 25px;
-                height: 30px;
-                color: #FFFFFF;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            .informacion {
-                border: 2px solid #D9D9D9;
-                border-radius: 10px;
-                padding: 20px 30px;
-                margin-bottom: 20px;  
-                width: 26%;
-                height: 150px;
-            }
-            .numero {
-                font-size: 30px;
-                font-weight: normal;
-                margin: 0;
-                margin-top: 50px;
-                margin-bottom: 10px;
-            }
-            table {
-                margin-top: 10px;
-                width: 100%;
-                table-layout: fixed;
-            }
-            tr {
-                height: 30px;
-            }
 
-            .Boton-icono img {
-                width: 18px;
-                height: 18px;
-            }
+<head>
+    <title>AgroCaña</title>
+    <meta charset="UTF-8">
+    <link rel="icon" type="png" href="iconos/logo.png" />
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            padding-top: 25px;
+            font-family: "Inter", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+        }
 
-            .Boton-icono {
-                border: none;
-                background-color: transparent;
-                padding: 4px 6px 6px 6px;
-                cursor: pointer;
-                border-radius: 6px;
-                margin-bottom: 30px;
-            }
+        .titulo {
+            margin-left: 20px;
+            margin-bottom: 5px;
+        }
 
-            .Boton-icono:hover {
-                background-color: #E6E6E6;
-            }
-            button:hover{
-                background-color: #2C6213;
-            }
-        </style>
-        <script type="text/javascript" src="scripts/sesion.js"></script>
-    </head>
-    <body>
-        <div class="titulo">
-            <h1>Envíos y Logística</h1>
-            <h2>Control de entrega, asignación de vehículos y seguimiento de rutas</h2>
+        .envios {
+            border: 2px solid #D9D9D9;
+            border-radius: 10px;
+            padding: 20px 30px;
+            margin-top: 20px;
+        }
+
+        .envio {
+            border: 2px solid #D9D9D9;
+            border-radius: 10px;
+            padding: 15px 30px;
+            margin-top: 10px;
+        }
+
+        .nivel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 13%;
+            margin-left: 20px;
+            margin-bottom: 5px;
+        }
+
+        .sublevel {
+            display: flex;
+            align-items: center;
+            width: 30%;
+        }
+
+        .imagen {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        h1 {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 0px;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-top: 5px;
+            color: #8B8383;
+        }
+
+        h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .contenido {
+            padding: 20px;
+            padding-top: 10px;
+            background-color: #FFFFFF;
+        }
+
+        button {
+            background-color: #346E19;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .centrado {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        select {
+            font-size: 16px;
+            border: 10px;
+            background-color: #EBEAEA;
+            border-radius: 10px;
+            width: 173px;
+            height: 43px;
+            color: #4C4C4C;
+            padding: 10px;
+        }
+
+        .text1 {
+            margin-block: 0px;
+            color: #000;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .text2 {
+            margin-block: 0px;
+            color: #8B8383;
+            font-size: 18px;
+            font-weight: 500px;
+        }
+
+        .text3 {
+            font-size: 17px;
+            font-weight: 500;
+            margin-right: 20px;
+            margin-bottom: 3px;
+        }
+
+        .seleccion {
+            background-color: #524A4A;
+            border-radius: 20px;
+            padding: 0px 25px;
+            height: 30px;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .informacion {
+            border: 2px solid #D9D9D9;
+            border-radius: 10px;
+            padding: 20px 30px;
+            margin-bottom: 20px;
+            width: 26%;
+            height: 150px;
+        }
+
+        .numero {
+            font-size: 30px;
+            font-weight: normal;
+            margin: 0;
+            margin-top: 50px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            margin-top: 10px;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        tr {
+            height: 30px;
+        }
+
+        .Boton-icono img {
+            width: 18px;
+            height: 18px;
+        }
+
+        .Boton-icono {
+            border: none;
+            background-color: transparent;
+            padding: 4px 6px 6px 6px;
+            cursor: pointer;
+            border-radius: 6px;
+            margin-bottom: 30px;
+        }
+
+        .Boton-icono:hover {
+            background-color: #E6E6E6;
+        }
+
+        button:hover {
+            background-color: #2C6213;
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: #000;
+        }
+    </style>
+    <script type="text/javascript" src="scripts/sesion.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+</head>
+
+<body>
+    <div class="titulo">
+        <h1>Envíos y Logística</h1>
+        <h2>Control de entrega, asignación de vehículos y seguimiento de rutas</h2>
+    </div>
+    <div class="contenido">
+        <div class="centrado">
+            <div class="informacion">
+                <p class="text1">Programados</p>
+                <p class="numero" id="pendientes">0</p>
+                <p class="text2">Pendientes por salir</p>
+            </div>
+            <div class="informacion">
+                <p class="text1">En Tránsito</p>
+                <p class="numero" id="camino">0</p>
+                <p class="text2">En camino</p>
+            </div>
+            <div class="informacion">
+                <p class="text1">Entregados</p>
+                <p class="numero" id="completos">0</p>
+                <p class="text2">Completados</p>
+            </div>
         </div>
-        <div class="contenido">
+        <div align="right" style="margin-right: 10px;">
+            <a style="text-decoration: none;" href="EnviosyLogistica-Formulario.html">
+                <button><span style="font-size: 18px;"><img src="iconos/anadir.png" alt="clientes"
+                            style="width: 14px; height: 14;"></span> Nuevo Envío</button>
+            </a>
+        </div>
+        <div class="envios">
             <div class="centrado">
-                <div class="informacion">
-                    <p class="text1">Programados</p>
-                    <p class="numero" id="pendientes">0</p>
-                    <p class="text2">Pendientes por salir</p>
-                </div>
-                <div class="informacion">
-                    <p class="text1">En Tránsito</p>
-                    <p class="numero" id="camino">0</p>
-                    <p class="text2">En camino</p>
-                </div>
-                <div class="informacion">
-                    <p class="text1">Entregados</p>
-                    <p class="numero" id="completos">0</p>
-                    <p class="text2">Completados</p>
-                </div>                    
+                <h3>Envíos y Entregas</h3>
+                <select id="filtro" onchange="filtrar()">
+                    <option value="0">Todos los estados</option>
+                    <option value="1">En transito</option>
+                    <option value="2">Entregado</option>
+                </select>
             </div>
-            <div align="right" style="margin-right: 10px;">
-                <a style="text-decoration: none;" href="EnviosyLogistica-Formulario.html">
-                    <button><span style="font-size: 18px;"><img src="iconos/anadir.png" alt="clientes" style="width: 14px; height: 14;"></span> Nuevo Envío</button>
-                </a>
-            </div>
-            <div class="envios">
-                <div class="centrado">
-                    <h3>Envíos y Entregas</h3>
-                    <select id="filtro" onchange="filtrar()">
-                        <option value="0">Todos los estados</option>
-                        <option value="1">En transito</option>
-                        <option value="2">Entregado</option>
-                    </select>
-                </div>
-                <div id="envios">
+            <div id="envios">
 
-                </div>
             </div>
         </div>
-    </body>
-    <script>
-        fetch("php/envios/SelectEnvios.php")
+    </div>
+
+    <div id="mapaOverlay" class="modal-overlay" onclick="cerrarMapa(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-modal" onclick="cerrarMapa()">&times;</span>
+            <div id="mapa-container"
+                style="width: 100%; height: 500px; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #666;">
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    let listaEnvios = [];
+    let mapaActual = null;
+
+    fetch("php/envios/SelectEnvios.php")
         .then(res => res.json())
         .then(data => {
+            listaEnvios = data;
             let div = document.getElementById("envios");
             data.forEach(envio => {
                 div.innerHTML += `
-                <div class="envio">
+                <div class="envio" onclick="abrirMapa(${envio.NENVIO})" style="cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.01)'" onmouseout="this.style.transform='scale(1)'">
                     <div class="centrado">
                 <div style="display: flex; align-items: center; margin-left: 20px;">
                     <p class="text3">Envio #${envio.NENVIO} </p>
@@ -227,8 +310,8 @@
                     </div>
                 </div>
                 <div style="display: flex; align-items: center; margin-top: 12px;">
-                    <button class="Boton-icono edit-icon" onclick="window.location.href = 'EnviosyLogistica-Formulario.html?cve=${envio.NENVIO}'"><img src="iconos/editar.png" alt="icono editar" style="width:20px;height:20px;"/></button>
-                    <button class="Boton-icono edit-icon" onclick="eliminar(${envio.NENVIO})"><img src="iconos/eliminar.png" alt="icono eliminar" style="width:20px;height:20px;"/></button>
+                    <button class="Boton-icono edit-icon" onclick="event.stopPropagation(); window.location.href = 'EnviosyLogistica-Formulario.html?cve=${envio.NENVIO}'"><img src="iconos/editar.png" alt="icono editar" style="width:20px;height:20px;"/></button>
+                    <button class="Boton-icono edit-icon" onclick="event.stopPropagation(); eliminar(${envio.NENVIO})"><img src="iconos/eliminar.png" alt="icono eliminar" style="width:20px;height:20px;"/></button>
                 </div>
             </div>
             <p style="margin-left:20px;" class="text2">Cliente: ${envio.CLIENTE}</p>
@@ -267,7 +350,7 @@
                         </div>
                     </div>
                     <div class="sublevel" style="align-items:center; justify-content: center;">
-                        ${(envio.ENTREGADO == 'Entregado')?'':`<button onclick="Completado(${envio.NENVIO})" id="completado">Marcar Completado</button>`}
+                        ${(envio.ENTREGADO == 'Entregado') ? '' : `<button onclick="event.stopPropagation(); Completado(${envio.NENVIO})" id="completado">Marcar Completado</button>`}
                     </div>
                 </div>
             </div>
@@ -289,7 +372,7 @@
                 `;
             });
         });
-        fetch("/php/envios/ContadorEnvios.php")
+    fetch("/php/envios/ContadorEnvios.php")
         .then(res => res.json())
         .then(data => {
             console.log(data);
@@ -297,15 +380,16 @@
             document.getElementById('camino').textContent = data.camino;
             document.getElementById('completos').textContent = data.completos;
         });
-        function filtrar() {
-            fetch("php/envios/SelectEnvios?seleccion="+encodeURIComponent(document.getElementById('filtro').value))
+    function filtrar() {
+        fetch("php/envios/SelectEnvios?seleccion=" + encodeURIComponent(document.getElementById('filtro').value))
             .then(res => res.json())
             .then(data => {
+                listaEnvios = data;
                 let div = document.getElementById("envios");
                 div.innerHTML = ''
                 data.forEach(envio => {
                     div.innerHTML += `
-                    <div class="envio">
+                    <div class="envio" onclick="abrirMapa(${envio.NENVIO})" style="cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.01)'" onmouseout="this.style.transform='scale(1)'">
                         <div class="centrado">
                     <div style="display: flex; align-items: center; margin-left: 20px;">
                         <p class="text3">Envio #${envio.NENVIO} </p>
@@ -314,8 +398,8 @@
                         </div>
                     </div>
                     <div style="display: flex; align-items: center; margin-top: 12px;">
-                        <button class="Boton-icono edit-icon" onclick="window.location.href = 'EnviosyLogistica-Formulario.html?cve=${envio.NENVIO}'"><img src="iconos/editar.png" alt="icono editar" style="width:20px;height:20px;"/></button>
-                        <button class="Boton-icono edit-icon" onclick="eliminar(${envio.NENVIO})"><img src="iconos/eliminar.png" alt="icono eliminar" style="width:20px;height:20px;"/></button>
+                        <button class="Boton-icono edit-icon" onclick="event.stopPropagation(); window.location.href = 'EnviosyLogistica-Formulario.html?cve=${envio.NENVIO}'"><img src="iconos/editar.png" alt="icono editar" style="width:20px;height:20px;"/></button>
+                        <button class="Boton-icono edit-icon" onclick="event.stopPropagation(); eliminar(${envio.NENVIO})"><img src="iconos/eliminar.png" alt="icono eliminar" style="width:20px;height:20px;"/></button>
                     </div>
                 </div>
                 <p style="margin-left:20px;" class="text2">Cliente: ${envio.CLIENTE}</p>
@@ -354,7 +438,7 @@
                             </div>
                         </div>
                         <div class="sublevel"  style="align-items:center; justify-content: center;">
-                            ${(envio.ENTREGADO == 'Entregado')?'':`<button onclick="Completado(${envio.NENVIO})" id="completado">Marcar Completado</button>`}
+                            ${(envio.ENTREGADO == 'Entregado') ? '' : `<button onclick="event.stopPropagation(); Completado(${envio.NENVIO})" id="completado">Marcar Completado</button>`}
                         </div>
                     </div>
                 </div>
@@ -376,34 +460,110 @@
                     `;
                 });
             });
-        }
-        function eliminar(cve) {
-            if(confirm("¿Estás seguro de que deseas eliminar este envio?")) {
-                fetch("php/envios/eliminar.php", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/x-www-form-urlencoded"},
-                    body: "cve=" + cve
-                })
+    }
+    function eliminar(cve) {
+        if (confirm("¿Estás seguro de que deseas eliminar este envio?")) {
+            fetch("php/envios/eliminar.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "cve=" + cve
+            })
                 .then(res => res.text())
                 .then(resp => {
                     alert(resp);
                     location.reload();
                 });
-            }
         }
-        function Completado(cve){
-            if(confirm("¿Completo el envio?")) {
-                fetch("php/envios/completar.php", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/x-www-form-urlencoded"},
-                    body: "cve=" + cve
-                })
+    }
+    function Completado(cve) {
+        if (confirm("¿Completo el envio?")) {
+            fetch("php/envios/completar.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "cve=" + cve
+            })
                 .then(res => res.text())
                 .then(resp => {
                     alert(resp);
                     location.reload();
                 });
-            }
         }
-    </script>
+    }
+
+    function obtenerCoordenadas(direccion) {
+        return fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(direccion)}`)
+            .then(res => res.json())
+            .then(datos => {
+                if (datos && datos.length > 0) {
+                    return [parseFloat(datos[0].lat), parseFloat(datos[0].lon)];
+                }
+                return null;
+            })
+            .catch(error => {
+                console.error("Error al obtener coordenadas para:", direccion, error);
+                return null;
+            });
+    }
+
+    function abrirMapa(nEnvio) {
+        const envio = listaEnvios.find(e => e.NENVIO == nEnvio);
+        if (!envio) return;
+
+        const contenedor = document.getElementById('mapa-container');
+        contenedor.setAttribute('data-envio', nEnvio);
+        document.getElementById('mapaOverlay').style.display = 'flex';
+
+        if (mapaActual !== null) {
+            mapaActual.remove();
+        }
+
+        mapaActual = L.map('mapa-container').setView([19.4326, -99.1332], 5);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(mapaActual);
+
+        const direccionOrigen = `${envio.CORIGEN}, ${envio.MORIGEN}, 'Tabasco', México`;
+        const direccionDestino = `${envio.CDESTINO}, ${envio.MDESTINO}, 'Tabasco', México`;
+
+        Promise.all([
+            obtenerCoordenadas(direccionOrigen),
+            obtenerCoordenadas(direccionDestino)
+        ]).then(([coordOrigen, coordDestino]) => {
+            const markers = [];
+
+            if (coordOrigen) {
+                const markerO = L.marker(coordOrigen).addTo(mapaActual)
+                    .bindPopup(`<b>Origen:</b><br>${envio.CORIGEN}`).openPopup();
+                markers.push(markerO);
+            }
+
+            if (coordDestino) {
+                const markerD = L.marker(coordDestino).addTo(mapaActual)
+                    .bindPopup(`<b>Destino:</b><br>${envio.CDESTINO}`);
+                markers.push(markerD);
+            }
+
+            if (markers.length > 0) {
+                const group = new L.featureGroup(markers);
+                mapaActual.fitBounds(group.getBounds(), { padding: [50, 50], maxZoom: 15 });
+
+                if (markers.length === 2) {
+                    L.polyline([coordOrigen, coordDestino], { color: '#346E19', weight: 4, opacity: 0.8, dashArray: '10, 10' }).addTo(mapaActual);
+                }
+            }
+        });
+    }
+
+    function cerrarMapa(event) {
+        if (event && event.target !== document.getElementById('mapaOverlay') && event.target.className !== 'close-modal') {
+            return;
+        }
+        document.getElementById('mapaOverlay').style.display = 'none';
+        if (mapaActual !== null) {
+            mapaActual.remove();
+            mapaActual = null;
+        }
+    }
+</script>
+
 </html>
