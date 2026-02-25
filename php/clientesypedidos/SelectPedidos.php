@@ -12,7 +12,7 @@ if($cve == 'null'){
 
     $sql = "SELECT 
                 P.CVE_PEDIDO AS CVE_PEDIDO,
-                GROUP_CONCAT(I.NOMBRE SEPARATOR ', ') AS ITEMS,
+                I.NOMBRE AS ITEMS,
                 SUM(EN.CANTIDAD) AS TOTAL_CANTIDAD,
                 I.UNIDAD AS UNIDAD,
                 P.FECHAPEDIDO AS FECHAPEDIDO,
@@ -22,13 +22,13 @@ if($cve == 'null'){
             LEFT JOIN encarga AS EN ON EN.CVE_PEDIDO = P.CVE_PEDIDO
             LEFT JOIN items AS I ON I.CVE_ITEM = EN.CVE_ITEM
             LEFT JOIN envios AS E ON E.CVE_PEDIDO = P.CVE_PEDIDO
-            GROUP BY P.CVE_PEDIDO,GROUP_CONCAT(I.NOMBRE SEPARATOR ', '), I.UNIDAD, P.FECHAPEDIDO, E.ENTREGADO;";
+            GROUP BY P.CVE_PEDIDO,I.NOMBRE , I.UNIDAD, P.FECHAPEDIDO, E.ENTREGADO;";
 
 } else {
 
     $sql = "SELECT 
                 P.CVE_PEDIDO AS CVE_PEDIDO,
-                GROUP_CONCAT(I.NOMBRE SEPARATOR ', ') AS ITEMS,
+                I.NOMBRE AS ITEMS,
                 SUM(EN.CANTIDAD) AS TOTAL_CANTIDAD,
                 I.UNIDAD AS UNIDAD,
                 P.FECHAPEDIDO AS FECHAPEDIDO,
@@ -38,7 +38,7 @@ if($cve == 'null'){
             LEFT JOIN encarga AS EN ON EN.CVE_PEDIDO = P.CVE_PEDIDO
             LEFT JOIN items AS I ON I.CVE_ITEM = EN.CVE_ITEM
             LEFT JOIN envios AS E ON E.CVE_PEDIDO = P.CVE_PEDIDO
-            WHERE P.CVE_PEDIDO = '$cve' GROUP BY P.CVE_PEDIDO, GROUP_CONCAT(I.NOMBRE SEPARATOR ', '), I.UNIDAD, P.FECHAPEDIDO, E.ENTREGADO";
+            WHERE P.CVE_PEDIDO = '$cve' GROUP BY P.CVE_PEDIDO, I.NOMBRE, I.UNIDAD, P.FECHAPEDIDO, E.ENTREGADO";
 
 }
 $result = $conexion->query($sql);
