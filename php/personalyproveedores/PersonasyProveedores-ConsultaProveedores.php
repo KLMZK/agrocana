@@ -17,7 +17,7 @@ FROM compradores
 LEFT JOIN pedidos 
     ON pedidos.CVE_COMPRADOR = compradores.CVE_COMPRADOR
     WHERE compradores.TIPO != 'Cliente'
-    GROUP BY compradores.CVE_COMPRADOR;
+    GROUP BY compradores.CVE_COMPRADOR, compradores.NOMBRE, compradores.TIPO, compradores.TELEFONO;
 ");
 
 $proveedores=[];
