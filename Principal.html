@@ -38,15 +38,15 @@
                         <div class="tituFrase"><text style="font-size: 20px;">Estado del Clima</text></div>
                         <div class="columna" style="gap: 10px;">
                             Ubicacion:
-                            <div class="respuesta"></div>
+                            <div class="respuesta" id="ubicacion"></div>
                         </div>
                         <div class="columna" style="gap: 10px;">
                             Temperatura:
-                            <div class="respuesta"></div>
+                            <div class="respuesta" id="temperatura"></div>
                         </div>
                         <div class="columna" style="gap: 10px;">
                             Condición:
-                            <div class="respuesta"></div>
+                            <div class="respuesta" id="condicionClima"></div>
                         </div>
                     </div>
                 </div>
@@ -88,6 +88,30 @@
     </div>
 </body>
 <script>
+    console.log("JS cargado");
+    const apiKey = "ca89717cf429130019ba830342fa1c82";
+
+async function obtenerClima() {
+  try {
+    const ciudad = "Cardenas"; // puedes cambiarla luego
+
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},mx&units=metric&lang=es&appid=${apiKey}`;
+
+    const respuesta = await fetch(url);
+    const datos = await respuesta.json();
+
+    // insertar en tu interfaz
+    document.getElementById("ubicacion").textContent = datos.name;
+    document.getElementById("temperatura").textContent = datos.main.temp + " °C";
+    document.getElementById("condicionClima").textContent = datos.weather[0].description;
+
+  } catch (error) {
+    console.error("Error obteniendo clima:", error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", obtenerClima);
+
         fetch("/proyecto/agrocana/php/principal.php?desc=" + encodeURIComponent(0))
         .then(res => res.json())
         .then(data => {
