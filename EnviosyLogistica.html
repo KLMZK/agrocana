@@ -505,6 +505,30 @@
             });
     }
 
+    function obtenerRuta(coordOrigen, coordDestino) {
+        const apiKey = 'eyJvcmciOiI1YjNjZTM1OTc4NTExMTAwMDFjZjYyNDgiLCJpZCI6IjcxZjRkZTcxZWEyZjQ5YTNiMTBmNDA3MGU5ZjM1MGRiIiwiaCI6Im11cm11cjY0In0=';
+        const start = `${coordOrigen[1]},${coordOrigen[0]}`;
+        const end = `${coordDestino[1]},${coordDestino[0]}`;
+        const url = `https://api.openrouteservice.org/v2/directions/driving-car?api_key=${apiKey}&start=${start}&end=${end}`;
+
+        return fetch(url)
+            .then(res => res.json())
+            .then(data => {
+                if (data.features && data.features.length > 0) {
+                    const feature = data.features[0];
+                    const coords = feature.geometry.coordinates.map(c => [c[1], c[0]]);
+                    const distance = feature.properties.summary.distance;
+                    const duration = feature.properties.summary.duration;
+                    return { coords, distance, duration };
+                }
+                return null;
+            })
+            .catch(error => {
+                console.error("Error al obtener la ruta:", error);
+                return null;
+            });
+    }
+
     function abrirMapa(nEnvio) {
         const envio = listaEnvios.find(e => e.NENVIO == nEnvio);
         if (!envio) return;
@@ -548,7 +572,22 @@
                 mapaActual.fitBounds(group.getBounds(), { padding: [50, 50], maxZoom: 15 });
 
                 if (markers.length === 2) {
-                    L.polyline([coordOrigen, coordDestino], { color: '#346E19', weight: 4, opacity: 0.8, dashArray: '10, 10' }).addTo(mapaActual);
+                    obtenerRuta(coordOrigen, coordDestino).then(rutaData => {
+                        if (rutaData) {
+                            const polyline = L.polyline(rutaData.coords, { color: '#346E19', weight: 4, opacity: 0.8 }).addTo(mapaActual);
+                            const distKm = (rutaData.distance / 1000).toFixed(2);
+                            const durHoras = Math.floor(rutaData.duration / 3600);
+                            const durMinutos = Math.floor((rutaData.duration % 3600) / 60);
+
+                            let tiempoTexto = "";
+                            if (durHoras > 0) tiempoTexto += `${durHoras} h `;
+                            tiempoTexto += `${durMinutos} min`;
+
+                            polyline.bindPopup(`<b>Distancia:</b> ${distKm} km<br><b>Tiempo estimado:</b> ${tiempoTexto}`);
+                        } else {
+                            L.polyline([coordOrigen, coordDestino], { color: '#346E19', weight: 4, opacity: 0.8, dashArray: '10, 10' }).addTo(mapaActual);
+                        }
+                    });
                 }
             }
         });

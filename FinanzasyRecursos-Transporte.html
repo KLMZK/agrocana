@@ -1,177 +1,299 @@
 <html>
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="estilos/pantallasCultivos.css">
-        <script type="text/javascript" src="scripts/sesion.js"></script>
-        <style>
-            .seleccion button{
-                width: 130px;
-            }
-            .seleccion button:hover{
-                width: 130px;
-            }
-            .seleccion button.activo{
-                width: 130px;
-            }
-            .seleccion{
-                width: 410px;
-                height:3px;
-            }
-            .tabla-vehiculos {
-                display: block;
-                max-height: 400px;
-                overflow-y: auto;
-            }
-            .tabla-vehiculos thead, 
-            .tabla-vehiculos tbody tr {
-                display: table;
-                width: 100%;
-                table-layout: fixed; 
-            }
-        </style>
-    </head>
-    <body>
-        <h1> Finanzas y Recursos</h1>
-        <h2>Control de  presupuesto, transporte e inventario</h2>
 
-        <div class="contenedor">
-            <div class="cuadros">
-                <p style="font-weight: bold;">Total Ingresos</p>
-                <text id="ingresosMes" style="color:#316C1B; font-size:25px; margin-top: 30px;">Cargando...</text><br>
-                <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Mes actual</text>
-            </div>
-            <div class="cuadros">
-                <p style="font-weight: bold;">Total Gastos</p>
-                <text id="gastosMes" style="color:#C51B1B; font-size: 25px; margin-top: 30px;">Cargando...</text><br>
-                <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Mes actual</text>
-            </div>
-            <div class="cuadros">
-                <p style="font-weight: bold;">Balance</p>
-                <text id="balanceMes" style="color:#316C1B; font-size: 25px; margin-top: 30px;">Cargando...</text><br>
-                <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Resultado Neto</text>
-            </div>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilos/pantallasCultivos.css">
+    <script type="text/javascript" src="scripts/sesion.js"></script>
+    <style>
+        .seleccion button {
+            width: 130px;
+        }
+
+        .seleccion button:hover {
+            width: 130px;
+        }
+
+        .seleccion button.activo {
+            width: 130px;
+        }
+
+        .seleccion {
+            width: 410px;
+            height: 3px;
+        }
+
+        .tabla-vehiculos {
+            display: block;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .tabla-vehiculos thead,
+        .tabla-vehiculos tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        @keyframes scaleUp {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes scaleDown {
+            from {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            to {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        .modal-fade-in {
+            animation: fadeIn 0.25s ease forwards;
+        }
+
+        .modal-fade-out {
+            animation: fadeOut 0.25s ease forwards;
+        }
+
+        .modal-scale-in {
+            animation: scaleUp 0.25s ease forwards;
+        }
+
+        .modal-scale-out {
+            animation: scaleDown 0.25s ease forwards;
+        }
+    </style>
+</head>
+
+<body>
+    <h1> Finanzas y Recursos</h1>
+    <h2>Control de presupuesto, transporte e inventario</h2>
+
+    <div class="contenedor">
+        <div class="cuadros">
+            <p style="font-weight: bold;">Total Ingresos</p>
+            <text id="ingresosMes" style="color:#316C1B; font-size:25px; margin-top: 30px;">Cargando...</text><br>
+            <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Mes actual</text>
         </div>
+        <div class="cuadros">
+            <p style="font-weight: bold;">Total Gastos</p>
+            <text id="gastosMes" style="color:#C51B1B; font-size: 25px; margin-top: 30px;">Cargando...</text><br>
+            <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Mes actual</text>
+        </div>
+        <div class="cuadros">
+            <p style="font-weight: bold;">Balance</p>
+            <text id="balanceMes" style="color:#316C1B; font-size: 25px; margin-top: 30px;">Cargando...</text><br>
+            <text style="color:#8B8383; font-size: 14px; margin-top: -15px;">Resultado Neto</text>
+        </div>
+    </div>
 
 
-        <div class="seleccion" style="gap:10px;">
-            <form action="FinanzasyRecursos-Presupuesto.html" style="margin-top: 17px;">
-                <button>
-                    <img src="iconos/dolar.png" alt="Icono dolar" width="14" height="14">  
-                    Presupuesto</button>
-            </form>
-            <form action="FinanzasyRecursos-Transporte.html" style="margin-top: 17px;">
+    <div class="seleccion" style="gap:10px;">
+        <form action="FinanzasyRecursos-Presupuesto.html" style="margin-top: 17px;">
+            <button>
+                <img src="iconos/dolar.png" alt="Icono dolar" width="14" height="14">
+                Presupuesto</button>
+        </form>
+        <form action="FinanzasyRecursos-Transporte.html" style="margin-top: 17px;">
             <button class="activo">
-                 <img src="iconos/camion.png" alt="Icono Transporte" width="14" height="14">  
+                <img src="iconos/camion.png" alt="Icono Transporte" width="14" height="14">
                 Transporte</button>
-            </form>
-            <form action="FinanzasyRecursos-Inventario.html" style="margin-top: 17px;">
-                <button>
-                 <img src="iconos/proveedor2.png" alt="Icono inventario" width="14" height="14">  
+        </form>
+        <form action="FinanzasyRecursos-Inventario.html" style="margin-top: 17px;">
+            <button>
+                <img src="iconos/proveedor2.png" alt="Icono inventario" width="14" height="14">
                 Inventario</button>
-            </form>
-        </div>
-            <div class="contenido" style="height: 500px; gap: 5px;">
-                <div class="arriba" style="justify-content: space-between; padding-bottom: 5px; margin-bottom:0 ;">
-                <text>Vehículos y Transporte</text>
-                <div class="bot">
-                    <form action="FinanzasyRecursos-FormularioRegistrarVehiculos.html">
-                    <button ><img src="iconos/anadir.png" alt="anadir"  width="14" height="14">Registrar Vehículo</button>
-                    </form>
-                    <form action="FinanzasyRecursos-FormularioMantenimiento.html">
-                    <button><img src="iconos/anadir.png" alt="anadir"  width="14" height="14">Registrar Mantenimiento</button>
-                    </form>
-                </div>
-                </div>
-                <table class="tabla-vehiculos" style="margin-top: 10px;">
-                    <tr>
-                        <th style="font-size: 14px;">Tipo</th>
-                        <th style="font-size: 14px;">Placa</th>
-                        <th style="font-size: 14px;">Estado</th>
-                        <th style="font-size: 14px;">Último Mantenimiento</th>
-                        <th style="font-size: 14px;">Acciones</th>
-                    </tr>
-                    <tbody id="tablaTransporte"></tbody>
-                </table>
+        </form>
+    </div>
+    <div class="contenido" style="height: 500px; gap: 5px;">
+        <div class="arriba" style="justify-content: space-between; padding-bottom: 5px; margin-bottom:0 ;">
+            <text>Vehículos y Transporte</text>
+            <div class="bot">
+                <form action="FinanzasyRecursos-FormularioRegistrarVehiculos.html">
+                    <button><img src="iconos/anadir.png" alt="anadir" width="14" height="14">Registrar Vehículo</button>
+                </form>
+                <form action="FinanzasyRecursos-FormularioMantenimiento.html">
+                    <button><img src="iconos/anadir.png" alt="anadir" width="14" height="14">Registrar
+                        Mantenimiento</button>
+                </form>
             </div>
-            <script>
-                let ingresos = 0;
-                let gastos = 0;
+        </div>
+        <table class="tabla-vehiculos" style="margin-top: 10px;">
+            <tr>
+                <th style="font-size: 14px;">Tipo</th>
+                <th style="font-size: 14px;">Placa</th>
+                <th style="font-size: 14px;">Estado</th>
+                <th style="font-size: 14px;">Último Mantenimiento</th>
+                <th style="font-size: 14px;">Acciones</th>
+            </tr>
+            <tbody id="tablaTransporte"></tbody>
+        </table>
+    </div>
 
-                const Ingr = fetch("php/finanzasyrecursos/FinanzasyRecursos_VistaIngreso.php")
-                    .then(res => res.json())
-                    .then(data => {
-                        ingresos = Number(data.totalIngresos);
-                        document.getElementById("ingresosMes").textContent =
-                            "$" + ingresos.toLocaleString();
-                    });
-                const Gast = fetch("php/finanzasyrecursos/FinanzasyRecursos_VistaGasto.php")
-                    .then(res => res.json())
-                    .then(data => {
-                        gastos = Number(data.totalGastos);
-                        document.getElementById("gastosMes").textContent =
-                            "$" + gastos.toLocaleString();
-                    });
+    <div id="modalMantenimiento" onclick="if(event.target === this) cerrarMantenimiento()"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+        <div id="modalContenido"
+            style="background:white; padding:20px; width:60%; max-height:80%; overflow-y:auto; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.2);">
+            <div
+                style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #ccc; padding-bottom:10px; margin-bottom:10px;">
+                <h3 style="margin:0;">Mantenimiento - Vehículo <span id="placaMantenimiento"></span></h3>
+                <span onclick="cerrarMantenimiento()"
+                    style="cursor:pointer; font-weight:bold; font-size:20px;">&times;</span>
+            </div>
+            <div id="infoMantenimiento"></div>
+        </div>
+    </div>
 
-                Promise.all([Ingr, Gast]).then(() => {
-                    const balance = ingresos - gastos;
+    <script>
+        let ingresos = 0;
+        let gastos = 0;
 
-                    document.getElementById("balanceMes").textContent =
-                        "$" + balance.toLocaleString();
-                    if (balance < 0) {
-                        document.getElementById("balanceMes").style.color = "#C51B1B";
-                    } else {
-                        document.getElementById("balanceMes").style.color = "#346E19"; 
-                    }
-                });
-                fetch("php/finanzasyrecursos/FinanzasyRecursos-ConsultaTransporte.php")
-                    .then(res => res.json())
-                    .then(data => {
-                        let tabla = document.getElementById("tablaTransporte");
-                        tabla.innerHTML = "";
-                        data.forEach(transporte => {
-                            tabla.innerHTML += `
-                                <tr>
+        const Ingr = fetch("php/finanzasyrecursos/FinanzasyRecursos_VistaIngreso.php")
+            .then(res => res.json())
+            .then(data => {
+                ingresos = Number(data.totalIngresos);
+                document.getElementById("ingresosMes").textContent =
+                    "$" + ingresos.toLocaleString();
+            });
+        const Gast = fetch("php/finanzasyrecursos/FinanzasyRecursos_VistaGasto.php")
+            .then(res => res.json())
+            .then(data => {
+                gastos = Number(data.totalGastos);
+                document.getElementById("gastosMes").textContent =
+                    "$" + gastos.toLocaleString();
+            });
+
+        Promise.all([Ingr, Gast]).then(() => {
+            const balance = ingresos - gastos;
+
+            document.getElementById("balanceMes").textContent =
+                "$" + balance.toLocaleString();
+            if (balance < 0) {
+                document.getElementById("balanceMes").style.color = "#C51B1B";
+            } else {
+                document.getElementById("balanceMes").style.color = "#346E19";
+            }
+        });
+        fetch("php/finanzasyrecursos/FinanzasyRecursos-ConsultaTransporte.php")
+            .then(res => res.json())
+            .then(data => {
+                let tabla = document.getElementById("tablaTransporte");
+                tabla.innerHTML = "";
+                data.forEach(transporte => {
+                    tabla.innerHTML += `
+                                <tr style="cursor: pointer;" onclick="mostrarMantenimiento('${transporte.PLACA}')">
                                     <td>${transporte.TIPO}</td>
                                     <td>${transporte.PLACA}</td>
                                     <td>${transporte.ESTADO}</td>
                                     <td>${transporte.FECHA}</td>
-                                    <td class="acciones">
+                                    <td class="acciones" onclick="event.stopPropagation();">
                                         <button class="Boton-icono" onclick="cambiarEstado('${transporte.PLACA}')"><img src="iconos/cambiar.png"></button>
                                         <button type="button" class="Boton-icono" onclick="window.location.href='FinanzasyRecursos-EditarAgregarTransporte.html?placa=${transporte.PLACA}'"><img src="iconos/editar.png"></button>
                                         <button class="Boton-icono" onclick="eliminar('${transporte.PLACA}')"><img src="iconos/eliminar.png"></button>
                                     </td>
                                 </tr>
                             `;
-                        });
-                    });
-                function cambiarEstado(placa) {
-                    fetch("php/finanzasyrecursos/FinanzasyRecursos-CambiarEstado.php", {
-                        method: "POST",
-                        headers: {"Content-Type": "application/x-www-form-urlencoded"},
-                        body: "placa=" + encodeURIComponent(placa)
-                    })
+                });
+            });
+        function cambiarEstado(placa) {
+            fetch("php/finanzasyrecursos/FinanzasyRecursos-CambiarEstado.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "placa=" + encodeURIComponent(placa)
+            })
+                .then(res => res.text())
+                .then(resp => {
+                    alert(resp);
+                    location.reload();
+                });
+        }
+        function eliminar(placa) {
+            if (confirm("¿Estás seguro de que deseas eliminar este vehiculo?")) {
+                fetch("php/finanzasyrecursos/FinanzasyRecursos-eliminarRegistro.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: "placa=" + placa
+                })
                     .then(res => res.text())
                     .then(resp => {
                         alert(resp);
                         location.reload();
                     });
-                }
-                function eliminar(placa) {
-                    if(confirm("¿Estás seguro de que deseas eliminar este vehiculo?")) {
-                        fetch("php/finanzasyrecursos/FinanzasyRecursos-eliminarRegistro.php", {
-                            method: "POST",
-                            headers: {"Content-Type": "application/x-www-form-urlencoded"},
-                            body: "placa=" + placa
-                        })
-                        .then(res => res.text())
-                        .then(resp => {
-                            alert(resp);
-                            location.reload();
-                        });
-                    }
-                }
-            </script>
-    </body>
+            }
+        }
+
+        function mostrarMantenimiento(placa) {
+            document.getElementById('placaMantenimiento').textContent = placa;
+            const modal = document.getElementById('modalMantenimiento');
+            const contenido = document.getElementById('modalContenido');
+
+            modal.style.display = 'flex';
+            modal.classList.remove('modal-fade-out');
+            modal.classList.add('modal-fade-in');
+
+            contenido.classList.remove('modal-scale-out');
+            contenido.classList.add('modal-scale-in');
+
+            const infoDiv = document.getElementById('infoMantenimiento');
+
+            infoDiv.innerHTML = "<p style='text-align:center;'>Cargando información...</p>";
+
+            //Aqui pon la api Arantxa, Duermete porfa
+
+            setTimeout(() => {
+                infoDiv.innerHTML = "<p style='text-align:center; color:#555;'>Este vehiculo aun no cuenta con un mantenimiento</p>";
+            }, 300);
+        }
+
+        function cerrarMantenimiento() {
+            const modal = document.getElementById('modalMantenimiento');
+            const contenido = document.getElementById('modalContenido');
+
+            modal.classList.remove('modal-fade-in');
+            modal.classList.add('modal-fade-out');
+
+            contenido.classList.remove('modal-scale-in');
+            contenido.classList.add('modal-scale-out');
+
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 250);
+        }
+    </script>
+</body>
+
 </html>
