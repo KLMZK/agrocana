@@ -1,116 +1,209 @@
 <html>
-    <head>
-        <title>AgroCaña</title>
-        <meta charset="UTF-8">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap" rel="stylesheet">
-        <link rel="icon" type="png" href="iconos/logo.png"/>
-        <link rel="stylesheet" href="estilos/formulariosedit.css">
-        <script type="text/javascript" src="scripts/sesion.js"></script>
-        <style>
-            .contenedor{
-                display: flex;
-                gap: 20px;
-                width: 100%;
-            }
-            .form{
-                display: flex;
-                flex-direction: column;
-                flex: 1px;
-            }
-            .contenedor input{
-                flex: 1px;
-                display: flex;
-                flex-direction: column;
-            }
-            .form label{
-                display: block;
-                margin-bottom: 10px;
-            }
-        </style>
-    </head>
-    <body>
-        <form action="php/finanzasyrecursos/FinanzasyRecursos-FormMantenimiento.php" method="post">
-            <p></p>
-            <h1 class="inder-regular">Nuevo registro de Mantenimiento</h1><br>
-            <h2 >Registra un Mantenimiento</h2><br>
-            <div align="center">
-                <label for="trabajador">Trabajador</label><br>
-                <select id="trabajador" name="trabajador">
-                    <option value="">Seleccionar el trabajador</option>
-                </select>
-                <label for="placas">Placa/ID</label><br>
-                <select id="placas" name="placas">
-                    <option value="">Seleccionar placas</option><br>
-                </select>
-                <label for="fechaMan">Fecha del Mantenimiento</label><br>
-                <input type="date" id="fechaMan" name="fechaMan" required>
-                <label for="costo">Costo</label><br>
-                <input type="number" id="costo" name="costo" placeholder="0.0" required><br>
-                <br><label for="observaciones" style="margin-top: -20px";>Observaciones</label><br>
-                <textarea type="text" id="observaciones" name="observaciones" maxlength="100" placeholder="Notas Adicionales"></textarea><br><br>
-                <input type="submit" value="Guardar Registro">
-            </div>
-            <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    fetch('php/finanzasyrecursos/FinanzasyRecursos-SelectTrabajador.php')
-                        .then(response => response.json())
-                        .then(data => {
-                            const select = document.getElementById('trabajador');
-                            data.forEach(trabajador => {
-                                const option = document.createElement('option');
-                                option.value = trabajador.CVE_USUARIO;
-                                option.textContent = trabajador.NOMBRE;
-                                select.appendChild(option);
-                            });
-                        })
-                });
-                document.addEventListener('DOMContentLoaded', () => {
-                    fetch('php/finanzasyrecursos/FinanzasyRecursos-SelectPlacas.php')
-                        .then(response => response.json())
-                        .then(data => {
-                            const select = document.getElementById('placas');
-                            data.forEach(placas => {
-                                const option = document.createElement('option');
-                                option.value = placas.PLACA;
-                                option.textContent = placas.PLACA;
-                                select.appendChild(option);
-                            });
-                        })
-                });
-                const form = document.querySelector('form');
 
-                form.addEventListener('submit', (e) => {
-                    const selects = Array.from(form.querySelectorAll('select'));
-                    const invalid = selects.filter(s => !s.value || s.selectedIndex === 0);
+<head>
+    <title>AgroCaña</title>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inder&family=Inter:opsz,wght@14..32,200&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="png" href="iconos/logo.png" />
+    <link rel="stylesheet" href="estilos/formulariosedit.css">
+    <script type="text/javascript" src="scripts/sesion.js"></script>
+    <style>
+        .contenedor {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+        }
 
-                    if (invalid.length) {
-                        e.preventDefault();
-                        invalid.forEach(s => s.classList.add('invalid'));
-                        invalid[0].focus();
-                        alert('Por favor selecciona una opción en todos los desplegables antes de enviar.');
-                        return false;
-                    }
-                });
-                
-                document.querySelectorAll('select').forEach(s => {
-                    s.addEventListener('change', () => s.classList.remove('invalid'));
-                });
-                document.addEventListener('DOMContentLoaded', () => {
-                    const pad = n => n.toString().padStart(2, '0');
-                    const now = new Date();
-                    const hoy = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
-                    const ahoraLocal = `${hoy}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
+        .form {
+            display: flex;
+            flex-direction: column;
+            flex: 1px;
+        }
 
-                    document.querySelectorAll('input[type="date"]').forEach(el => {
-                        el.setAttribute('min', hoy);
+        .contenedor input {
+            flex: 1px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form label {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="formMantenimiento">
+        <p></p>
+        <h1 class="inder-regular" id="tituloFormulario">Nuevo registro de Mantenimiento</h1><br>
+        <h2 id="subtituloFormulario">Registra un Mantenimiento</h2><br>
+        <div align="center">
+            <label for="trabajador">Trabajador</label><br>
+            <select id="trabajador" name="trabajador">
+                <option value="">Seleccionar el trabajador</option>
+            </select>
+
+            <label for="placas">Placa/ID</label><br>
+            <select id="placas" name="placas">
+                <option value="">Seleccionar placas</option>
+            </select>
+
+            <label for="tipoMantenimiento">Tipo de Mantenimiento</label><br>
+            <select id="tipoMantenimiento" name="tipoMantenimiento">
+                <option value="">Seleccionar tipo</option>
+                <option value="Preventivo">Preventivo</option>
+                <option value="Correctivo">Correctivo</option>
+                <option value="Predictivo">Predictivo</option>
+                <option value="Otro">Otro</option>
+            </select>
+
+            <label for="detalleMantenimiento">Detalle del Mantenimiento</label><br>
+            <input type="text" id="detalleMantenimiento" name="detalleMantenimiento" maxlength="30"
+                placeholder="Ej: Cambio de aceite, revisión de frenos..."><br>
+
+            <label for="fechaMan">Fecha del Mantenimiento</label><br>
+            <input type="date" id="fechaMan" name="fechaMan" required>
+
+            <label for="costo">Costo</label><br>
+            <input type="number" id="costo" name="costo" placeholder="0.0" required><br>
+
+            <br><label for="observaciones" style="margin-top: -20px;">Observaciones</label><br>
+            <textarea id="observaciones" name="observaciones" maxlength="100"
+                placeholder="Notas Adicionales"></textarea><br><br>
+
+            <input type="submit" value="Guardar Registro">
+        </div>
+    </form>
+
+    <script>
+        const API_BASE_URL = 'http://127.0.0.1:8000';
+
+        const params = new URLSearchParams(window.location.search);
+        const idEditar = params.get('id');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('php/finanzasyrecursos/FinanzasyRecursos-SelectTrabajador.php')
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById('trabajador');
+                    data.forEach(trabajador => {
+                        const option = document.createElement('option');
+                        option.value = trabajador.CVE_USUARIO;
+                        option.textContent = trabajador.NOMBRE;
+                        select.appendChild(option);
                     });
-                    document.querySelectorAll('input[type="datetime-local"]').forEach(el => {
-                        el.setAttribute('min', ahoraLocal);
+                    if (idEditar) cargarDatosEdicion();
+                });
+
+            fetch('php/finanzasyrecursos/FinanzasyRecursos-SelectPlacas.php')
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById('placas');
+                    data.forEach(p => {
+                        const option = document.createElement('option');
+                        option.value = p.PLACA;
+                        option.textContent = p.PLACA;
+                        select.appendChild(option);
                     });
                 });
-        </script>
-        </form>
-    </body>         
+
+            if (idEditar) {
+                document.getElementById('tituloFormulario').textContent = 'Editar Mantenimiento';
+                document.getElementById('subtituloFormulario').textContent = 'Modifica los datos del Mantenimiento';
+            }
+
+            const pad = n => n.toString().padStart(2, '0');
+            const now = new Date();
+            const hoy = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+            document.getElementById('fechaMan').setAttribute('min', hoy);
+        });
+
+        function cargarDatosEdicion() {
+            fetch(API_BASE_URL + '/mantenimiento/GetMan/' + idEditar)
+                .then(res => res.json())
+                .then(m => {
+                    const cveUsuario = m.cVEUSUARIO || m.CVE_USUARIO || '';
+                    document.getElementById('trabajador').value = cveUsuario;
+
+                    document.getElementById('placas').value = m.PLACA || '';
+
+                    const tipo = m.tIPOMANTENIMIENTO || m.TIPO_MANTENIMIENTO || '';
+                    document.getElementById('tipoMantenimiento').value = tipo;
+
+                    document.getElementById('detalleMantenimiento').value = m.MANTENIMIENTO || '';
+
+                    const fecha = (m.FECHA || '').toString().split('T')[0];
+                    document.getElementById('fechaMan').value = fecha;
+
+                    document.getElementById('costo').value = m.COSTO || '';
+
+                    document.getElementById('observaciones').value = m.OBSERVACIONES || '';
+                })
+                .catch(err => {
+                    alert('No se pudo cargar el registro para editar: ' + err.message);
+                    console.error(err);
+                });
+        }
+
+        document.getElementById('formMantenimiento').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const selects = [
+                document.getElementById('trabajador'),
+                document.getElementById('placas'),
+                document.getElementById('tipoMantenimiento')
+            ];
+            const invalidos = selects.filter(s => !s.value || s.selectedIndex === 0);
+            if (invalidos.length) {
+                invalidos.forEach(s => s.classList.add('invalid'));
+                invalidos[0].focus();
+                alert('Por favor selecciona una opción en todos los desplegables antes de enviar.');
+                return;
+            }
+
+            const payload = {
+                cVEUSUARIO: parseInt(document.getElementById('trabajador').value),
+                PLACA: document.getElementById('placas').value,
+                tIPOMANTENIMIENTO: document.getElementById('tipoMantenimiento').value,
+                MANTENIMIENTO: document.getElementById('detalleMantenimiento').value,
+                FECHA: document.getElementById('fechaMan').value,
+                COSTO: parseFloat(document.getElementById('costo').value),
+                OBSERVACIONES: document.getElementById('observaciones').value
+            };
+
+            const url = idEditar
+                ? API_BASE_URL + '/mantenimiento/actualizar/' + idEditar
+                : API_BASE_URL + '/mantenimiento/registrar';
+
+            const method = idEditar ? 'PUT' : 'POST';
+
+            fetch(url, {
+                method: method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error('Error en la respuesta del servidor: ' + res.status);
+                    return res.json();
+                })
+                .then(() => {
+                    alert(idEditar ? 'Mantenimiento actualizado correctamente.' : 'Mantenimiento registrado correctamente.');
+                    window.location.href = 'FinanzasyRecursos-Transporte.html';
+                })
+                .catch(err => {
+                    alert('Ocurrió un error al guardar: ' + err.message);
+                    console.error(err);
+                });
+        });
+
+        document.querySelectorAll('select').forEach(s => {
+            s.addEventListener('change', () => s.classList.remove('invalid'));
+        });
+    </script>
+</body>
+
 </html>

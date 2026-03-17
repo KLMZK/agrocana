@@ -96,6 +96,19 @@
         .modal-scale-out {
             animation: scaleDown 0.25s ease forwards;
         }
+
+        .boton-modal-icono {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 5px;
+            transition: background 0.2s ease;
+        }
+
+        .boton-modal-icono:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 
@@ -272,11 +285,64 @@
 
             infoDiv.innerHTML = "<p style='text-align:center;'>Cargando información...</p>";
 
-            //Aqui pon la api Arantxa, Duermete porfa
+            const API_BASE_URL = 'http://127.0.0.1:8000';
 
-            setTimeout(() => {
-                infoDiv.innerHTML = "<p style='text-align:center; color:#555;'>Este vehiculo aun no cuenta con un mantenimiento</p>";
-            }, 300);
+            fetch(API_BASE_URL + '/mantenimiento/GetMan')
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+
+                    if (!Array.isArray(data)) {
+                        throw new Error("La API no devolvió una lista válida de datos.");
+                    }
+
+                    const mantenimientosVehiculo = data.filter(m => m.placa === placa || m.PLACA === placa);
+
+                    if (mantenimientosVehiculo.length > 0) {
+                        let htmlMantenimientos = '';
+                        mantenimientosVehiculo.forEach(m => {
+                            let fechaMostrada = m.FECHA || m.fecha || "Sin fecha";
+
+                            if (m.fecha && typeof m.fecha === 'object' && m.fecha.date) {
+                                fechaMostrada = m.fecha.date.split(' ')[0];
+                            } else if (typeof fechaMostrada === 'string' && fechaMostrada.includes('T')) {
+                                fechaMostrada = fechaMostrada.split('T')[0];
+                            }
+
+                            const tipoMan = m.tipoMantenimiento || m.tipomantenimiento || m.tIPOMANTENIMIENTO || m.TIPO_MANTENIMIENTO || "No especificado";
+                            const detMan = m.mantenimiento || m.MANTENIMIENTO || "Sin detalles";
+                            const obsMan = m.observaciones || m.OBSERVACIONES || "Ninguna";
+                            const costoMan = m.costo || m.COSTO || 0;
+                            const idMan = m.id || m.CVE_MANTENIMIENTO || m.cVE_MANTENIMIENTO || 0;
+
+                            htmlMantenimientos += `
+                            <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 5px; position:relative;">
+                                <p style="margin:0 0 5px;"><strong>Fecha:</strong> ${fechaMostrada}</p>
+                                <p style="margin:0 0 5px;"><strong>Tipo de Mantenimiento:</strong> ${tipoMan}</p>
+                                <p style="margin:0 0 5px;"><strong>Detalle:</strong> ${detMan}</p>
+                                <p style="margin:0 0 5px;"><strong>Observaciones:</strong> ${obsMan}</p>
+                                <p style="margin:0;"><strong>Costo:</strong> $${parseFloat(costoMan).toLocaleString()}</p>
+                                
+                                <div style="position:absolute; top:10px; right:10px; display:flex; gap:5px;">
+                                    <button onclick="editarMantenimiento(${idMan})" class="boton-modal-icono" title="Editar">
+                                        <img src="iconos/editar.png" width="16" height="16">
+                                    </button>
+                                    <button onclick="eliminarMantenimiento(${idMan})" class="boton-modal-icono" title="Eliminar">
+                                        <img src="iconos/eliminar.png" width="16" height="16">
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        });
+                        infoDiv.innerHTML = htmlMantenimientos;
+                    } else {
+                        infoDiv.innerHTML = "<p style='text-align:center; color:#555;'>Este vehiculo aun no cuenta con un mantenimiento</p>";
+                    }
+                })
+                .catch(err => {
+                    console.error("Error cargando API:", err);
+                    infoDiv.innerHTML = `<p style='text-align:center; color:red;'>Error al cargar los mantenimientos: ${err.message}</p>`;
+                });
         }
 
         function cerrarMantenimiento() {
@@ -292,6 +358,28 @@
             setTimeout(() => {
                 modal.style.display = 'none';
             }, 250);
+        }
+
+        function editarMantenimiento(idMantenimiento) {
+            window.location.href = 'FinanzasyRecursos-FormularioMantenimiento.html?id=' + idMantenimiento;
+        }
+
+        function eliminarMantenimiento(idMantenimiento) {
+            if (confirm("¿Estás seguro de que deseas eliminar este registro de mantenimiento?")) {
+                const API_BASE_URL = 'http://127.0.0.1:8000';
+                fetch(API_BASE_URL + '/mantenimiento/eliminar/' + idMantenimiento, {
+                    method: 'DELETE'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        alert(data.mensaje || "Registro eliminado exitosamente");
+                        location.reload();
+                    })
+                    .catch(err => {
+                        alert("Ocurrió un error al intentar eliminar el registro");
+                        console.error("Error eliminando mantenimiento: ", err);
+                    });
+            }
         }
     </script>
 </body>
