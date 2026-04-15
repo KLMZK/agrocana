@@ -141,65 +141,46 @@ h2 {
     color:#4C4C4C;
     gap: 10px;
 }
-.cultivos {
-    padding: 15px;
-    padding-top: 10px;
-    padding-left: 20px;
+.cultivos, .cosecha, .finanzas {
+    padding: 14px 20px;
     display: block;
     border: 2px solid #D9D9D9;
-    border-radius: 4px;
-    height: 80%;
-    width: 28%;
     border-radius: 10px;
+    height: 200px;
+    width: 28%;
+    overflow: hidden;
 }
 .subtitulo {
-    margin-bottom: 5px;
+    margin-bottom: 4px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 .numero {
-    font-size: 30px;
+    font-size: 28px;
     font-weight: normal;
     margin: 0;
-    margin-top: 30px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 6px;
 }
 .des {
-    font-size: 14px;
+    font-size: 13px;
     color: black;
     margin: 0;
 }
 .des2 {
-    font-size: 14px;
+    font-size: 13px;
     color: #8B8383;
     margin: 0;
-}
-.cosecha {
-    padding: 15px;
-    padding-top: 10px;
-    display: block;
-    border: 2px solid #D9D9D9;
-    border-radius: 4px;
-    height: 80%;
-    width: 28%;
-    border-radius: 10px;
-}
-.finanzas {
-    padding: 15px;
-    padding-top: 10px;
-    display: block;
-    border: 2px solid #D9D9D9;
-    border-radius: 4px;
-    height: 80%;
-    width: 28%;
-    border-radius: 10px;
 }
 .detalles{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 10px;
+    margin-top: 6px;
+}
+.cont {
+    display: none;
 }
 p {
     display: block;
@@ -211,8 +192,7 @@ p {
 }
 .nivel2 {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
-    height: 25%;
-    margin-bottom: 12px;
+    margin: 0 20px 16px 20px;
 }

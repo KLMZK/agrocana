@@ -1,4 +1,5 @@
 <html>
+
 <head>
     <title>AgroCaña</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -7,8 +8,160 @@
     <link rel="stylesheet" type="text/css" href="estilos/principal2.css" />
     <script type="text/javascript" src="scripts/sesion.js"></script>
     <style>
+        /* ── MODALES (diseño claro) ──────────────────────────────────── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #ffffff;
+            border: 1px solid #D9D9D9;
+            border-radius: 14px;
+            padding: 28px;
+            width: 90%;
+            max-width: 680px;
+            max-height: 88vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            color: #333;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            border-bottom: 1px solid #E8E8E8;
+            padding-bottom: 12px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #222;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: #f3f3f3;
+            border: 1px solid #ddd;
+            color: #666;
+            font-size: 16px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            line-height: 28px;
+            text-align: center;
+            transition: background .15s;
+        }
+
+        .modal-close:hover {
+            background: #ffe0e0;
+            color: #c00;
+            border-color: #fbb;
+        }
+
+        .modal-chart-wrap {
+            position: relative;
+            height: 240px;
+            margin-bottom: 20px;
+        }
+
+        .modal-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .info-card {
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 12px 14px;
+            border: 1px solid #E8E8E8;
+        }
+
+        .info-card .ic-label {
+            font-size: 0.68rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+        }
+
+        .info-card .ic-value {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #222;
+            margin-top: 3px;
+        }
+
+        .modal-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.81rem;
+            margin-top: 6px;
+        }
+
+        .modal-table thead tr {
+            background: #f5f5f5;
+        }
+
+        .modal-table th {
+            padding: 7px 10px;
+            text-align: left;
+            color: #666;
+            font-weight: 600;
+            border-bottom: 1px solid #E8E8E8;
+        }
+
+        .modal-table td {
+            padding: 7px 10px;
+            border-bottom: 1px solid #F0F0F0;
+            color: #444;
+        }
+
+        .modal-table tr:hover td {
+            background: #fafafa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 9px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+
+        .badge-ok {
+            background: #e6f4ea;
+            color: #2e7d32;
+        }
+
+        .badge-pend {
+            background: #fdecea;
+            color: #c62828;
+        }
+
+        /* Cards: solo cursor pointer, sin animación */
+        .cultivos,
+        .cosecha,
+        .finanzas {
+            cursor: pointer;
+        }
     </style>
 </head>
+
 <body>
     <div class="titulo">
         <h1>Panel Principal</h1>
@@ -17,7 +170,7 @@
     <div class="contenido">
         <div class="nivel1">
             <div class="grafica">
-                <canvas id="ndviChart" ></canvas>
+                <canvas id="ndviChart"></canvas>
             </div>
             <div class="datos">
                 <div class="filtros">
@@ -26,13 +179,15 @@
                 </div>
                 <div class="tabla">
                     <div class="ndvi">
-                        <div class="tituFrase"><text style="font-size: 20px;">NDVI</text><text id="condicion">Cargando..</text></div>
+                        <div class="tituFrase"><text style="font-size: 20px;">NDVI</text><text
+                                id="condicion">Cargando..</text></div>
                         <text style="font-size: 12px; color: gray;" id="fechaNDVI">Fecha</text>
-                        <div class="columna"> <text style="color: green;">Max</text><text id="max" >Cargando..</text></div>
+                        <div class="columna"> <text style="color: green;">Max</text><text id="max">Cargando..</text>
+                        </div>
                         <div class="columna"><text style="color: red;">Min</text><text id="min">Cargando..</text></div>
-                        <div class="columna"><text >Promedio</text><text id="mean">Cargando..</text></div>
-                        <div class="columna"><text >Central</text><text id="median">Cargando..</text></div>
-                        <div class="columna"><text >Desviación Estándar</text><text id="std">Cargando..</text></div>
+                        <div class="columna"><text>Promedio</text><text id="mean">Cargando..</text></div>
+                        <div class="columna"><text>Central</text><text id="median">Cargando..</text></div>
+                        <div class="columna"><text>Desviación Estándar</text><text id="std">Cargando..</text></div>
                     </div>
                     <div class="etiqueta" style="gap: 20px;">
                         <div class="tituFrase"><text style="font-size: 20px;">Estado del Clima</text></div>
@@ -53,110 +208,377 @@
             </div>
         </div>
         <div class="nivel2">
-            <div class="cultivos" style="height: 100%;">
+            <!-- ENVÍOS -->
+            <div class="cultivos" onclick="abrirModalEnvios()">
                 <div class="subtitulo">
-                    <h3>Cultivos Activos</h3> <img src="iconos/planta2.png" alt="Cultivos Icon" width="15" height="15" />
+                    <h3>Envíos del Mes</h3>
+                    <span style="font-size:18px;">🚚</span>
                 </div>
-                <p id="ACTIVOS" class="numero">0</p>
-                <p class="des2" id="HECTAREAS">0 hectáreas totales</p>
-                <p class="cont" style="color: white;">0 En crecimiento</p>
-            </div>
-            <div class="cosecha" >
-                <div class="subtitulo">
-                    <h3>Estado de la Cosecha</h3><img src="iconos/palomita1.png" alt="Cosecha Icon" width="13" height="13" />
-                </div>
-                <p class="numero" id="COSECHA">0</p>
-                <p class="des2">Lotes listos para cosechar</p>
-                <p class="cont" id="CRECIMIENTO">0 En crecimiento</p>
-            </div>
-            <div class="finanzas">
-                <div class="subtitulo">
-                    <h3>Finanzas</h3><img src="iconos/monedas.png" alt="Finanzas Icon" width="13" height="13" />
-                </div>
-                <p id="balanceMes" class="numero">$0</p>
-                <p class="des2">Balance neto del mes</p>
+                <p id="ENV_TOTAL" class="numero">—</p>
+                <p class="des2">Envíos registrados</p>
                 <div class="detalles">
-                    <p class="des" style="color: #346E19;">Ingresos:</p>
-                    <p class="des" id="ingresosMes">$0</p>
+                    <p class="des" style="color:#346E19;">Entregados:</p>
+                    <p class="des" id="ENV_ENTREGADOS">—</p>
                 </div>
                 <div class="detalles">
-                    <p class="des" style="color: #FD0000;">Gastos:</p>
-                    <p class="des" id="gastosMes">$0</p>
+                    <p class="des" style="color:#FD0000;">Pendientes:</p>
+                    <p class="des" id="ENV_PENDIENTES">—</p>
                 </div>
+                <p class="cont" style="color:white;" id="ENV_COSTO">Costo: $0</p>
+            </div>
+            <!-- MANTENIMIENTOS -->
+            <div class="cosecha" onclick="abrirModalMant()">
+                <div class="subtitulo">
+                    <h3>Mantenimientos</h3>
+                    <span style="font-size:18px;">🔧</span>
+                </div>
+                <p class="numero" id="MANT_TOTAL">—</p>
+                <p class="des2">Mantenimientos del mes</p>
+                <div class="detalles">
+                    <p class="des" style="color:#FD0000;">Costo total:</p>
+                    <p class="des" id="MANT_COSTO">$0</p>
+                </div>
+                <p class="cont" id="MANT_TIPO" style="color:white;">Cargando...</p>
+            </div>
+            <!-- ACTIVIDADES -->
+            <div class="finanzas" onclick="abrirModalAct()">
+                <div class="subtitulo">
+                    <h3>Actividades</h3>
+                    <span style="font-size:18px;">📋</span>
+                </div>
+                <p id="ACT_TOTAL" class="numero">—</p>
+                <p class="des2">Actividades del mes</p>
+                <div class="detalles">
+                    <p class="des" style="color:#346E19;">Completadas:</p>
+                    <p class="des" id="ACT_COMPLETADAS">—</p>
+                </div>
+                <div class="detalles">
+                    <p class="des" style="color:#FD0000;">Pendientes:</p>
+                    <p class="des" id="ACT_PENDIENTES">—</p>
+                </div>
+                <p class="cont" style="color:white;" id="ACT_COSTO">Costo: $0</p>
             </div>
         </div>
     </div>
+
+    <!-- ═══════ MODAL ENVÍOS ═══════ -->
+    <div class="modal-overlay" id="modalEnvios">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2>🚚 Envíos del Mes</h2>
+                <button class="modal-close" onclick="cerrarModal('modalEnvios')">✕</button>
+            </div>
+            <div class="modal-info-grid" id="envInfoGrid"></div>
+            <div class="modal-chart-wrap">
+                <canvas id="envChart"></canvas>
+            </div>
+            <div id="envTablaWrap"></div>
+        </div>
+    </div>
+
+    <!-- ═══════ MODAL MANTENIMIENTOS ═══════ -->
+    <div class="modal-overlay" id="modalMant">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2>🔧 Mantenimientos</h2>
+                <button class="modal-close" onclick="cerrarModal('modalMant')">✕</button>
+            </div>
+            <div class="modal-info-grid" id="mantInfoGrid"></div>
+            <div class="modal-chart-wrap">
+                <canvas id="mantChart"></canvas>
+            </div>
+            <div id="mantTablaWrap"></div>
+        </div>
+    </div>
+
+    <!-- ═══════ MODAL ACTIVIDADES ═══════ -->
+    <div class="modal-overlay" id="modalAct">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2>📋 Actividades del Mes</h2>
+                <button class="modal-close" onclick="cerrarModal('modalAct')">✕</button>
+            </div>
+            <div class="modal-info-grid" id="actInfoGrid"></div>
+            <div class="modal-chart-wrap">
+                <canvas id="actChart"></canvas>
+            </div>
+            <div id="actTablaWrap"></div>
+        </div>
+    </div>
+
 </body>
 <script>
     console.log("JS cargado");
     const apiKey = "ca89717cf429130019ba830342fa1c82";
 
-async function obtenerClima() {
-  try {
-    const ciudad = "Cardenas"; // puedes cambiarla luego
+    async function obtenerClima() {
+        try {
+            const ciudad = "Cardenas"; // puedes cambiarla luego
 
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},mx&units=metric&lang=es&appid=${apiKey}`;
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},mx&units=metric&lang=es&appid=${apiKey}`;
 
-    const respuesta = await fetch(url);
-    const datos = await respuesta.json();
+            const respuesta = await fetch(url);
+            const datos = await respuesta.json();
 
-    // insertar en tu interfaz
-    document.getElementById("ubicacion").textContent = datos.name;
-    document.getElementById("temperatura").textContent = datos.main.temp + " °C";
-    document.getElementById("condicionClima").textContent = datos.weather[0].description;
+            // insertar en tu interfaz
+            document.getElementById("ubicacion").textContent = datos.name;
+            document.getElementById("temperatura").textContent = datos.main.temp + " °C";
+            document.getElementById("condicionClima").textContent = datos.weather[0].description;
 
-  } catch (error) {
-    console.error("Error obteniendo clima:", error);
-  }
-}
-
-document.addEventListener("DOMContentLoaded", obtenerClima);
-
-        fetch("/proyecto/agrocana/php/principal.php?desc=" + encodeURIComponent(0))
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById("ACTIVOS").textContent = data[0].TOTAL;
-            document.getElementById("HECTAREAS").textContent = data[0].HECTAREAS + ' hectáreas totales';
-        });
-    fetch("/proyecto/agrocana/php/principal.php?desc=" + encodeURIComponent(1))
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById("COSECHA").textContent = data[0].TOTAL;
-        });
-    fetch("/proyecto/agrocana/php/principal.php?desc=" + encodeURIComponent(2))
-        .then(res => res.json())
-        .then(data => {
-            document.getElementById("CRECIMIENTO").textContent = data[0].TOTAL + ' En crecimiento';
-        });
-    let ingresos = 0;
-    let gastos = 0;
-
-    const Ingr = fetch("php/finanzasyrecursos/FinanzasyRecursos_VistaIngreso.php")
-        .then(res => res.json())
-        .then(data => {
-            ingresos = Number(data.totalIngresos);
-            document.getElementById("ingresosMes").textContent =
-                "$" + ingresos.toLocaleString();
-        });
-    const Gast = fetch("php/finanzasyrecursos/FinanzasyRecursos_VistaGasto.php")
-        .then(res => res.json())
-        .then(data => {
-            gastos = Number(data.totalGastos);
-            document.getElementById("gastosMes").textContent =
-                "$" + gastos.toLocaleString();
-        });
-
-    Promise.all([Ingr, Gast]).then(() => {
-        const balance = ingresos - gastos;
-
-        document.getElementById("balanceMes").textContent =
-            "$" + balance.toLocaleString();
-        if (balance < 0) {
-            document.getElementById("balanceMes").style.color = "#C51B1B";
-        } else {
-            document.getElementById("balanceMes").style.color = "#346E19";
+        } catch (error) {
+            console.error("Error obteniendo clima:", error);
         }
+    }
+
+    document.addEventListener("DOMContentLoaded", obtenerClima);
+
+    // ── API Agrocana (Node) ──────────────────────────────────────────
+    const API_BASE = 'http://localhost:3001';
+    const ahora = new Date();
+    const mesActual = ahora.getMonth() + 1;
+    const anioActual = ahora.getFullYear();
+    const params = `mes=${mesActual}&anio=${anioActual}`;
+
+    // ── Variables compartidas (declaradas antes de los fetch) ────────
+    let envChartInst, mantChartInst, actChartInst;
+    let cachedEnvios = null, cachedMant = null, cachedAct = null;
+    const MESES_ES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+    // Envíos
+    fetch(`${API_BASE}/api/reportes/envios?${params}`)
+        .then(res => res.json())
+        .then(data => {
+            cachedEnvios = data;
+            const r = data.resumen;
+            document.getElementById('ENV_TOTAL').textContent = r.total_envios;
+            document.getElementById('ENV_ENTREGADOS').textContent = r.entregados;
+            document.getElementById('ENV_PENDIENTES').textContent = r.pendientes;
+            document.getElementById('ENV_COSTO').textContent =
+                'Costo: $' + (r.costo_total || 0).toLocaleString();
+        })
+        .catch(err => {
+            console.error('Error envíos:', err);
+            document.getElementById('ENV_TOTAL').textContent = 'Error';
+        });
+
+    // Mantenimientos
+    fetch(`${API_BASE}/api/reportes/mantenimientos?${params}`)
+        .then(res => res.json())
+        .then(data => {
+            const r = data.resumen;
+            document.getElementById('MANT_TOTAL').textContent = r.total_mantenimientos;
+            document.getElementById('MANT_COSTO').textContent =
+                '$' + (r.costo_total || 0).toLocaleString();
+            // Mostrar tipos únicos de mantenimiento
+            const tipos = [...new Set(data.datos.map(d => d.TIPO_MANTENIMIENTO))].join(', ');
+            document.getElementById('MANT_TIPO').textContent = tipos || 'Sin registros';
+        })
+        .catch(err => {
+            console.error('Error mantenimientos:', err);
+            document.getElementById('MANT_TOTAL').textContent = 'Error';
+        });
+
+    // Actividades
+    fetch(`${API_BASE}/api/reportes/actividades?${params}`)
+        .then(res => res.json())
+        .then(data => {
+            cachedAct = data;
+            const r = data.resumen;
+            document.getElementById('ACT_TOTAL').textContent = r.total_actividades;
+            document.getElementById('ACT_COMPLETADAS').textContent = r.total_completadas;
+            document.getElementById('ACT_PENDIENTES').textContent = r.total_pendientes;
+            document.getElementById('ACT_COSTO').textContent =
+                'Costo: $' + (r.costo_total_mes || 0).toLocaleString();
+        })
+        .catch(err => {
+            console.error('Error actividades:', err);
+            document.getElementById('ACT_TOTAL').textContent = 'Error';
+        });
+
+    // ── UTILIDADES MODALES ──────────────────────────────────────────────
+
+    function cerrarModal(id) {
+        document.getElementById(id).classList.remove('active');
+    }
+    // Cerrar al click fuera del box
+    document.querySelectorAll('.modal-overlay').forEach(ov => {
+        ov.addEventListener('click', e => { if (e.target === ov) ov.classList.remove('active'); });
     });
+
+    function infoCard(label, value) {
+        return `<div class="info-card"><div class="ic-label">${label}</div><div class="ic-value">${value}</div></div>`;
+    }
+
+    // ── MODAL ENVÍOS ───────────────────────────────────────────────────
+    function abrirModalEnvios() {
+        document.getElementById('modalEnvios').classList.add('active');
+        if (cachedEnvios) renderEnvios(cachedEnvios);
+    }
+    function renderEnvios(data) {
+        const r = data.resumen;
+        // Info cards
+        document.getElementById('envInfoGrid').innerHTML =
+            infoCard('Total envíos', r.total_envios) +
+            infoCard('Entregados', r.entregados) +
+            infoCard('Pendientes', r.pendientes) +
+            infoCard('Costo total', '$' + (r.costo_total || 0).toLocaleString());
+        // Gráfica pastel
+        if (envChartInst) envChartInst.destroy();
+        const ctx = document.getElementById('envChart').getContext('2d');
+        envChartInst = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Entregados', 'Pendientes'],
+                datasets: [{
+                    data: [r.entregados, r.pendientes],
+                    backgroundColor: ['#4caf7d', '#e05252'],
+                    borderColor: ['#1a2332'],
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom', labels: { color: '#cdd6e0' } } }
+            }
+        });
+        // Tabla detalle
+        let rows = data.datos.map(d => `<tr>
+            <td>${d.CVE_ENVIO}</td>
+            <td>${d.ORIGEN} → ${d.DESTINO}</td>
+            <td>${d.conductor || '—'}</td>
+            <td>${d.PLACA || '—'}</td>
+            <td>$${(d.COSTO || 0).toLocaleString()}</td>
+            <td><span class="badge ${d.ENTREGADO ? 'badge-ok' : 'badge-pend'}">${d.ENTREGADO ? 'Entregado' : 'Pendiente'}</span></td>
+        </tr>`).join('');
+        document.getElementById('envTablaWrap').innerHTML = `
+            <table class="modal-table">
+                <thead><tr><th>#</th><th>Ruta</th><th>Conductor</th><th>Placa</th><th>Costo</th><th>Estado</th></tr></thead>
+                <tbody>${rows || '<tr><td colspan="6" style="text-align:center;color:#8a9ab5;">Sin registros</td></tr>'}</tbody>
+            </table>`;
+    }
+
+    // ── MODAL MANTENIMIENTOS (barras 3 meses) ───────────────────────────
+    async function abrirModalMant() {
+        document.getElementById('modalMant').classList.add('active');
+        // Cargar 3 meses anteriores + mes actual
+        const meses = [];
+        for (let i = 3; i >= 1; i--) {
+            const d = new Date(anioActual, mesActual - 1 - i, 1);
+            meses.push({ mes: d.getMonth() + 1, anio: d.getFullYear(), label: MESES_ES[d.getMonth()] });
+        }
+        meses.push({ mes: mesActual, anio: anioActual, label: MESES_ES[mesActual - 1] + ' (actual)' });
+
+        try {
+            const resultados = await Promise.all(
+                meses.map(m => fetch(`${API_BASE}/api/reportes/mantenimientos?mes=${m.mes}&anio=${m.anio}`).then(r => r.json()))
+            );
+            const labels = meses.map(m => m.label);
+            const costos = resultados.map(r => (r.resumen.costo_total || 0));
+            const totales = resultados.map(r => (r.resumen.total_mantenimientos || 0));
+
+            // Info cards con datos del mes actual
+            const rActual = resultados[3].resumen;
+            document.getElementById('mantInfoGrid').innerHTML =
+                infoCard('Este mes', rActual.total_mantenimientos) +
+                infoCard('Costo mes', '$' + (rActual.costo_total || 0).toLocaleString()) +
+                infoCard('Mes previo', resultados[2].resumen.total_mantenimientos) +
+                infoCard('Costo previo', '$' + (resultados[2].resumen.costo_total || 0).toLocaleString());
+
+            if (mantChartInst) mantChartInst.destroy();
+            const ctx = document.getElementById('mantChart').getContext('2d');
+            mantChartInst = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: 'Costo ($)', data: costos,
+                            backgroundColor: 'rgba(253,153,0,0.7)', borderRadius: 6,
+                            yAxisID: 'y'
+                        },
+                        {
+                            label: 'Nº registros', data: totales,
+                            backgroundColor: 'rgba(100,180,255,0.6)', borderRadius: 6,
+                            yAxisID: 'y1', type: 'bar'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { labels: { color: '#cdd6e0' } } },
+                    scales: {
+                        x: { ticks: { color: '#8a9ab5' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                        y: { position: 'left', ticks: { color: '#FD9900', callback: v => '$' + v.toLocaleString() }, grid: { color: 'rgba(255,255,255,0.05)' } },
+                        y1: { position: 'right', ticks: { color: '#64b4ff' }, grid: { drawOnChartArea: false } }
+                    }
+                }
+            });
+
+            // Tabla del mes actual
+            const datos = resultados[3].datos;
+            let rows = datos.map(d => `<tr>
+                <td>${d.CVE_MANTENIMIENTO}</td>
+                <td>${d.MANTENIMIENTO || '—'}</td>
+                <td>${d.TIPO_MANTENIMIENTO || '—'}</td>
+                <td>${d.PLACA || '—'}</td>
+                <td>${d.responsable || '—'}</td>
+                <td>$${(d.COSTO || 0).toLocaleString()}</td>
+            </tr>`).join('');
+            document.getElementById('mantTablaWrap').innerHTML = `
+                <table class="modal-table">
+                    <thead><tr><th>#</th><th>Descripción</th><th>Tipo</th><th>Placa</th><th>Responsable</th><th>Costo</th></tr></thead>
+                    <tbody>${rows || '<tr><td colspan="6" style="text-align:center;color:#8a9ab5;">Sin registros</td></tr>'}</tbody>
+                </table>`;
+        } catch (e) {
+            document.getElementById('mantInfoGrid').innerHTML = `<p style="color:#e05252;">Error al cargar datos</p>`;
+        }
+    }
+
+    // ── MODAL ACTIVIDADES ───────────────────────────────────────────────
+    function abrirModalAct() {
+        document.getElementById('modalAct').classList.add('active');
+        if (cachedAct) renderActividades(cachedAct);
+    }
+    function renderActividades(data) {
+        const r = data.resumen;
+        document.getElementById('actInfoGrid').innerHTML =
+            infoCard('Total', r.total_actividades) +
+            infoCard('Completadas', r.total_completadas) +
+            infoCard('Pendientes', r.total_pendientes) +
+            infoCard('Costo total', '$' + (r.costo_total_mes || 0).toLocaleString());
+
+        if (actChartInst) actChartInst.destroy();
+        const ctx = document.getElementById('actChart').getContext('2d');
+        actChartInst = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Completadas', 'Pendientes'],
+                datasets: [{
+                    data: [r.total_completadas, r.total_pendientes],
+                    backgroundColor: ['#4caf7d', '#e05252'],
+                    borderColor: ['#1a2332'], borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom', labels: { color: '#cdd6e0' } } }
+            }
+        });
+
+        // Tabla por tipo
+        let rows = data.datos.map(d => `<tr>
+            <td>${d.TIPO || '—'}</td>
+            <td>${d.total}</td>
+            <td>${d.completadas}</td>
+            <td>${d.pendientes}</td>
+            <td>$${(d.costo_total || 0).toLocaleString()}</td>
+        </tr>`).join('');
+        document.getElementById('actTablaWrap').innerHTML = `
+            <table class="modal-table">
+                <thead><tr><th>Tipo</th><th>Total</th><th>Completadas</th><th>Pendientes</th><th>Costo</th></tr></thead>
+                <tbody>${rows || '<tr><td colspan="5" style="text-align:center;color:#8a9ab5;">Sin registros</td></tr>'}</tbody>
+            </table>`;
+    }
 
     const API_KEY = "d25c5faafdfce26b40b38ff1256b924a";
     const FieldID = "699a7909c2d63e950b38df78";
@@ -167,92 +589,93 @@ document.addEventListener("DOMContentLoaded", obtenerClima);
     let ndviChart;
 
     function fechaATimestamp(fecha) {
-    return Math.floor(new Date(fecha + "T00:00:00").getTime() / 1000);
+        return Math.floor(new Date(fecha + "T00:00:00").getTime() / 1000);
     }
 
     function cargarNDVI() {
-    if (!fechaInicio.value || !fechaFin.value) return;
+        if (!fechaInicio.value || !fechaFin.value) return;
 
-    const start = fechaATimestamp(fechaInicio.value);
-    const end = fechaATimestamp(fechaFin.value);
+        const start = fechaATimestamp(fechaInicio.value);
+        const end = fechaATimestamp(fechaFin.value);
 
-fetch(`https://api.agromonitoring.com/agro/1.0/ndvi/history?start=${start}&end=${end}&polyid=${FieldID}&appid=${API_KEY}`)
-  .then(res => res.json())
-  .then(res => {
-    console.log("NDVI histórico:", res);
+        fetch(`https://api.agromonitoring.com/agro/1.0/ndvi/history?start=${start}&end=${end}&polyid=${FieldID}&appid=${API_KEY}`)
+            .then(res => res.json())
+            .then(res => {
+                console.log("NDVI histórico:", res);
 
-    if (!Array.isArray(res) || res.length === 0) {
-      console.warn("No hay datos NDVI");
-      return;
+                if (!Array.isArray(res) || res.length === 0) {
+                    console.warn("No hay datos NDVI");
+                    return;
+                }
+
+                const ordenado = res.sort((a, b) => a.dt - b.dt);
+
+                const seleccionado = ordenado.reduce((prev, curr) => {
+                    return Math.abs(curr.dt - end) < Math.abs(prev.dt - end) ? curr : prev;
+                });
+
+                const { max, min, mean, median, std } = seleccionado.data;
+
+                document.getElementById('max').textContent = max.toFixed(2);
+                document.getElementById('min').textContent = min.toFixed(2);
+                document.getElementById('mean').textContent = mean.toFixed(2);
+                document.getElementById('median').textContent = median.toFixed(2);
+                document.getElementById('std').textContent = std.toFixed(2);
+
+
+                if (seleccionado.data.mean < 0.2) desc = "Muy poca o nula vegetación";
+                else if (seleccionado.data.mean < 0.4) desc = "Vegetación escasa o estresada";
+                else if (seleccionado.data.mean < 0.6) desc = "Vegetación moderada y saludable";
+                else if (seleccionado.data.mean < 0.8) desc = "Vegetación densa y vigorosa";
+                else desc = "Vegetación extremadamente densa";
+
+                document.getElementById('condicion').textContent = desc;
+                document.getElementById('fechaNDVI').textContent =
+                    `Desde ${fechaInicio.value} hasta ${fechaFin.value}`;
+
+                const labels = ordenado.map(i => new Date(i.dt * 1000).toLocaleDateString());
+                const valores = ordenado.map(i => i.data.mean);
+
+                const ctx = document.getElementById('ndviChart').getContext('2d');
+                if (ndviChart) ndviChart.destroy();
+                ndviChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels,
+                        datasets: [{
+                            label: 'NDVI promedio',
+                            data: valores,
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: { y: { min: -1, max: 1 } }
+                    }
+                });
+            })
+            .catch(err => console.error("Error NDVI:", err));
     }
+    const hoy = new Date();
+    const limite = new Date();
+    limite.setDate(hoy.getDate() - 5);
 
-    const ordenado = res.sort((a, b) => a.dt - b.dt);
+    const formatear = f => f.toISOString().split("T")[0];
 
-    const seleccionado = ordenado.reduce((prev, curr) => {
-    return Math.abs(curr.dt - end) < Math.abs(prev.dt - end) ? curr : prev;
-    });
+    fechaInicio.max = formatear(limite);
+    fechaFin.max = formatear(limite);
 
-    const { max, min, mean, median, std } = seleccionado.data;
+    const now = Math.floor(Date.now() / 1000);
+    const fiveDaysAgo = new Date((now - 5 * 86400) * 1000);
+    const oneMonthAgo = new Date((now - 30 * 86400) * 1000);
 
-    document.getElementById('max').textContent = max.toFixed(2);
-    document.getElementById('min').textContent = min.toFixed(2);
-    document.getElementById('mean').textContent = mean.toFixed(2);
-    document.getElementById('median').textContent = median.toFixed(2);
-    document.getElementById('std').textContent = std.toFixed(2);
+    fechaInicio.value = formatear(oneMonthAgo);
+    fechaFin.value = formatear(fiveDaysAgo);
 
+    fechaInicio.addEventListener("change", cargarNDVI);
+    fechaFin.addEventListener("change", cargarNDVI);
 
-    if (seleccionado.data.mean < 0.2) desc = "Muy poca o nula vegetación";
-    else if (seleccionado.data.mean < 0.4) desc = "Vegetación escasa o estresada";
-    else if (seleccionado.data.mean < 0.6) desc = "Vegetación moderada y saludable";
-    else if (seleccionado.data.mean < 0.8) desc = "Vegetación densa y vigorosa";
-    else desc = "Vegetación extremadamente densa";
-
-    document.getElementById('condicion').textContent = desc;
-    document.getElementById('fechaNDVI').textContent =
-        `Desde ${fechaInicio.value} hasta ${fechaFin.value}`;
-
-    const labels = ordenado.map(i => new Date(i.dt * 1000).toLocaleDateString());
-    const valores = ordenado.map(i => i.data.mean);
-
-    const ctx = document.getElementById('ndviChart').getContext('2d');
-    if (ndviChart) ndviChart.destroy();
-      ndviChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels,
-          datasets: [{
-            label: 'NDVI promedio',
-            data: valores,
-            tension: 0.3
-          }]
-        },
-        options: {
-          responsive: true,
-          scales: { y: { min: -1, max: 1 } }
-        }
-      });
-    })
-    .catch(err => console.error("Error NDVI:", err));
-}
-        const hoy = new Date();
-        const limite = new Date();
-        limite.setDate(hoy.getDate() - 5);
-
-        const formatear = f => f.toISOString().split("T")[0];
-
-        fechaInicio.max = formatear(limite);
-        fechaFin.max = formatear(limite);
-
-        const now = Math.floor(Date.now() / 1000);
-        const fiveDaysAgo = new Date((now - 5 * 86400) * 1000);
-        const oneMonthAgo = new Date((now - 30 * 86400) * 1000);
-
-        fechaInicio.value = formatear(oneMonthAgo);
-        fechaFin.value = formatear(fiveDaysAgo);
-
-        fechaInicio.addEventListener("change", cargarNDVI);
-        fechaFin.addEventListener("change", cargarNDVI);
-
-        cargarNDVI();
+    cargarNDVI();
 </script>
+
 </html>
